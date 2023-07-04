@@ -6,8 +6,14 @@ ENV = (
     else "dev"
 )
 
-# Get email info 
-f = open("financial/secret/email.json")
+PATH = (
+    "financial/dagster/financial/secret/" 
+    if ENV == "prod" 
+    else "financial/secret/"
+)
+
+# Get email info
+f = open(PATH + "email.json")
 data = json.load(f)[ENV]
 EMAIL_SENDER = data["sender_email"]
 EMAIL_PASSWORD = data["password"]
@@ -18,7 +24,7 @@ context = ssl.create_default_context()
 SMTP = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
 
 # Get database info
-f = open("financial/secret/postgres.json")
+f = open(PATH + "postgres.json")
 data = json.load(f)[ENV]
 DB_URL = data["url"]
 f.close()
@@ -28,7 +34,7 @@ engine = sqlalchemy.create_engine(DB_URL)
 DB_CONNECTION = engine.connect()
 
 # Airbyte connection
-f = open("financial/secret/airbyte.json")
+f = open(PATH + "airbyte.json")
 data = json.load(f)[ENV]
 AIRBYTE_HOST = data["host"]
 AIRBYTE_PORT = data["port"]
@@ -38,7 +44,7 @@ AIRBYTE_WORKSPACE = data["workspace"]
 f.close()
 
 # dbt connection
-f = open("financial/secret/dbt.json")
+f = open(PATH + "dbt.json")
 data = json.load(f)[ENV]
 DBT_PROJECT_DIR = data["project"]
 DBT_PROFILE_PATH = data["profile"]

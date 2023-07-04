@@ -1,10 +1,10 @@
 from dagster import Definitions
-from .assets.dbt import *
-from .assets.airbyte import *
-from .assets.email import *
-from .sensors import *
-from .jobs import *
-from .schedules import *
+from financial.assets.dbt import *
+from financial.assets.airbyte import *
+from financial.assets.email import *
+from financial.sensors import *
+from financial.jobs import *
+from financial.schedules import *
 
 defs = Definitions(
     assets=(
