@@ -1,0 +1,4 @@
+load_from:
+  - python_file:
+      relative_path: financial/__init__.py
+      location_name: financial

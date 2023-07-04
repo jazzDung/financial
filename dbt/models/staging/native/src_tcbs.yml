@@ -1,0 +1,76 @@
+version: 2
+
+sources:
+  - name: price_history
+    description: Organization stock price history, daily data
+    database: financial_data
+    schema: financial_raw
+    tables:
+      - name: price_history
+        description: Organization stock price history, daily data
+        freshness:
+          warn_after: { count: 3, period: day }
+          error_after: { count: 7, period: day }
+        loaded_at_field: _airbyte_emitted_at
+
+  - name: organization
+    description: Organization overview information
+    database: financial_data
+    schema: financial_raw
+    freshness:
+      warn_after: { count: 30, period: day }
+      error_after: { count: 60, period: day }
+    loaded_at_field: _airbyte_emitted_at
+    tables:
+      - name: organization
+        description: Organization overview information, collected from SSI
+      - name: organization_overview
+        description: Organization overview information, collected from TCBS
+
+  - name: cash_flow
+    description: Organization cash flow report, quarterly and yearly data
+    database: financial_data
+    schema: financial_raw
+    tables:
+      - name: cash_flow
+        description: Organization cash flow report, quarterly and yearly data
+        freshness:
+          warn_after: { count: 90, period: day }
+          error_after: { count: 180, period: day }
+        loaded_at_field: _airbyte_emitted_at
+
+  - name: balance_sheet
+    description: Organization balance sheet report, quarterly and yearly data
+    database: financial_data
+    schema: financial_raw
+    tables:
+      - name: balance_sheet
+        description: Organization balance sheet report, quarterly and yearly data
+        freshness:
+          warn_after: { count: 90, period: day }
+          error_after: { count: 180, period: day }
+        loaded_at_field: _airbyte_emitted_at
+
+  - name: income_statement
+    description: Organization income statement report, quarterly and yearly data
+    database: financial_data
+    schema: financial_raw
+    tables:
+      - name: income_statement
+        description: Organization income_statement report, quarterly and yearly data
+        freshness:
+          warn_after: { count: 90, period: day }
+          error_after: { count: 180, period: day }
+        loaded_at_field: _airbyte_emitted_at
+
+  - name: general_rating
+    description: Organization general rating
+    database: financial_data
+    schema: financial_raw
+    tables:
+      - name: general_rating
+        description: Organization general rating
+        freshness:
+          warn_after: { count: 90, period: day }
+          error_after: { count: 180, period: day }
+        loaded_at_field: _airbyte_emitted_at

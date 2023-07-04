@@ -1,0 +1,10 @@
+dagster
+dagster-cloud
+dagster-airbyte
+dagster-dbt
+dbt-postgres
+sqlalchemy<2.0
+
+[dev]
+dagit
+pytest
