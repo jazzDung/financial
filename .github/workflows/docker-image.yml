@@ -2,8 +2,8 @@ name: Push Docker Image
 
 # Controls when the workflow will run
 on:
-  push:
-    branches: [ "master" ]
+#   push:
+#     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
