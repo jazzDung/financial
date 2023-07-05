@@ -43,4 +43,4 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: vietcheems/fdp-helm-chart
           event-type: new-image
-          client-payload: '{"image": "${{ steps.meta.outputs.tags }}"}'
+          client-payload: '{"tag": "${{ steps.meta.outputs.tags }}"}'
