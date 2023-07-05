@@ -26,7 +26,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: jazzdung/dagster_financial
+          images: jazzdung/dagster-financial
           tags: type=sha
           
       - name: Build and push
