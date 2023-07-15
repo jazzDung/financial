@@ -5,3 +5,45 @@
 {"data": {"command": "dbt run", "completed_at": "2023-05-25T20:21:06.638057Z", "elapsed": 0.012888167, "success": false}, "info": {"category": "", "code": "Q039", "extra": {}, "invocation_id": "2b542030-6794-4fba-93b4-792fcc77843a", "level": "debug", "msg": "Command `dbt run` failed at 03:21:06.638057 after 0.01 seconds", "name": "CommandCompleted", "pid": 98103, "thread": "MainThread", "ts": "2023-05-25T20:21:06.638174Z"}}
 {"data": {"kwargs": "{'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121e677e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121d1617e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121d1616c0>]}"}, "info": {"category": "", "code": "Z040", "extra": {}, "invocation_id": "2b542030-6794-4fba-93b4-792fcc77843a", "level": "debug", "msg": "Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121e677e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121d1617e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f121d1616c0>]}", "name": "SendingEvent", "pid": 98103, "thread": "MainThread", "ts": "2023-05-25T20:21:06.638622Z"}}
 {"data": {}, "info": {"category": "", "code": "Z042", "extra": {}, "invocation_id": "2b542030-6794-4fba-93b4-792fcc77843a", "level": "debug", "msg": "Flushing usage events", "name": "FlushEvents", "pid": 98103, "thread": "MainThread", "ts": "2023-05-25T20:21:06.639197Z"}}
+[0m16:24:32.752302 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31da948640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31d92a1b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31d92a1c30>]}
+
+
+============================== 16:24:32.754048 | 57c570fc-6c27-4682-99ab-656929e65329 ==============================
+[0m16:24:32.754048 [info ] [MainThread]: Running with dbt=1.5.1
+[0m16:24:32.754538 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/jazzdung/.dbt', 'debug': 'False', 'version_check': 'True', 'log_path': 'logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m16:24:32.754912 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/jazzdung/projects/financial/dagster/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:24:32.755628 [debug] [MainThread]: Command `cli run` failed at 16:24:32.755454 after 0.01 seconds
+[0m16:24:32.756015 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31da948640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31d92a1d20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f31d92a1f30>]}
+[0m16:24:32.756623 [debug] [MainThread]: Flushing usage events
+[0m16:27:17.097694 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5910367c70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f590ec9d9c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f590ec9da80>]}
+
+
+============================== 16:27:17.099465 | 9209926a-8443-45f2-a882-ccd0d037f821 ==============================
+[0m16:27:17.099465 [info ] [MainThread]: Running with dbt=1.5.1
+[0m16:27:17.100160 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/jazzdung/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': 'logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m16:27:17.100619 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/jazzdung/projects/financial/dagster/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:27:17.101335 [debug] [MainThread]: Command `cli run` failed at 16:27:17.101234 after 0.01 seconds
+[0m16:27:17.101669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5910367c70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f590ec9dba0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f590ec9dd80>]}
+[0m16:27:17.102011 [debug] [MainThread]: Flushing usage events
+[0m16:29:13.629015 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c6856950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c5267580>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c5267640>]}
+
+
+============================== 16:29:13.631016 | c3986c98-5e16-4091-bc27-5b2c975180e4 ==============================
+[0m16:29:13.631016 [info ] [MainThread]: Running with dbt=1.5.1
+[0m16:29:13.631687 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'version_check': 'True', 'profiles_dir': '/home/jazzdung/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m16:29:13.632096 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/jazzdung/projects/financial/dagster/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:29:13.632668 [debug] [MainThread]: Command `cli run` failed at 16:29:13.632573 after 0.01 seconds
+[0m16:29:13.632956 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c6856950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c5267760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f58c5267940>]}
+[0m16:29:13.633270 [debug] [MainThread]: Flushing usage events

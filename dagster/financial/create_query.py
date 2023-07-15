@@ -21,7 +21,9 @@ import logging
 # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
 EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
 
-MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
+# MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
+MANIFEST_PATH = "/home/jazzdung/projects/financial/dbt/target/manifest.json"
+
 
 MATERIALIZATION_MAPPING = {
     1:'table',
@@ -49,9 +51,6 @@ def get_tables_from_sql_simple(sql):
     tables = list(set(tables))
 
     return tables
-    
-
-
     
 def is_valid_table_name(table_name):
   """
@@ -95,6 +94,8 @@ def get_tables_from_dbt(dbt_manifest):
                     f"ref('{name}')" if table_type == 'nodes'
                     else f"source('{source}', '{name}')"
             }
+    
+    return tables
 
 # Get all schema names in project
 # Either this or defined schema name available to the user before
@@ -177,14 +178,14 @@ with {table} as (
 def get_records():
     # Query records
     try:
-        connection = psycopg2.connect(user="airflow",
-                                    password="airflow",
-                                    host="127.0.0.1",
-                                    port="5432",
-                                    database="jaffle_shop",
+        connection = psycopg2.connect(user="fdp",
+                                    password="fdp",
+                                    host="34.82.185.252",
+                                    port="30005",
+                                    database="financial_data",
                                     )
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from dbt_alice.query"
+        postgreSQL_select_Query = "select * from financial_query.query"
         # postgreSQL_select_Query = """
         # SELECT *
         # FROM query
@@ -293,7 +294,7 @@ def main():
             f.write(create_dbt_model(df.loc[i], dbt_tables_with_schemas))
             f.close()
         status.append("Success")
-    
+    print(status)
     # Get Emails from API
     # superset = SupersetDBTConnector(logger=logger,refresh_token=True)
     # users = set(df["user_id"].to_list())
