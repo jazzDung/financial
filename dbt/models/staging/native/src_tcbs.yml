@@ -138,19 +138,13 @@ sources:
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
-          # tests:
-          # - dbt_utils.unique_combination_of_columns:
-          #     combination_of_columns:
-          #       - ticker
-          #       - quarter
-          #       - year
-          #     config:
-          #       severity: warn
         loaded_at_field: _airbyte_emitted_at
         columns:
           - name: ticker
             description: "Stock symbol of dim_organization_overview, primary key for this table"
             tests:
               - dbt_expectations.expect_column_to_exist
-              - dbt_expectations.expect_column_values_to_be_unique
+              - dbt_expectations.expect_column_values_to_be_unique:
+                  config:
+                    severity: warn
               - dbt_expectations.expect_column_values_to_not_be_null

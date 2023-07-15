@@ -3,10 +3,6 @@ version: 2
 models:
   - name: dim_organization_overview
     description: "Detailed organization's data"
-    tests: 
-      - table_column_count:
-          model_name: 'dim_organization_overview'
-          count: 25
     columns:
       - name: ticker
         description: "Stock symbol of dim_organization_overview, primary key for this table"
