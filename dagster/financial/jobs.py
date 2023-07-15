@@ -70,3 +70,5 @@ create_model_job = define_asset_job(
         .upstream()
         .required_multi_asset_neighbors()
     )
+
+

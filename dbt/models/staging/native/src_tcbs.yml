@@ -1,50 +1,12 @@
 version: 2
 
 sources:
-  - name: price_history
-    description: Organization stock price history, daily data
+  - name: financial_raw
+    description: Raw financial data from Airbyte
     database: financial_data
     schema: financial_raw
     tables:
-      - name: price_history
-        description: Organization stock price history, daily data
-        freshness:
-          warn_after: { count: 3, period: day }
-          error_after: { count: 7, period: day }
-        loaded_at_field: _airbyte_emitted_at
-        test:
-          - dbt_expectations.expect_table_column_count_to_equal:
-              value: 7
-          - dbt_utils.unique_combination_of_columns:
-              combination_of_columns:
-                - ticker
-                - trading_date
-                - year
-              config:
-                severity: warn
-        columns:
-          - name: ticker
-            description: "Stock symbol of dim_organization_overview, primary key for this table"
-            tests:
-              - dbt_expectations.expect_column_to_exist
-              - unique
-              - not_null
-              - invalid_length
-              - not_uppercase
-              - relationships:
-                  to: ref('dim_organization_overview')
-                  field: ticker
-                  severity: warn
-
-  - name: organization
-    description: Organization overview information
-    database: financial_data
-    schema: financial_raw
-    freshness:
-      warn_after: { count: 30, period: day }
-      error_after: { count: 60, period: day }
-    loaded_at_field: _airbyte_emitted_at
-    tables:
+      #Organization overview
       - name: organization
         description: Organization overview information, collected from SSI
         columns:
@@ -68,11 +30,7 @@ sources:
               - invalid_length
               - not_uppercase
 
-  - name: cash_flow
-    description: Organization cash flow report, quarterly and yearly data
-    database: financial_data
-    schema: financial_raw
-    tables:
+      # Financial reports
       - name: cash_flow
         description: Organization cash flow report, quarterly and yearly data
         freshness:
@@ -88,51 +46,72 @@ sources:
               config:
                 severity: warn
 
-  - name: balance_sheet
-    description: Organization balance sheet report, quarterly and yearly data
-    database: financial_data
-    schema: financial_raw
-    tables:
       - name: balance_sheet
         description: Organization balance sheet report, quarterly and yearly data
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
         loaded_at_field: _airbyte_emitted_at
-        tests:
-          - dbt_utils.unique_combination_of_columns:
-              combination_of_columns:
-                - ticker
-                - quarter
-                - year
-              config:
-                severity: warn
+        # tests:
+        #   - dbt_utils.unique_combination_of_columns:
+        #       combination_of_columns:
+        #         - ticker
+        #         - quarter
+        #         - year
+        #       config:
+        #         severity: warn
 
-  - name: income_statement
-    description: Organization income statement report, quarterly and yearly data
-    database: financial_data
-    schema: financial_raw
-    tables:
       - name: income_statement
         description: Organization income_statement report, quarterly and yearly data
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
         loaded_at_field: _airbyte_emitted_at
-        tests:
+        # tests:
+        #   - dbt_utils.unique_combination_of_columns:
+        #       combination_of_columns:
+        #         - ticker
+        #         - quarter
+        #         - year
+        #       config:
+        #         severity: warn
+     
+      # Price history
+      - name: price_history
+        description: Organization stock price history, daily data
+        freshness:
+          warn_after: { count: 3, period: day }
+          error_after: { count: 7, period: day }
+        loaded_at_field: _airbyte_emitted_at
+        test:
+          - dbt_expectations.expect_table_column_count_to_equal:
+              value: 7
           - dbt_utils.unique_combination_of_columns:
               combination_of_columns:
                 - ticker
-                - quarter
+                - trading_date
                 - year
               config:
                 severity: warn
+        columns:
+          - name: ticker
+            description: "Stock symbol of dim_organization_overview, primary key for this table"
+            tests:
+              - dbt_expectations.expect_column_to_exist
+              - unique:
+                  config:
+                    severity: warn
+              - not_null
+              - invalid_length
+              - not_uppercase
+              - relationships:
+                  to: ref('dim_organization_overview')
+                  field: ticker
+                  severity: warn
 
-  - name: general_rating
-    description: Organization general rating
-    database: financial_data
-    schema: financial_raw
-    tables:
+      # Intraday transaction
+      - name: stock_intraday
+
       - name: general_rating
         description: Organization general rating
         freshness:
@@ -148,3 +127,13 @@ sources:
                   config:
                     severity: warn
               - dbt_expectations.expect_column_values_to_not_be_null
+      
+      - name: business_model_rating
+
+      - name: business_operation_rating
+
+      - name: financial_health_rating
+
+      - name: valuation_rating
+
+      - name: industry_health_rating

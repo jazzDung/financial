@@ -140,11 +140,8 @@ select * from original_query
     table_to_ref = {}
     
     for table in final_tables:
-       if table.startswith(SCHEMA_NAMES):
-          # Replace . with _ in schema name to comply with dbt
-          table_to_ref[table] = re.sub(r".", "_", table)
-       else:
-          table_to_ref[table] = table
+       if table.startswith(SCHEMA_NAMES): table_to_ref[table] = table[table.find(".")+1:]
+       else: table_to_ref[table] = table
     
     new_query = """
 with {table} as (
@@ -219,14 +216,14 @@ def get_records():
 
 def update_records(df):
     try:
-        connection = psycopg2.connect(user="airflow",
-                                    password="airflow",
-                                    host="127.0.0.1",
-                                    port="5432",
-                                    database="jaffle_shop",
+        connection = psycopg2.connect(user="fdp",
+                                    password="fdp",
+                                    host="34.82.185.252",
+                                    port="30005",
+                                    database="financial_data",
                                     )
         cursor = connection.cursor()
-        update_sql_query = f"""UPDATE dbt_alice.query q 
+        update_sql_query = f"""UPDATE financial_query.query q 
                                 SET success = v.success,
                                     checked = v.checked
 
