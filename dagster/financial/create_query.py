@@ -60,6 +60,29 @@ def is_valid_table_name(table_name):
   else:
     return False
 
+def get_tables_from_dbt(dbt_manifest):
+    tables = {}
+    for table_type in ['nodes']: #removing sources from this list
+        manifest_subset = dbt_manifest[table_type]
+
+        for table_key_long in manifest_subset:
+            table = manifest_subset[table_key_long]
+            name = table['name'] #used for referencing within the dbt project
+            schema = table['schema']
+            database = table['database']
+            alias = table['alias'] #used for referencing from the outside
+            source = table['unique_id'].split('.')[-2]
+            table_key = schema + '.' + alias
+            tables[table_key] = {
+                'name': name,
+                'schema': schema,
+                'database': database,
+                'type': table_type[:-1],
+                'ref':
+                    f"ref('{name}')" if table_type == 'nodes'
+                    else f"source('{source}', '{name}')"
+            }
+
 def create_dbt_model(df_row, dbt_tables):
     """
     Returns content of a user-created dbt model file.
@@ -249,11 +272,11 @@ def main():
         status.append("Success")
     
     # Get Emails from API
-    superset = SupersetDBTConnector(logger=logger,refresh_token=True)
-    users = set(df["user_id"].to_list())
-    emails = get_emails(superset, users)
-    email_dict = dict(zip(df.user_id.to_list(), emails))
-    # {1:"catvu113@gmail"}
+    # superset = SupersetDBTConnector(logger=logger,refresh_token=True)
+    # users = set(df["user_id"].to_list())
+    # emails = get_emails(superset, users)
+    # email_dict = dict(zip(df.user_id.to_list(), emails))
+    email_dict = {1:"catvu113@gmail"}
 
     import smtplib, ssl
 
