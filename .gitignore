@@ -1,7 +1,3 @@
-/dbt/target/
-/dbt/dbt_packages/
-/dbt/logs/
-
 # Folders
 /dagster/tmp*/
 /dagster/__pycache__/
