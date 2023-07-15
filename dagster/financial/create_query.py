@@ -30,15 +30,7 @@ MATERIALIZATION_MAPPING = {
     4:'ephemereal'
 }
 
-# Get all schema names in project
-# Either this or defined schema name available to the user before
-with open(MANIFEST_PATH) as f:
-    dbt_manifest = json.load(f)
-    dbt_tables=get_tables_from_dbt(dbt_manifest)
 
-SCHEMA_NAMES = tuple(set([dbt_tables[table]["schema"]
-                    for table in dbt_tables.keys() if not dbt_tables[table]["schema"].endswith("_dbt_test__audit")]))
-SCHEMA_NAMES_WITH_DOT = tuple([schema + "." for schema in SCHEMA_NAMES])
 
 def get_tables_from_sql_simple(sql):
     '''
@@ -57,6 +49,9 @@ def get_tables_from_sql_simple(sql):
     tables = list(set(tables))
 
     return tables
+    
+
+
     
 def is_valid_table_name(table_name):
   """
@@ -100,6 +95,16 @@ def get_tables_from_dbt(dbt_manifest):
                     f"ref('{name}')" if table_type == 'nodes'
                     else f"source('{source}', '{name}')"
             }
+
+# Get all schema names in project
+# Either this or defined schema name available to the user before
+with open(MANIFEST_PATH) as f:
+    dbt_manifest = json.load(f)
+    dbt_tables=get_tables_from_dbt(dbt_manifest)
+
+SCHEMA_NAMES = tuple(set([dbt_tables[table]["schema"]
+                    for table in dbt_tables.keys() if not dbt_tables[table]["schema"].endswith("_dbt_test__audit")]))
+SCHEMA_NAMES_WITH_DOT = tuple([schema + "." for schema in SCHEMA_NAMES])
 
 def create_dbt_model(df_row, dbt_tables):
     """
