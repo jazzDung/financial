@@ -1,11 +1,6 @@
 from dagster import define_asset_job, AssetSelection, job
 from financial.assets.run_info import *
 
-
-@job
-def do_stuff():
-    get_run_id()
-
 ingest_all_job = define_asset_job(
     name="INGEST_EVERYTHING_EVERYWHERE_ALL_AT_ONCE",
     description="Ingest every available data",
@@ -64,6 +59,14 @@ ingest_org_overview_job = define_asset_job(
     name="INGEST_ORGANIZATION_OVERVIEW", 
     description="Ingest organization overview information, this job run at the start every quarterr",
     selection= AssetSelection.keys("financial_clean/dim_organization_overview")
+        .upstream()
+        .required_multi_asset_neighbors()
+    )
+
+create_model_job = define_asset_job(
+    name="CREATE_USER_QUERY", 
+    description="Create user query",
+    selection=AssetSelection.keys("create_model")
         .upstream()
         .required_multi_asset_neighbors()
     )

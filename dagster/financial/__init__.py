@@ -1,4 +1,5 @@
 from dagster import Definitions
+from financial.assets.model import *
 from financial.assets.dbt import *
 from financial.assets.airbyte import *
 from financial.assets.email import *
@@ -10,7 +11,8 @@ defs = Definitions(
     assets=(
         dbt_assets +
         [airbyte_assets] +
-        [fetch_unchecked, send_email, check_record]
+        [fetch_unchecked, send_email, check_record] +
+        [create_model]
     ),
     
     jobs=[
@@ -22,11 +24,11 @@ defs = Definitions(
         ingest_balance_sheet_job,
         ingest_income_statement_job,
         ingest_general_rating_job,
-        do_stuff
+        create_model_job
     ],
         
     sensors=[
-        unchecked_records_exist
+        check_new_records
     ],
 
     schedules=schedules,
