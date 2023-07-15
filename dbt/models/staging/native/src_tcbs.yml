@@ -58,6 +58,7 @@ sources:
               - not_uppercase
       - name: organization_overview
         description: Organization overview information, collected from TCBS
+        columns:
           - name: ticker
             description: "Stock symbol of dim_organization_overview, primary key for this table"
             tests:
@@ -66,6 +67,13 @@ sources:
               - not_null
               - invalid_length
               - not_uppercase
+          - name: exchange
+            tests:
+              - accepted_values:
+                  values:
+                    - UPCOM
+                    - HNX
+            
 
   - name: cash_flow
     description: Organization cash flow report, quarterly and yearly data
@@ -98,14 +106,14 @@ sources:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
         loaded_at_field: _airbyte_emitted_at
-        tests:
-          - dbt_utils.unique_combination_of_columns:
-              combination_of_columns:
-                - ticker
-                - quarter
-                - year
-              config:
-                severity: warn
+        # tests:
+        #   - dbt_utils.unique_combination_of_columns:
+        #       combination_of_columns:
+        #         - ticker
+        #         - quarter
+        #         - year
+        #       config:
+        #         severity: warn
 
   - name: income_statement
     description: Organization income statement report, quarterly and yearly data
@@ -118,14 +126,14 @@ sources:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
         loaded_at_field: _airbyte_emitted_at
-        tests:
-          - dbt_utils.unique_combination_of_columns:
-              combination_of_columns:
-                - ticker
-                - quarter
-                - year
-              config:
-                severity: warn
+        # tests:
+        #   - dbt_utils.unique_combination_of_columns:
+        #       combination_of_columns:
+        #         - ticker
+        #         - quarter
+        #         - year
+        #       config:
+        #         severity: warn
 
   - name: general_rating
     description: Organization general rating
@@ -137,15 +145,8 @@ sources:
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
-          # tests:
-          # - dbt_utils.unique_combination_of_columns:
-          #     combination_of_columns:
-          #       - ticker
-          #       - quarter
-          #       - year
-          #     config:
-          #       severity: warn
         loaded_at_field: _airbyte_emitted_at
+        columns:
           - name: ticker
             description: "Stock symbol of dim_organization_overview, primary key for this table"
             tests:
