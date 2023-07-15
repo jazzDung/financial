@@ -13,10 +13,22 @@ RUN \
         dagster-airbyte==0.19.9 \
         dagster-postgres==0.19.9 \
         dagster-dbt==0.19.9 \
-        dbt-postgres==1.5.1\
-        sqlalchemy==1.4.17\
-        pydantic==1.10.10
+        dbt-postgres==1.5.1 \
+        sqlalchemy==1.4.17 \
+        pydantic==1.10.10 \
+	fal==0.9.2 \
+	dbt-postgres==1.5.1 \
+	pandas==1.5.3 \
+	pathos==0.3.0 \
+	tqdm==4.65.0 \
+	prophet==1.1.4 \
+	markdown==3.3.4 \
+	ruamel.yaml==0.17.32 \
+	sqlfluff==2.1.1 \
+	bs4=0.0.1 \
+	prophet==1.1.4 \
 
+	
         # dagster-celery[flower,redis,kubernetes]==${DAGSTER_VERSION} \
         # dagster-aws==${DAGSTER_VERSION} \
         # dagster-k8s==${DAGSTER_VERSION} \
