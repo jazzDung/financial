@@ -21,8 +21,9 @@ import logging
 # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
 EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
 
+PROJECT_PATH = "/home/jazzdung/projects/financial/dbt/"
 # MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
-MANIFEST_PATH = "/home/jazzdung/projects/financial/dbt/target/manifest.json"
+MANIFEST_PATH = PROJECT_PATH + "target/manifest.json"
 
 
 MATERIALIZATION_MAPPING = {
@@ -289,7 +290,7 @@ def main():
             # df.loc[i,'checked'] = True
             status.append("Query is not 'SELECT'")
             continue
-        model_path = "models/user/{name}.sql".format(name=df.loc[i,'name'])
+        model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i,'name'])
         with open(model_path,"w") as f:
             f.write(create_dbt_model(df.loc[i], dbt_tables_with_schemas))
             f.close()
