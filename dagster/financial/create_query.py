@@ -40,6 +40,24 @@ SCHEMA_NAMES = tuple(set([dbt_tables[table]["schema"]
                     for table in dbt_tables.keys() if not dbt_tables[table]["schema"].endswith("_dbt_test__audit")]))
 SCHEMA_NAMES_WITH_DOT = tuple([schema + "." for schema in SCHEMA_NAMES])
 
+def get_tables_from_sql_simple(sql):
+    '''
+    (Superset) Fallback SQL parsing using regular expressions to get tables names.
+    '''
+    sql = re.sub(r'(--.*)|(#.*)', '', sql)  
+    sql = re.sub(r'\s+', ' ', sql).lower()  
+    sql = re.sub(r'(/\*(.|\n)*\*/)', '', sql)  
+
+    regex = re.compile(r'\b(from|join)\b\s+(\"?(\w+)\"?(\.))?\"?(\w+)\"?\b')  
+    tables_match = regex.findall(sql)
+    tables = [table[2] + '.' + table[4] if table[2] != '' else table[4]  
+              for table in tables_match
+              if table[4] != 'unnest'] 
+
+    tables = list(set(tables))
+
+    return tables
+    
 def is_valid_table_name(table_name):
   """
   Checks if the given string is a valid table name in PostgreSQL.
