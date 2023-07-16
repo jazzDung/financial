@@ -10,4 +10,4 @@ select
 	pcp as pcp,
 	t as transaction_time
 from
-	{{ source('raw', 'stock_intraday') }}
+	{{ source('sources', 'stock_intraday') }}

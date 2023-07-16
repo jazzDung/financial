@@ -217,7 +217,7 @@ def get_records():
             print("PostgreSQL connection is closed")
     return df
 
-def update_records(df):
+def update_records(update_values):
     try:
         connection = psycopg2.connect(user="fdp",
                                     password="fdp",
@@ -230,10 +230,12 @@ def update_records(df):
                                 SET success = v.success,
                                     checked = v.checked
 
-                                FROM (VALUES {df}) AS v (name, user_id, checked, success)
+                                FROM (values {update_values}) AS v (name, user_id, checked, success)
                                 WHERE q.user_id = v.user_id 
                                 AND q.name = v.name;"""
-
+        cursor.execute(update_sql_query)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while updating data in PostgreSQL", error)
 
         cursor.execute(update_sql_query)
 

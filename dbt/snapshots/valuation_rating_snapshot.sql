@@ -10,6 +10,6 @@
     )
 }}
 
-select * from {{ source('raw', 'valuation_rating') }}
+select * from {{ source('sources', 'valuation_rating') }}
 
 {% endsnapshot %}

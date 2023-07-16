@@ -13,4 +13,4 @@ select
 	operationRisk as operation_risk,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('raw', 'business_model_rating') }}
+	{{ source('sources', 'business_model_rating') }}

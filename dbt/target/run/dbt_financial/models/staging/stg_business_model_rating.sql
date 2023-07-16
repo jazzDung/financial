@@ -18,5 +18,5 @@
 	operationRisk as operation_risk,
 	_airbyte_emitted_at::date as index_date
 from
-	"financial_data"."financial_raw"."business_model_rating"
+	"financial_data"."sources"."business_model_rating"
   );

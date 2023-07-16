@@ -15,7 +15,7 @@ with dim_price_history as (
     ),
     
 original_query as (
-    SELECT * from financial_clean.dim_price_history
+    SELECT * from marts.dim_price_history
 )
     
 select * from original_query

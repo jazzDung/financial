@@ -14,5 +14,5 @@
 	dividendRate as dividend_rate,
 	_airbyte_emitted_at::date as index_date
 from
-	"financial_data"."financial_raw"."valuation_rating"
+	"financial_data"."sources"."valuation_rating"
   );

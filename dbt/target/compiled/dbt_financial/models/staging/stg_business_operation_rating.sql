@@ -21,4 +21,4 @@ select
 	TOIGrowth as toi_growth,
 	_airbyte_emitted_at::date as index_date
 from
-	"financial_data"."financial_raw"."business_operation_rating"
+	"financial_data"."sources"."business_operation_rating"

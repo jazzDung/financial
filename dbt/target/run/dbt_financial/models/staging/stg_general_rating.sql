@@ -19,5 +19,5 @@
     beta,
     alpha,
 	_airbyte_emitted_at::date as index_date
-FROM "financial_data"."financial_raw"."general_rating"
+FROM "financial_data"."sources"."general_rating"
   );

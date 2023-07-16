@@ -8,4 +8,4 @@ select
     fromSale as from_sale,
     freeCashFlow as free_cash_flow
 
-from "financial_data"."financial_raw"."cash_flow"
+from "financial_data"."sources"."cash_flow"

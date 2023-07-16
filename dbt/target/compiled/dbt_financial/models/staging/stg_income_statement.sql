@@ -22,4 +22,4 @@ select
     operationIncome as operation_income,
     ebitda
 from 
-    "financial_data"."financial_raw"."income_statement"
+    "financial_data"."sources"."income_statement"

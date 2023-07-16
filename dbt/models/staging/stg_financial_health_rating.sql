@@ -13,4 +13,4 @@ select
 	netDebtEBITDA as net_debt_ebitda,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('raw', 'financial_health_rating') }}
+	{{ source('sources', 'financial_health_rating') }}

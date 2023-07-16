@@ -19,4 +19,4 @@ select
     deltainmonth as delta_in_month,
     foreignpercent as foreign_percent
 
-from "financial_data"."financial_raw"."organization"
+from "financial_data"."sources"."organization"

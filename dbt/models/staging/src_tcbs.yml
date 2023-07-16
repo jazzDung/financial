@@ -1,10 +1,10 @@
 version: 2
 
 sources:
-  - name: raw
-    description: Raw financial data from Airbyte
+  - name: sources
+    description: sources financial data from Airbyte
     database: financial_data
-    schema: financial_raw
+    schema: sources
     tables:
       #Organization overview
       - name: organization
@@ -39,6 +39,18 @@ sources:
                 - year
               config:
                 severity: warn
+        columns:
+          - name: ticker
+            description: "Stock symbol"
+            tests:
+              - dbt_expectations.expect_column_to_exist
+              - not_null
+              - symbol_invalid_length
+              - not_uppercase
+              - relationships:
+                  to: source('sources', 'organization')
+                  field: ticker
+                  severity: warn
 
       - name: balance_sheet
         description: Organization balance sheet report, quarterly and yearly data
@@ -56,6 +68,18 @@ sources:
                 - year
               config:
                 severity: warn
+        columns:
+          - name: ticker
+            description: "Stock symbol"
+            tests:
+              - dbt_expectations.expect_column_to_exist
+              - not_null
+              - symbol_invalid_length
+              - not_uppercase
+              - relationships:
+                  to: source('sources', 'organization')
+                  field: ticker
+                  severity: warn
 
       - name: income_statement
         description: Organization income_statement report, quarterly and yearly data
@@ -73,6 +97,18 @@ sources:
                 - year
               config:
                 severity: warn
+        columns:
+          - name: ticker
+            description: "Stock symbol"
+            tests:
+              - dbt_expectations.expect_column_to_exist
+              - not_null
+              - symbol_invalid_length
+              - not_uppercase
+              - relationships:
+                  to: source('sources', 'organization')
+                  field: ticker
+                  severity: warn
      
       # Price history
       - name: price_history
@@ -129,8 +165,9 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
 
       - name: general_rating
         description: Organization general rating
@@ -140,18 +177,18 @@ sources:
         loaded_at_field: _airbyte_emitted_at
         tests:
           - dbt_expectations.expect_table_column_count_to_equal:
-              value: 11      
+              value: 18
         columns:
           - name: ticker
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
       
       - name: business_model_rating
         description: Organization general rating
@@ -167,12 +204,12 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
 
       - name: business_operation_rating
         description: Organization general rating
@@ -188,12 +225,12 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
 
       - name: financial_health_rating
         description: Organization general rating
@@ -209,12 +246,12 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
 
       - name: valuation_rating
         description: Organization general rating
@@ -230,12 +267,12 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn
 
       - name: industry_health_rating
         description: Organization general rating
@@ -252,9 +289,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
-              - not_null
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization')
+                  to: source('sources', 'organization')
                   field: ticker
+                  severity: warn

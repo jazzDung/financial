@@ -4,29 +4,32 @@ select
       count(*) != 0 as should_error
     from (
       
-    
+
     
 
-with child as (
-    select ticker as from_field
-    from "financial_data"."financial_clean"."dim_income_statement"
-    where ticker is not null
+
+with parent as (
+
+    select
+        ticker as id
+
+    from "financial_data"."marts"."dim_organization"
+
 ),
 
-parent as (
-    select ticker as to_field
-    from "financial_data"."financial_clean"."dim_organization"
+child as (
+
+    select
+        ticker as id
+
+    from "financial_data"."marts"."dim_income_statement"
+
 )
 
-select
-    from_field
-
+select *
 from child
-left join parent
-    on child.from_field = parent.to_field
-
-where parent.to_field is null
-
+where id is not null
+  and id not in (select id from parent)
 
 
       

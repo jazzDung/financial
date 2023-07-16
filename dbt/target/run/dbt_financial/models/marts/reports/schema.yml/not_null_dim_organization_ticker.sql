@@ -10,7 +10,7 @@ select
 
 
 select ticker
-from "financial_data"."financial_clean"."dim_organization"
+from "financial_data"."marts"."dim_organization"
 where ticker is null
 
 

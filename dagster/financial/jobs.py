@@ -1,4 +1,4 @@
-from dagster import define_asset_job, AssetSelection, job
+from dagster import define_asset_job, AssetSelection
 from financial.assets.run_info import *
 
 ingest_all_job = define_asset_job(
@@ -18,7 +18,7 @@ send_email_job = define_asset_job(
 ingest_stock_history_job = define_asset_job(
     name="INGEST_STOCK_HISTORY", 
     description="Ingest stock price history, this job run daily",
-    selection= AssetSelection.keys("financial_clean/dim_price_history")
+    selection= AssetSelection.keys("marts/dim_price_history")
         .upstream()
         .required_multi_asset_neighbors()
     )
@@ -26,7 +26,7 @@ ingest_stock_history_job = define_asset_job(
 ingest_cash_flow_job = define_asset_job(
     name="INGEST_CASH_FLOW", 
     description="Ingest organization cash flow reports, this job run at the start every quarter",
-    selection= AssetSelection.keys("financial_clean/dim_cash_flow")
+    selection= AssetSelection.keys("marts/dim_cash_flow")
         .upstream()
         .required_multi_asset_neighbors()
     )
@@ -34,7 +34,7 @@ ingest_cash_flow_job = define_asset_job(
 ingest_balance_sheet_job = define_asset_job(
     name="INGEST_BALANCE_SHEET", 
     description="Ingest organization balance sheet reports, this job run at the start every quarter",
-    selection= AssetSelection.keys("financial_clean/dim_balance_sheet")
+    selection= AssetSelection.keys("marts/dim_balance_sheet")
         .upstream()
         .required_multi_asset_neighbors()
     )
@@ -42,7 +42,7 @@ ingest_balance_sheet_job = define_asset_job(
 ingest_income_statement_job = define_asset_job(
     name="INGEST_INCOME_STATEMENT", 
     description="Ingest organization income statement reports, this job run at the start every quarter",
-    selection= AssetSelection.keys("financial_clean/dim_income_statement")
+    selection= AssetSelection.keys("marts/dim_income_statement")
         .upstream()
         .required_multi_asset_neighbors()
     )
@@ -50,15 +50,15 @@ ingest_income_statement_job = define_asset_job(
 ingest_general_rating_job = define_asset_job(
     name="INGEST_GENERAL_RATING", 
     description="Ingest organization general rating",
-    selection= AssetSelection.keys("financial_clean/dim_general_rating")
+    selection= AssetSelection.keys("marts/dim_general_rating")
         .upstream()
         .required_multi_asset_neighbors()
     )
 
-ingest_org_overview_job = define_asset_job(
+ingest_organization_job = define_asset_job(
     name="INGEST_ORGANIZATION_OVERVIEW", 
     description="Ingest organization overview information, this job run at the start every quarterr",
-    selection= AssetSelection.keys("financial_clean/dim_organization_overview")
+    selection= AssetSelection.keys("marts/dim_organization")
         .upstream()
         .required_multi_asset_neighbors()
     )

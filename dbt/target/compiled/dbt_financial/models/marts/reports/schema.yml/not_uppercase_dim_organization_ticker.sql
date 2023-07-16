@@ -7,7 +7,7 @@ with validation as (
     select
         ticker as test_field
 
-    from "financial_data"."financial_clean"."dim_organization"
+    from "financial_data"."marts"."dim_organization"
 
 ),
 

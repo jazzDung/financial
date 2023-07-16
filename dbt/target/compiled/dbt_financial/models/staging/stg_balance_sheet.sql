@@ -35,4 +35,4 @@ select
     minorShareHolderProfit as minor_share_holder_profit,
     payable
 from
-    "financial_data"."financial_raw"."balance_sheet"
+    "financial_data"."sources"."balance_sheet"

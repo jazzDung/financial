@@ -9,7 +9,7 @@ schedules=[
     ),
 
     ScheduleDefinition(
-        job=ingest_org_overview_job,
+        job=ingest_organization_job,
         cron_schedule="* * * 1-12/3 *"
     ),
 

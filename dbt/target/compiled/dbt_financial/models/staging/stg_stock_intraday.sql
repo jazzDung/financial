@@ -10,4 +10,4 @@ select
 	pcp as pcp,
 	t as transaction_time
 from
-	"financial_data"."financial_raw"."stock_intraday"
+	"financial_data"."sources"."stock_intraday"

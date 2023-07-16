@@ -13,4 +13,4 @@ select
 	netDebtEBITDA as net_debt_ebitda,
 	_airbyte_emitted_at::date as index_date
 from
-	"financial_data"."financial_raw"."industry_health_rating"
+	"financial_data"."sources"."industry_health_rating"
