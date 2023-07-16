@@ -32,11 +32,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dbt_financial:
     marts:
-      +materialized: table
-      +schema: financial_clean
-    technical:
-      +materialized: table
-      +schema: financial_clean
+      reports:
+        +materialized: table
+        +schema: financial_clean
+      technicals:
+        +materialized: table
+        +schema: technical  
+      users:
+        +materialized: table
+        +schema: user  
     staging:
       +materialized: view
-      +schema: financial_raw
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+      users:
+        +materialized: view
+        +schema: user  

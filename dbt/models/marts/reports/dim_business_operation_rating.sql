@@ -1,0 +1,1 @@
+SELECT * FROM {{ref ('stg_business_operation_rating')}}

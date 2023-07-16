@@ -1,0 +1,1 @@
+SELECT * FROM {{ref ('stg_industry_health_rating')}}

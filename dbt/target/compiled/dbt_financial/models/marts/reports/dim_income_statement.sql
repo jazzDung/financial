@@ -1,0 +1,1 @@
+SELECT * FROM "financial_data"."staging"."stg_income_statement"

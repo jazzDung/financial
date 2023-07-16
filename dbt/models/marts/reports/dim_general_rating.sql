@@ -1,0 +1,1 @@
+SELECT * FROM {{ref ('stg_general_rating')}}

@@ -1,0 +1,1 @@
+SELECT * FROM {{ref ('stg_financial_health_rating')}}
