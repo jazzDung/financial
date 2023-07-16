@@ -1,4 +1,4 @@
-{% snapshot orders_snapshot %}
+{% snapshot general_rating_snapshot %}
 
 {{
     config(

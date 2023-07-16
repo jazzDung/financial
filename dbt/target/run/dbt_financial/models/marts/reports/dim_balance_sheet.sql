@@ -2,7 +2,7 @@
   
     
 
-  create  table "financial_data"."financial_clean"."dim_balance_sheet__dbt_tmp"
+  create  table "financial_data"."marts"."dim_balance_sheet__dbt_tmp"
   
   
     as

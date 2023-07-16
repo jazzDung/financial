@@ -6,7 +6,7 @@
     
     
 with dim_price_history as (
-    select * from "financial_data"."financial_clean"."dim_price_history"
+    select * from "financial_data"."marts"."dim_price_history"
     ),
     
 original_query as (

@@ -142,7 +142,10 @@ select * from original_query
     for table in final_tables:
        if table.startswith(SCHEMA_NAMES): table_to_ref[table] = table[table.find(".")+1:]
        else: table_to_ref[table] = table
-    
+    print("1")
+    print(table_to_ref)
+    print("2")
+    print(final_tables)
     new_query = """
 with {table} as (
     select * from {{{{ref(\'{table}\')}}}}
@@ -290,6 +293,7 @@ for i in df.index:
         status.append("Query is not 'SELECT'")
         continue
     model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i,'name'])
+     
     with open(model_path,"w+") as f:
         f.write(create_dbt_model(df.loc[i], dbt_tables_with_schemas))
         f.close()

@@ -2,7 +2,7 @@
   
     
 
-  create  table "financial_data"."financial_clean"."dim_price_history copy__dbt_tmp"
+  create  table "financial_data"."marts"."dim_price_history copy__dbt_tmp"
   
   
     as

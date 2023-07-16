@@ -2,7 +2,7 @@ with price_history as (
 	select
 		*
 	from
-		"financial_data"."financial_clean"."dim_price_history"
+		"financial_data"."marts"."dim_price_history"
 ),
 typical_price as (
 	SELECT

@@ -2,7 +2,7 @@
   
     
 
-  create  table "financial_data"."financial_clean"."dim_financial_health_ratingstg_financial_health_rating__dbt_tmp"
+  create  table "financial_data"."marts"."dim_financial_health_ratingstg_financial_health_rating__dbt_tmp"
   
   
     as

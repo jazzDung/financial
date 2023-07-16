@@ -2,7 +2,7 @@
   
     
 
-  create  table "financial_data"."technical"."dim_bollinger__dbt_tmp"
+  create  table "financial_data"."marts"."dim_bollinger__dbt_tmp"
   
   
     as
