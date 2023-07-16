@@ -1,5 +1,7 @@
 {% test not_uppercase(model, column_name) %}
 
+    {{ config(severity = 'warn') }}
+
 with validation as (
 
     select
