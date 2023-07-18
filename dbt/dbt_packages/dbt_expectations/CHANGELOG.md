@@ -1,3 +1,30 @@
+# dbt-expectations v0.8.5
+
+## New Features
+
+* Add support for regex flags for BigQuery by @lookslikeitsnot in https://github.com/calogica/dbt-expectations/pull/253
+
+# dbt-expectations v0.8.4
+
+## Fixes
+* escape quotes in `expect_column_values_to_be_in_type_list` by @RobbertDM in https://github.com/calogica/dbt-expectations/pull/251
+* Fix `postgres__regexp_instr` not validating regex #249 by @lookslikeitsnot in https://github.com/calogica/dbt-expectations/pull/250
+
+## Under The Hood
+* added negative tests for regex email test to make sure those tests are failing when they should
+
+# dbt-expectations v0.8.3
+
+## New Features
+* Add optional flags argument to regex tests by @tconbeer in https://github.com/calogica/dbt-expectations/pull/247
+
+## Docs
+* Update docs site by @clausherther in https://github.com/calogica/dbt-expectations/pull/235
+
+## Under The Hood
+* Add explicit reference to dbt.length() by @clausherther in https://github.com/calogica/dbt-expectations/pull/234
+* Disabling SQLFluff by @clausherther in https://github.com/calogica/dbt-expectations/pull/242
+
 # dbt-expectations v0.8.2
 
 ## Fixes
