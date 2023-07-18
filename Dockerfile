@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN \
     pip3 install\
-        dbt-core==1.4.4\
+        dbt-core==1.4.0\
         dbt-postgres==1.4.0\
         dagster==1.3.9 \
         dagster-airbyte==0.19.9\
