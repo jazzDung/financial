@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: sources
-    description: sources financial data from Airbyte
+    description: Raw financial data from Airbyte
     database: financial_data
     schema: sources
     tables:
