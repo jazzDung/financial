@@ -10,8 +10,3 @@ metrics:
     dimensions:
       - had_discount
       - order_country
-
-    filters:
-      - field: had_discount
-        operator: 'is'
-        value: 'true'
