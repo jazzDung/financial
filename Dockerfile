@@ -7,13 +7,13 @@ RUN apt-get update && apt-get install -y \
     python3-pip
 
 RUN \
-    pip3 install \
-        dagster==1.3.9 \
-        dagster-airbyte==0.19.9 \
-        dagster-postgres==0.19.9 \
-        dagster-dbt==0.19.9 \
-        dbt-core==1.4.4 \
+    pip3 install\
+        dbt-core==1.4.4\
         dbt-postgres==1.4.0\
+        dagster==1.3.9 \
+        dagster-airbyte==0.19.9\
+        dagster-postgres==0.19.9\
+        dagster-dbt==0.19.9\
         sqlalchemy==1.4.17\
         pydantic==1.10.10
 
