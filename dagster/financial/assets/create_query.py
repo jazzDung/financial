@@ -30,7 +30,8 @@ from superset_utils.utils import (
     get_tables_from_sql_simple,
 )
 
-def is_valid_table_name(table_name):
+
+def is_valid_table_name(table_name, dbt_tables):
     """
     Checks if the given string is a valid table name in PostgreSQL.
 
@@ -45,7 +46,7 @@ def is_valid_table_name(table_name):
     regex = re.compile(r"^[a-zA-Z0-9_]{1,63}$")
 
     # Check if the string matches the regular expression.
-    if regex.match(table_name):
+    if regex.match(table_name) and table_name in dbt_tables.keys():
         return True
     else:
         return False
@@ -215,9 +216,7 @@ def main():
     # MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
     MANIFEST_PATH = PROJECT_PATH + "target/manifest.json"
 
-
     MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
-
 
     # Get all schema names in project
     # Either this or defined schema name available to the user before
@@ -235,7 +234,6 @@ def main():
         )
     )
     SCHEMA_NAMES_WITH_DOT = tuple([schema + "." for schema in SCHEMA_NAMES])
-
 
     logger = logging.getLogger(__name__)
     # Get table names with and without schemas
@@ -256,7 +254,7 @@ def main():
     for i in df.index:
         # Check name
         print(df.loc[i]["name"])
-        name_validation = is_valid_table_name(df.loc[i]["name"])
+        name_validation = is_valid_table_name(df.loc[i]["name"], dbt_tables_names)
         print(name_validation)
         if not name_validation:
             status.append("Invalid name")
@@ -362,7 +360,6 @@ def main():
                 dbt_res_df_map[i] = r
             break
     context = ssl.create_default_context()
-
 
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         for i in df.index:
