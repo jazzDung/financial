@@ -1,3 +1,4 @@
+import pandas as pd
 import logging
 import re
 import sqlfluff
@@ -17,7 +18,7 @@ from financial.resources import (
     DB_PORT,
     DB_DB,
 )
-
+from urllib.parse import unquote
 
 #### ADD ALL OF THE END POINT USED TO CSRF EXEMPT LIST TO RUN PARALLELY
 #### ONLY USE SESSION FOR SEQUENTIAL RUNNING SCRIPTS
@@ -53,7 +54,7 @@ class SupersetDBTConnectorSession:
     def _refresh_session(self):
         self.logger.info("Refreshing session")
 
-        self.soup = BeautifulSoup(self.session.post(self.url + "/login").text, "html.parser")
+        self.soup = BeautifulSoup(self.session.post(self.url + "login").text, "html.parser")
         self.csrf_token = self.soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
 
         data = {
@@ -66,7 +67,7 @@ class SupersetDBTConnectorSession:
             # 'Authorization': 'Bearer {}'.format(self.access_token),
             "x-csrftoken": self.csrf_token,
         }
-        response = self.session.post("http://localhost:8088/login", json=data, headers=self.headers)  # type: ignore
+        response = self.session.post(self.url + "login", json=data, headers=self.headers)  # type: ignore
         return True
 
     def request(self, method, endpoint, refresh_session_if_needed=True, headers=None, **request_kwargs):
@@ -630,7 +631,7 @@ def is_unique_table_name(table_name, dbt_tables):
     regex = re.compile(r"^[a-zA-Z0-9_]{1,63}$")
 
     # Check if the string matches the regular expression.
-    if table_name not in dbt_tables.keys():
+    if table_name not in dbt_tables:
         return True
     else:
         return False
@@ -788,5 +789,6 @@ def update_records(update_values):
 
 
 def get_emails(superset, user_ids):
-    res = superset.request("POST", "/security/get_email", json={"users_ids": user_ids})
+    url = unquote(f'/security/get_email/?q={list(user_ids)}')
+    res = superset.request("GET", url)
     return res["emails"]
