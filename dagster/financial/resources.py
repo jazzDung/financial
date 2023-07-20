@@ -66,6 +66,7 @@ SUPERSET_USERNAME = data["username"]
 SUPERSET_PASSWORD = data["password"]
 SUPERSET_HOST = data["host"]
 DATABASE_ID = data["db"]
+f.close()
 
 # Create Query
 MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}

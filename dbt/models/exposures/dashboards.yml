@@ -1,0 +1,10 @@
+version: 2
+exposures:
+  - name: superset__test
+    type: dashboard
+    url: http://34.82.185.252:30007//superset/dashboard/1
+    description: ''
+    depends_on: []
+    owner:
+        name: Superset Admin
+        email: ''
