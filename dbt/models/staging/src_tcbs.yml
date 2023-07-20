@@ -22,7 +22,6 @@ sources:
               - symbol_invalid_length
               - not_uppercase
 
-  # Financial reports
   - name: cash_flow
     description: Raw financial data from Airbyte
     database: financial_data

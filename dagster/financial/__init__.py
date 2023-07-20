@@ -1,4 +1,5 @@
 from dagster import Definitions
+from financial.assets.dataset_sync import dataset_sync
 from financial.assets.create_query import *
 from financial.assets.dbt_assets import *
 from financial.assets.airbyte_assets import *
@@ -12,7 +13,8 @@ defs = Definitions(
         dbt_assets +
         [airbyte_assets] +
         [fetch_unchecked, send_email, check_record] +
-        [create_model]
+        [create_model] +
+        [dataset_sync]
         # [is_valid_table_name, create_dbt_model, get_records, update_records, create_model]
     ),
     

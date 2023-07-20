@@ -15,7 +15,17 @@ RUN \
         dagster-postgres==0.19.9\
         dagster-dbt==0.19.9\
         sqlalchemy==1.4.17\
-        pydantic==1.10.10
+        pydantic==1.10.10\ \ 
+        sqlfluff==2.1.0\ 
+        sqlparse==0.4.3\ 
+        regex==2023.6.3\ 
+        requests==2.31.0\ 
+        ruamel.yaml==0.17.32\ 
+        psycopg2-binary==2.9.6\ 
+        Markdown==3.3.4\ 
+        bs4==0.0.1\ 
+        pgsanity==0.2.9\ 
+        pandas==1.5.3\ 
 
         # dagster-celery[flower,redis,kubernetes]==${DAGSTER_VERSION} \
         # dagster-aws==${DAGSTER_VERSION} \

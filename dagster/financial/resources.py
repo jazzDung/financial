@@ -45,7 +45,7 @@ f.close()
 
 
 # Superset bot ID, username and password
-SUPERSET_ID = 2
+SUPERSET_ID = 1
 SUPERSET_USERNAME = "superset"
 SUPERSET_PASSWORD = "superset"
 SUPERSET_HOST = "http://34.82.185.252:30007/"

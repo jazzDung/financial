@@ -3,6 +3,8 @@ import json
 import logging
 import argparse
 from pathlib import Path
+
+from dagster import asset
 import ruamel.yaml
 from financial.utils import (
     SupersetDBTConnectorSession,
@@ -28,8 +30,8 @@ def _parse_args(argv):
     )
     return parser.parse_args(argv)
 
-
-def main():
+@asset(group_name="dashboard")
+def pull_dashboard():
     superset = SupersetDBTConnectorSession(logger=logger)
 
     logging.info("Starting the script!")

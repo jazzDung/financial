@@ -7,6 +7,7 @@ import logging
 import json
 from itertools import compress
 from pathlib import Path
+from dagster import asset
 from financial.utils import (
     SupersetDBTConnectorSession,
     get_physical_datasets_from_superset,
@@ -14,8 +15,8 @@ from financial.utils import (
 )
 from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, SUPERSET_ID
 
-
-def main():
+@asset(group_name="dashboard")
+def dataset_sync():
     logger = logging.getLogger(__name__)
 
     superset = SupersetDBTConnectorSession(logger=logger)
@@ -63,7 +64,7 @@ def main():
     for i in add_to_superset:
         print("Starting datasets addition")
         print(i)
-        rison_request = "/dataset/"
+        rison_request = "dataset/"
         array = i.split(".")
         schema = array[0]
         table_name = array[1]
@@ -76,11 +77,14 @@ def main():
             "owners": [SUPERSET_ID],
         }
         # Add potential user
-        if dbt_tables[add_to_superset]["user"]:
-            dictionary["owners"].insert(dbt_tables[add_to_superset]["user"])
+        if dbt_tables[i]["user"]:
+            dictionary["owners"].append(dbt_tables[add_to_superset]["user"])
         # Serializing json
         json_object = json.dumps(dictionary)
-        response = superset.request("POST", rison_request, json=dictionary)
+        try:
+            response = superset.request("POST", rison_request, json=dictionary)
+        except:
+            raise Exception(dictionary)
     print("Done!")
     print("Starting superset datasets removal")
     for i in remove_from_superset:

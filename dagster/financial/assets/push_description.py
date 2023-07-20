@@ -1,6 +1,7 @@
 # push desc
 import json
 import logging
+from dagster import asset
 from requests import HTTPError
 import argparse
 from pathlib import Path
@@ -16,8 +17,8 @@ from financial.resources import (
 )
 from financial.resources import DATABASE_ID, MANIFEST_PATH
 
-
-def main():
+@asset(group_name="dashboard")
+def push_description():
     logging.basicConfig(level=logging.INFO)
 
     logger = logging.getLogger(__name__)

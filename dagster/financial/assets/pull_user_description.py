@@ -1,10 +1,12 @@
 import logging
 import re
+
+from dagster import asset
 from financial.utils import SupersetDBTConnectorSession, YamlFormatted
 from financial.resources import DATABASE_ID, USER_SCHEMA
 
-
-def main():
+@asset(group_name="dashboard")
+def pull_user_description():
     logger = logging.getLogger(__name__)
     superset = SupersetDBTConnectorSession(logger=logger)
 

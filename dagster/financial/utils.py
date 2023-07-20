@@ -729,7 +729,7 @@ def get_records():
         postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
         # postgreSQL_select_Query = """
         # SELECT *
-        # FROM query
+        # FROM query 
         # WHERE insert_time  > now() - interval '30 second';
         # """
         print(postgreSQL_select_Query)

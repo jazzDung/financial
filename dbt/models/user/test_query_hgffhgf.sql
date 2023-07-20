@@ -3,7 +3,7 @@
     materialized='table',
     name='test_query_hgffhgf',
     description='test description',
-    tags = ['1','user_created','20/07/2023_18:05:22'],
+    tags = ['1','user_created','20/07/2023_18:48:25'],
     schema = 'financial_user'
 ) }}
     -- depends_on: {{ref('dim_price_history')}}
