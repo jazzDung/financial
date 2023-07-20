@@ -4,7 +4,7 @@ with price_history as (
         close,
         trading_date
     from
-		{{ref('stg_price_history')}}
+        {{ ref('stg_price_history') }}
 ),
 sma as (
     select
@@ -44,9 +44,15 @@ bollinger as (
 select
     ticker,
     close,
-    lower_band,
-    mid_band,
-    upper_band,
+    case
+        when lower_band is null then 0
+        else round(CAST(lower_band as numeric), 2)
+    end as lower_band,
+    round(CAST(mid_band as numeric), 2) as mid_band,
+    case
+        when upper_band is null then 0
+        else round(CAST(upper_band as numeric), 2)
+    end as upper_band,
     trading_date
 from
     bollinger
