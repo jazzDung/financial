@@ -1,5 +1,7 @@
-select
+select distinct on (ticker, quarter, year) 
     ticker,
+    quarter as quarter,
+    year as year,
     shortAsset as short_asset,
     cash,
     shortInvest as short_invest,
@@ -36,3 +38,5 @@ select
     payable
 from
     {{source('balance_sheet', 'balance_sheet')}}
+where 
+    ticker is not null

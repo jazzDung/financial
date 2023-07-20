@@ -1,4 +1,4 @@
-select
+select distinct on (ticker) 
 	industryEn as industry_en,
 	ticker as ticker,
 	valuation as valuation,
@@ -10,3 +10,5 @@ select
 	_airbyte_emitted_at::date as index_date
 from
 	{{ source('valuation_rating', 'valuation_rating') }}
+where 
+    ticker is not null

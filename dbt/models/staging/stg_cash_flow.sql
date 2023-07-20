@@ -1,5 +1,7 @@
-select 
+select distinct on (ticker, quarter, year) 
     ticker,
+    quarter,
+    year,
     quarter,
     year,
     investCost as invest_cost,
