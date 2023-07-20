@@ -2,6 +2,7 @@ import datetime
 import json
 
 import logging
+
 # import re
 # import smtplib
 # import ssl
@@ -132,7 +133,7 @@ def create_model():
         status.append("Success")
     print(status)
     # Get Emails from API
-    superset  = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession(logger=logger)
     users = set(df["user_id"].to_list())
     emails = get_emails(superset, users)
     email_dict = dict(zip(df.user_id.to_list(), emails))
@@ -244,4 +245,6 @@ def create_model():
                 server.sendmail(sender_email, email_dict[df.loc[i, "user_id"]], message)
 
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
+    print("entries")
+    print(entries_to_update)
     update_records(entries_to_update)

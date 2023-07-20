@@ -17,6 +17,8 @@ from financial.resources import (
     DB_HOST,
     DB_PORT,
     DB_DB,
+    QUERY_SCHEMA,
+    QUERY_TABLE,
 )
 from urllib.parse import unquote
 
@@ -724,7 +726,7 @@ def get_records():
             database=DB_DB,
         )
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from financial_query.query"
+        postgreSQL_select_Query = "select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
         # postgreSQL_select_Query = """
         # SELECT *
         # FROM query
@@ -766,13 +768,14 @@ def update_records(update_values):
             database=DB_DB,
         )
         cursor = connection.cursor()
-        update_sql_query = f"""UPDATE financial_query.query q 
+        update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
                                 SET success = v.success,
                                     checked = v.checked
 
                                 FROM (values {update_values}) AS v (name, user_id, checked, success)
                                 WHERE q.user_id = v.user_id 
                                 AND q.name = v.name;"""
+        print(update_sql_query)
         cursor.execute(update_sql_query)
     except (Exception, psycopg2.Error) as error:
         print("Error while updating data in PostgreSQL", error)

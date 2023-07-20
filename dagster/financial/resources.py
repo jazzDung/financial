@@ -71,7 +71,8 @@ DB_PASSWORD = "fdp"
 DB_HOST = "34.82.185.252"
 DB_PORT = "30005"
 DB_DB = "financial_data"
-
+QUERY_SCHEMA = "financial_query"
+QUERY_TABLE = "query"
 # Create Query
 MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
 
