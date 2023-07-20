@@ -6,16 +6,51 @@ with price_history as (
     from
         {{ ref('stg_price_history') }}
 ),
-sma as (
+moving_average as (
     select
         *,
         AVG(close) OVER(
             partition by ticker
             ORDER BY
                 ticker,
+                trading_date asc ROWS BETWEEN 5 PRECEDING
+                AND CURRENT ROW
+        ) AS sma_5,
+        AVG(close) OVER(
+            partition by ticker
+            ORDER BY
+                ticker,
+                trading_date asc ROWS BETWEEN 10 PRECEDING
+                AND CURRENT ROW
+        ) AS sma_10,
+        AVG(close) OVER(
+            partition by ticker
+            ORDER BY
+                ticker,
                 trading_date asc ROWS BETWEEN 20 PRECEDING
                 AND CURRENT ROW
-        ) AS sma
+        ) AS sma_20,
+        AVG(close) OVER(
+            partition by ticker
+            ORDER BY
+                ticker,
+                trading_date asc ROWS BETWEEN 50 PRECEDING
+                AND CURRENT ROW
+        ) AS sma_50,
+        AVG(close) OVER(
+            partition by ticker
+            ORDER BY
+                ticker,
+                trading_date asc ROWS BETWEEN 100 PRECEDING
+                AND CURRENT ROW
+        ) AS sma_100,
+        AVG(close) OVER(
+            partition by ticker
+            ORDER BY
+                ticker,
+                trading_date asc ROWS BETWEEN 200 PRECEDING
+                AND CURRENT ROW
+        ) AS sma_200
     from
         price_history
 ),
@@ -30,14 +65,14 @@ standard_deviation as (
                 AND CURRENT ROW
         ) AS std_dev
     from
-        sma
+        moving_average
 ),
 bollinger as (
     select
         *,
-        sma as mid_band,
-        sma + (2 * std_dev) as upper_band,
-        sma - (2 * std_dev) as lower_band
+        sma_5 as mid_band,
+        sma_5 + (2 * std_dev) as upper_band,
+        sma_5 - (2 * std_dev) as lower_band
     from
         standard_deviation
 )
