@@ -16,11 +16,11 @@ import sqlparse
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from financial.resources import (
     DATABASE_ID,
-    DB_DB,
-    DB_HOST,
-    DB_PASSWORD,
-    DB_PORT,
-    DB_USERNAME,
+    DATABASE_NAME,
+    DATABASE_HOST,
+    DATABASE_PASSWORD,
+    DATABASE_PORT,
+    DATABASE_USERNAME,
     EMAIL_PASSWORD,
     EMAIL_PORT,
     EMAIL_SENDER,

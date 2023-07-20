@@ -20,21 +20,21 @@ SMTP = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
 # Get database info
 f = open(PATH + "postgres.json")
 data = json.load(f)[ENV]
-DB_URL = data["url"]
+DATABASE_URL = data["url"]
 USER_SCHEMA = data["user_schema"]
 SERVING_SCHEMA = data["serving_schema"]
 SQL_DIALECT = data["type"]
-DB_USERNAME = data["username"]
-DB_PASSWORD = data["password"]
-DB_HOST = data["host"]
-DB_PORT = data["port"]
-DB_DB = data["db"]
+DATABASE_USERNAME = data["username"]
+DATABASE_PASSWORD = data["password"]
+DATABASE_HOST = data["host"]
+DATABASE_PORT = data["port"]
+DATABASE_NAME = data["db"]
 QUERY_SCHEMA = data["query_schema"]
 QUERY_TABLE = data["query_table"]
 f.close()
 
 # Setup connection
-engine = sqlalchemy.create_engine(DB_URL)
+engine = sqlalchemy.create_engine(DATABASE_URL)
 DB_CONNECTION = engine.connect()
 
 # Airbyte connection

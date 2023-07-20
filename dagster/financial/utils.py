@@ -12,11 +12,11 @@ from financial.resources import (
     SUPERSET_PASSWORD,
     SUPERSET_USERNAME,
     MATERIALIZATION_MAPPING,
-    DB_USERNAME,
-    DB_PASSWORD,
-    DB_HOST,
-    DB_PORT,
-    DB_DB,
+    DATABASE_USERNAME,
+    DATABASE_PASSWORD,
+    DATABASE_HOST,
+    DATABASE_PORT,
+    DATABASE_NAME,
     QUERY_SCHEMA,
     QUERY_TABLE,
 )
@@ -719,11 +719,11 @@ def get_records():
     # Query records
     try:
         connection = psycopg2.connect(
-            user=DB_USERNAME,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_DB,
+            user=DATABASE_USERNAME,
+            password=DATABASE_PASSWORD,
+            host=DATABASE_HOST,
+            port=DATABASE_PORT,
+            database=DATABASE_NAME,
         )
         cursor = connection.cursor()
         postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
@@ -761,11 +761,11 @@ def get_records():
 def update_records(update_values):
     try:
         connection = psycopg2.connect(
-            user=DB_USERNAME,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_DB,
+            user=DATABASE_USERNAME,
+            password=DATABASE_PASSWORD,
+            host=DATABASE_HOST,
+            port=DATABASE_PORT,
+            database=DATABASE_NAME,
         )
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
