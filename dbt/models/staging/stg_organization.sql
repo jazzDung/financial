@@ -1,4 +1,4 @@
-select 
+select distinct on (ticker)
     ticker,
     website,
     outstandingshare as outstanding_share,
@@ -20,3 +20,5 @@ select
     foreignpercent as foreign_percent
 
 from {{ source('organization', 'organization') }}
+where 
+    ticker is not null

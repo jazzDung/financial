@@ -726,13 +726,13 @@ def get_records():
             database=DB_DB,
         )
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
+        postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
         # postgreSQL_select_Query = """
         # SELECT *
         # FROM query
         # WHERE insert_time  > now() - interval '30 second';
         # """
-
+        print(postgreSQL_select_Query)
         cursor.execute(postgreSQL_select_Query)
         query_columns = [
             "query_string",

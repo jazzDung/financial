@@ -1,4 +1,4 @@
-select
+select distinct on (ticker) 
 	ticker as ticker,
 	businessModel as business_model,
 	businessEfficiency as business_efficiency,
@@ -14,3 +14,5 @@ select
 	_airbyte_emitted_at::date as index_date
 from
 	"financial_data"."sources"."business_model_rating"
+where 
+    ticker is not null

@@ -14,7 +14,7 @@ sources:
               value: 23
         columns:
           - name: ticker
-            description: "Stock symbol of dim_organization_overview, primary key for this table"
+            description: "Stock symbol of organization, primary key for this table"
             tests:
               - dbt_expectations.expect_column_to_exist
               - unique
@@ -150,7 +150,7 @@ sources:
                 severity: warn
         columns:
           - name: ticker
-            description: "Stock symbol of dim_organization_overview, primary key for this table"
+            description: "Stock symbol of price_history, primary key for this table"
             tests:
               - dbt_expectations.expect_column_to_exist
               - unique:
@@ -160,7 +160,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: ref('dim_organization_overview')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 

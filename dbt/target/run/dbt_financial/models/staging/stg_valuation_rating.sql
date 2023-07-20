@@ -3,7 +3,7 @@
     
     
   as (
-    select
+    select distinct on (ticker) 
 	industryEn as industry_en,
 	ticker as ticker,
 	valuation as valuation,
@@ -15,4 +15,6 @@
 	_airbyte_emitted_at::date as index_date
 from
 	"financial_data"."sources"."valuation_rating"
+where 
+    ticker is not null
   );

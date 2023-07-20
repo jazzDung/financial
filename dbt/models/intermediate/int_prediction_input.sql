@@ -1,14 +1,19 @@
-{{ config(materialized='view', description = 'Prediction component input') }}
+{{ 
+  config(
+    materialized = 'view',
+    description = 'Prediction component input'
+  ) 
+}}
 
 SELECT
-  "time_stamp" ,
+  trading_date::date as trading_date,
   ticker,
-  "close" as price
-    from
-        {{ ref('stg_price_history') }}
+  close as price
+from
+  {{ ref('dim_price_history') }}
 WHERE
-  "time_stamp" BETWEEN CURRENT_DATE - INTERVAL '210' DAY AND CURRENT_DATE
---fix the interval later, this is just for testing
+  trading_date BETWEEN CURRENT_DATE - INTERVAL '210' DAY
+  AND CURRENT_DATE --fix the interval later, this is just for testing
 ORDER BY
   ticker,
-  "time_stamp"
+  trading_date

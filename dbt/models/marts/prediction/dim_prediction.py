@@ -33,7 +33,7 @@ def model(dbt, fal):
 
     stock_df: pd.DataFrame = dbt.ref("int_prediction_input")
 
-    stock_df.rename(columns={"time_stamp": "ds", "price": "y"}, inplace=True)
+    stock_df.rename(columns={"trading_date": "ds", "price": "y"}, inplace=True)
     stocks = tuple(stock_df.groupby("ticker"))
 
     start_time = time.time()

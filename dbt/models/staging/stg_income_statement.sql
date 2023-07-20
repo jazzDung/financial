@@ -1,5 +1,6 @@
-select
+select distinct on (ticker, index_date) 
     ticker,
+    format('%s-%s-1', year, quarter)::date as index_date,
     revenue,
     yearRevenueGrowth as year_revenue_growth,
     quarterRevenueGrowth as quarter_revenue_growth,
@@ -23,3 +24,5 @@ select
     ebitda
 from 
     {{source('income_statement', 'income_statement')}}
+where 
+    ticker is not null

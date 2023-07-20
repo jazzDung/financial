@@ -3,7 +3,7 @@
     
     
   as (
-    select
+    select distinct on (ticker) 
 	industryEn as industry_en,
 	loanDeposit as loan_deposit,
 	badLoanGrossLoan as bad_loan_gross_loan,
@@ -19,4 +19,6 @@
 	_airbyte_emitted_at::date as index_date
 from
 	"financial_data"."sources"."industry_health_rating"
+where 
+    ticker is not null
   );

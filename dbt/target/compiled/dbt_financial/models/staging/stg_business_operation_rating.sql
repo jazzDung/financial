@@ -1,4 +1,4 @@
-select
+select distinct on (ticker) 
 	industryEn as industry_en,
 	loanGrowth as loan_growth,
 	depositGrowth as deposit_growth,
@@ -22,3 +22,5 @@ select
 	_airbyte_emitted_at::date as index_date
 from
 	"financial_data"."sources"."business_operation_rating"
+where 
+    ticker is not null

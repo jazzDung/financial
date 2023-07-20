@@ -3,7 +3,7 @@
     
     
   as (
-    select 
+    select distinct on (ticker)
     ticker,
     website,
     outstandingshare as outstanding_share,
@@ -25,4 +25,6 @@
     foreignpercent as foreign_percent
 
 from "financial_data"."sources"."organization"
+where 
+    ticker is not null
   );

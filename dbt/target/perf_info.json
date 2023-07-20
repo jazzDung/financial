@@ -1,0 +1,81 @@
+{
+    "path_count": 356,
+    "parsed_path_count": 356,
+    "static_analysis_path_count": 33,
+    "static_analysis_parsed_path_count": 32,
+    "is_partial_parse_enabled": true,
+    "is_static_analysis_enabled": true,
+    "read_files_elapsed": 0.05655716999899596,
+    "load_macros_elapsed": 1.7385864150019188,
+    "parse_project_elapsed": 0.2547572270013916,
+    "patch_sources_elapsed": 0.25964629399823025,
+    "process_manifest_elapsed": 0.04638820399850374,
+    "load_all_elapsed": 2.480883536001784,
+    "projects": [
+        {
+            "project_name": "dbt_financial",
+            "elapsed": 0.22503919099835912,
+            "parsers": [
+                {
+                    "parser": "model",
+                    "elapsed": 0.16430318399943644,
+                    "parsed_path_count": 33
+                },
+                {
+                    "parser": "test",
+                    "elapsed": 0.056639291000465164,
+                    "parsed_path_count": 2
+                }
+            ],
+            "parsed_path_count": 35
+        },
+        {
+            "project_name": "dbt_postgres",
+            "elapsed": 0.004523351002717391,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt",
+            "elapsed": 0.004341685998952016,
+            "parsers": [
+                {
+                    "parser": "doc",
+                    "elapsed": 0.00022337300106300972,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 1
+        },
+        {
+            "project_name": "dbt_expectations",
+            "elapsed": 0.004893170000286773,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt_utils",
+            "elapsed": 0.0055153060020529665,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "metrics",
+            "elapsed": 0.004760447995067807,
+            "parsers": [
+                {
+                    "parser": "doc",
+                    "elapsed": 0.00016098700143629685,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 1
+        },
+        {
+            "project_name": "dbt_date",
+            "elapsed": 0.005487528000230668,
+            "parsers": [],
+            "parsed_path_count": 0
+        }
+    ]
+}

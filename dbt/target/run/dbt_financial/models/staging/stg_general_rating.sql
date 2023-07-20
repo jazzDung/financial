@@ -3,7 +3,7 @@
     
     
   as (
-    SELECT 
+    SELECT distinct on (ticker) 
     stockRating AS stock_rating,
     valuation,
     financialHealth AS financial_health,
@@ -20,4 +20,6 @@
     alpha,
 	_airbyte_emitted_at::date as index_date
 FROM "financial_data"."sources"."general_rating"
+where 
+    ticker is not null
   );

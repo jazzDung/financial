@@ -248,4 +248,4 @@ def create_model():
     print("entries")
     print(entries_to_update)
     update_records(entries_to_update)
-    raise Exception("throwaway")
+    raise Exception(entries_to_update)
