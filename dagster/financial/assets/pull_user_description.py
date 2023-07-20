@@ -1,7 +1,7 @@
 import logging
 import re
-from financial.superset_utils.utils import SupersetDBTConnectorSession, YamlFormatted
-from financial.superset_utils.config import DATABASE_ID, USER_SCHEMA
+from financial.utils import SupersetDBTConnectorSession, YamlFormatted
+from financial.resources import DATABASE_ID, USER_SCHEMA
 
 
 def main():

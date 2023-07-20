@@ -4,7 +4,7 @@ import logging
 import argparse
 from pathlib import Path
 import ruamel.yaml
-from financial.superset_utils.utils import (
+from financial.utils import (
     SupersetDBTConnectorSession,
     YamlFormatted,
     get_dashboards_from_superset,
@@ -13,7 +13,7 @@ from financial.superset_utils.utils import (
     get_tables_from_dbt,
     merge_dashboards_with_datasets,
 )
-from financial.superset_utils.config import DATABASE_ID, EXPOSURES_PATH, MANIFEST_PATH, SQL_DIALECT, SUPERSET_ID
+from financial.resources import DATABASE_ID, EXPOSURES_PATH, MANIFEST_PATH, SQL_DIALECT, SUPERSET_ID
 
 # logging.basicConfig(level=logging.INFO)
 logging.getLogger("sqlfluff").setLevel(level=logging.WARNING)

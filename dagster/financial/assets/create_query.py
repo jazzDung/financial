@@ -245,3 +245,4 @@ def create_model():
 
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
     update_records(entries_to_update)
+    raise Exception("throwaway")

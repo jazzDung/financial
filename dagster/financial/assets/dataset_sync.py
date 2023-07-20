@@ -7,12 +7,12 @@ import logging
 import json
 from itertools import compress
 from pathlib import Path
-from financial.superset_utils.utils import (
+from financial.utils import (
     SupersetDBTConnectorSession,
     get_physical_datasets_from_superset,
     get_tables_from_dbt,
 )
-from financial.superset_utils.config import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, SUPERSET_ID
+from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, SUPERSET_ID
 
 
 def main():
