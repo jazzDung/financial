@@ -24,20 +24,15 @@ from financial.resources import (
     USER_SCHEMA,
 )
 from pgsanity.pgsanity import check_string
-from superset_utils.utils import (
+from financial.utils import (
     SupersetDBTConnectorSession,
     get_tables_from_dbt,
     get_tables_from_sql,
     get_tables_from_sql_simple,
 )
 
-<<<<<<< HEAD
-
-def is_valid_table_name(table_name, dbt_tables):
-=======
 @asset(group_name="user_query")
 def is_valid_table_name(table_name):
->>>>>>> e9f21df (lmao)
     """
     Checks if the given string is a valid table name in PostgreSQL.
 

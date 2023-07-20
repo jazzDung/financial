@@ -6,7 +6,7 @@ import requests
 from markdown import markdown
 import ruamel.yaml
 
-from superset_utils.config import SUPERSET_HOST, SUPERSET_PASSWORD, SUPERSET_USERNAME
+from financial.resources import SUPERSET_HOST, SUPERSET_PASSWORD, SUPERSET_USERNAME
 
 
 #### ADD ALL OF THE END POINT USED TO CSRF EXEMPT LIST TO RUN PARALLELY

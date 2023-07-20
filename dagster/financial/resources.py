@@ -45,12 +45,12 @@ f.close()
 
 
 # Superset bot ID, username and password
-SUPERSET_ID = 1
-SUPERSET_USERNAME = os.getenv("SUPERSET_USERNAME")
-SUPERSET_PASSWORD = os.getenv("SUPERSET_PASSWORD")
+SUPERSET_ID = 2
+SUPERSET_USERNAME = "superset"
+SUPERSET_PASSWORD = "superset"
 SUPERSET_HOST = "http://34.82.185.252:30007/"
 # dbt project path
-DBT_PROJECT_DIR = "/home/vu/Desktop/Projects/Thesis/dbt-project/thesis"
+DBT_PROJECT_DIR = "/home/jazzdung/projects/financial/dbt"
 # dbt project's manifest path
 MANIFEST_PATH = DBT_PROJECT_DIR + "/target/manifest.json"
 
