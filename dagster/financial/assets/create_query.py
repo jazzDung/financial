@@ -2,15 +2,15 @@ import datetime
 import json
 
 import logging
-import re
-import smtplib
-import ssl
+# import re
+# import smtplib
+# import ssl
 from itertools import compress
 from dagster import asset
 
-import pandas as pd
-import psycopg2
-import sqlfluff
+# import pandas as pd
+# import psycopg2
+# import sqlfluff
 import sqlparse
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from financial.resources import (
@@ -120,7 +120,7 @@ def create_model():
         model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i, "name"])
 
         with open(model_path, "w+") as f:
-            model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas, SCHEMA_NAMES)
+            model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas, EXEC_TIME, SCHEMA_NAMES)
             if model_file_content:
                 f.write(model_file_content)
                 print("Wrote model {name} contents".format(name=df.loc[i, "name"]))
@@ -132,7 +132,7 @@ def create_model():
         status.append("Success")
     print(status)
     # Get Emails from API
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset  = SupersetDBTConnectorSession(logger=logger)
     users = set(df["user_id"].to_list())
     emails = get_emails(superset, users)
     email_dict = dict(zip(df.user_id.to_list(), emails))

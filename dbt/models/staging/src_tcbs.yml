@@ -215,6 +215,8 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -241,6 +243,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
+              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -267,6 +272,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
+              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -293,6 +301,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
+              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -319,6 +330,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
+              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -346,6 +360,9 @@ sources:
             description: "Stock symbols"
             tests:
               - unique
+              - not_null:
+                  severity: warn
+              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
