@@ -19,4 +19,4 @@ select
     deltainmonth as delta_in_month,
     foreignpercent as foreign_percent
 
-from {{ source('sources', 'organization') }}
+from {{ source('organization', 'organization') }}

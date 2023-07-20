@@ -22,4 +22,4 @@ select
     operationIncome as operation_income,
     ebitda
 from 
-    {{source('sources', 'income_statement')}}
+    {{source('income_statement', 'income_statement')}}

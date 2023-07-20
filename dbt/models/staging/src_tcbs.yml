@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: sources
+  - name: organization
     description: Raw financial data from Airbyte
     database: financial_data
     schema: sources
@@ -22,9 +22,14 @@ sources:
               - symbol_invalid_length
               - not_uppercase
 
-      # Financial reports
+  # Financial reports
+  - name: cash_flow
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: cash_flow
-        description: Organization cash flow report, quarterly and yearly data
+        description: cash flow report, quarterly and yearly data
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
@@ -48,12 +53,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: balance_sheet
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: balance_sheet
-        description: Organization balance sheet report, quarterly and yearly data
+        description: balance sheet report, quarterly and yearly data
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
@@ -77,12 +87,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: income_statement
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: income_statement
-        description: Organization income_statement report, quarterly and yearly data
+        description: income_statement report, quarterly and yearly data
         freshness:
           warn_after: { count: 90, period: day }
           error_after: { count: 180, period: day }
@@ -106,13 +121,19 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
      
       # Price history
+  
+  - name: price_history
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: price_history
-        description: Organization stock price history, daily data
+        description: stock price history, daily data
         freshness:
           warn_after: { count: 3, period: day }
           error_after: { count: 7, period: day }
@@ -144,8 +165,14 @@ sources:
                   severity: warn
 
       # Intraday transaction
+  
+  - name: stock_intraday
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: stock_intraday
-        description: Organization transaction records during daytime, collected every 30 minutes
+        description: transaction records during daytime, collected every 30 minutes
         freshness:
           warn_after: { count: 3, period: day }
           error_after: { count: 7, period: day }
@@ -165,12 +192,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: general_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: general_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -186,12 +218,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
       
+  - name: business_model_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: business_model_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -207,12 +244,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: business_operation_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: business_operation_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -228,12 +270,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: financial_health_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: financial_health_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -249,12 +296,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: valuation_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: valuation_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -270,12 +322,17 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn
 
+  - name: industry_health_rating
+    description: Raw financial data from Airbyte
+    database: financial_data
+    schema: sources
+    tables:
       - name: industry_health_rating
-        description: Organization general rating
+        description: general rating
         freshness:
           warn_after: { count: 30, period: day }
           error_after: { count: 60, period: day }
@@ -292,6 +349,6 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('sources', 'organization')
+                  to: source('organization', 'organization')
                   field: ticker
                   severity: warn

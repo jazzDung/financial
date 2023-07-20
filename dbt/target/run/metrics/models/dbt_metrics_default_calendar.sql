@@ -2,7 +2,7 @@
   
     
 
-  create  table "financial_data"."financial_raw"."dbt_metrics_default_calendar__dbt_tmp"
+  create  table "financial_data"."sourcesp"."dbt_metrics_default_calendar__dbt_tmp"
   
   
     as

@@ -21,4 +21,4 @@ select
 	TOIGrowth as toi_growth,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('sources', 'business_operation_rating') }}
+	{{ source('business_operation_rating', 'business_operation_rating') }}

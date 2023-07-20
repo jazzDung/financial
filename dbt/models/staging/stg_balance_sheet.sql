@@ -35,4 +35,4 @@ select
     minorShareHolderProfit as minor_share_holder_profit,
     payable
 from
-    {{source('sources', 'balance_sheet')}}
+    {{source('balance_sheet', 'balance_sheet')}}

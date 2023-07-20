@@ -9,4 +9,4 @@ select
 	dividendRate as dividend_rate,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('sources', 'valuation_rating') }}
+	{{ source('valuation_rating', 'valuation_rating') }}

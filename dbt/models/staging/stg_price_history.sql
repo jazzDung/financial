@@ -7,4 +7,4 @@ select
     volume,
     to_timestamp(tradingDate, 'YYYY-MM-DDTHH:MI:SS.MS') as trading_date
     
-from {{ source('sources', 'price_history') }}
+from {{ source('price_history', 'price_history') }}

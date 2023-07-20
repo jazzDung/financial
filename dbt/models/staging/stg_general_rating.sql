@@ -15,4 +15,4 @@ SELECT
     beta,
     alpha,
 	_airbyte_emitted_at::date as index_date
-FROM {{source('sources', 'general_rating')}}
+FROM {{source('general_rating', 'general_rating')}}

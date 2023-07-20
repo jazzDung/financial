@@ -8,4 +8,4 @@ select
     fromSale as from_sale,
     freeCashFlow as free_cash_flow
 
-from {{ source('sources', 'cash_flow') }}
+from {{ source('cash_flow', 'cash_flow') }}
