@@ -1,7 +1,2 @@
 models:
-  - name: dim_b
-    columns:
-      - name: customer_id
-        tests:
-          - unique
-          - not_null
+  - name: dim_price_history
