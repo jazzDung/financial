@@ -29,13 +29,6 @@ def _parse_args(argv):
     return parser.parse_args(argv)
 
 
-# DBT_PROJECT_PATH = os.getenv('DBT_PROJECT_PATH')
-
-
-# flags = _parse_args(sys.argv[1:])
-
-# DATABASE_ID=flags.DATABASE_ID
-# SQL_DIALECT=flags.SQL_DIALECT
 user_id = 1
 superset = SupersetDBTConnectorSession(logger=logger)
 
