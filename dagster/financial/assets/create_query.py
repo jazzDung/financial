@@ -12,7 +12,7 @@ import psycopg2
 import sqlfluff
 import sqlparse
 from dbt.cli.main import dbtRunner, dbtRunnerResult
-from financial.superset_utils.config import (
+from financial.resources import (
     DATABASE_ID,
     DB_DB,
     DB_HOST,
