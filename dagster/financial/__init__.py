@@ -12,7 +12,8 @@ defs = Definitions(
         dbt_assets +
         [airbyte_assets] +
         [fetch_unchecked, send_email, check_record] +
-        [is_valid_table_name, create_dbt_model, get_records, update_records, create_model]
+        [create_model]
+        # [is_valid_table_name, create_dbt_model, get_records, update_records, create_model]
     ),
     
     jobs=[
