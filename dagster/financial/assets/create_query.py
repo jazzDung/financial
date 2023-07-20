@@ -31,182 +31,6 @@ from financial.utils import (
     get_tables_from_sql_simple,
 )
 
-@asset(group_name="user_query")
-def is_valid_table_name(table_name):
-    """
-    Checks if the given string is a valid table name in PostgreSQL.
-
-    Args:
-        table_name: The string to check.
-
-    Returns:
-        True if the string is a valid table name, False otherwise.
-    """
-
-    # The regular expression to match a valid table name.
-    regex = re.compile(r"^[a-zA-Z0-9_]{1,63}$")
-
-    # Check if the string matches the regular expression.
-    if regex.match(table_name) and table_name in dbt_tables.keys():
-        return True
-    else:
-        return False
-
-@asset(group_name="user_query")
-def create_dbt_model(df_row, dbt_tables):
-    """
-    Returns content of a user-created dbt model file.
-
-    Args:
-        df_row: Row of DataFrame taken from "query" table.
-        dbt_tables: Set of tables name.
-
-    Returns:
-        String: the content of the dbt model.
-    """
-
-    original_query = df_row["query_string"]
-    original_query = original_query[:-1] if original_query[-1] == ";" else original_query
-    # Access table names
-    try:
-        original_query = sqlfluff.fix(original_query, dialect="posgres")
-        table_names = set(get_tables_from_sql(original_query, dialect="posgres"))
-    except:
-        table_names = set(get_tables_from_sql_simple(original_query))
-
-    # Wrap original query
-    new_query = """
-original_query as (
-    {original_query}
-)
-    
-select * from original_query
-    """.format(
-        original_query=original_query
-    )
-
-    # Put tables in subqueries
-    final_tables = tuple(table_names.intersection(dbt_tables))  # Filter out
-    assert len(final_tables) > 0, "No tables referenced in dbt projects"
-
-    table_to_ref = {}
-
-    for table in final_tables:
-        if table.startswith(SCHEMA_NAMES):
-            table_to_ref[table] = table[table.find(".") + 1 :]
-        else:
-            table_to_ref[table] = table
-    for table in final_tables:
-        new_query = (
-            """
-    -- depends_on: {{{{ref(\'{table}\')}}}}
-        ),
-        """.format(
-                table=table_to_ref[final_tables[0]]
-            )
-            + new_query
-        )
-
-    new_query = (
-        """
-{{{{ config(
-    materialized=\'{materialization}\',
-    name='{name}',
-    description='{desc}',
-    tags = ['{user_id}','user_created','{created_time}'],
-    schema = 'financial_user'
-) }}}}""".format(
-            materialization=MATERIALIZATION_MAPPING[df_row["materialization"]],
-            user_id=df_row["user_id"],
-            name=df_row["name"],
-            desc=df_row["description"],
-            created_time=EXEC_TIME,
-        )
-        + new_query
-    )
-
-    # original_query = re.sub(r".", "_", original_query)
-
-    return new_query
-
-@asset(group_name="user_query")
-def get_records():
-    # Query records
-    try:
-        connection = psycopg2.connect(
-            user=DB_USERNAME,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_DB,
-        )
-        cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from financial_query.query"
-        # postgreSQL_select_Query = """
-        # SELECT *
-        # FROM query
-        # WHERE insert_time  > now() - interval '30 second';
-        # """
-
-        cursor.execute(postgreSQL_select_Query)
-        query_columns = [
-            "query_string",
-            "materialization",
-            "user_id",
-            "description",
-            "insert_time",
-            "name",
-            "success",
-            "checked",
-        ]
-
-        df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
-
-    except (Exception, psycopg2.Error) as error:
-        print("Error while fetching data from PostgreSQL", error)
-    finally:
-        # closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
-    return df
-
-@asset(group_name="user_query")
-def update_records(update_values):
-    try:
-        connection = psycopg2.connect(
-            user=DB_USERNAME,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_DB,
-        )
-        cursor = connection.cursor()
-        update_sql_query = f"""UPDATE financial_query.query q 
-                                SET success = v.success,
-                                    checked = v.checked
-
-                                FROM (values {update_values}) AS v (name, user_id, checked, success)
-                                WHERE q.user_id = v.user_id 
-                                AND q.name = v.name;"""
-        cursor.execute(update_sql_query)
-    except (Exception, psycopg2.Error) as error:
-        print("Error while updating data in PostgreSQL", error)
-
-        cursor.execute(update_sql_query)
-
-    finally:
-        # closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
-
-@asset(group_name="user_query")
-def get_emails(superset, user_ids):
-    res = superset.request("POST", "/security/get_email", json={"users_ids": user_ids})
-    return res["emails"]
 
 @asset(group_name="user_query")
 def create_model():
@@ -216,8 +40,6 @@ def create_model():
     PROJECT_PATH = "/home/jazzdung/projects/financial/dbt/"
     # MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
     MANIFEST_PATH = PROJECT_PATH + "target/manifest.json"
-
-    MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
 
     # Get all schema names in project
     # Either this or defined schema name available to the user before
@@ -253,12 +75,19 @@ def create_model():
     df = get_records()
 
     for i in df.index:
-        # Check name
+        # Check name validity
         print(df.loc[i]["name"])
-        name_validation = is_valid_table_name(df.loc[i]["name"], dbt_tables_names)
+        name_validation = is_valid_table_name(df.loc[i]["name"])
         print(name_validation)
         if not name_validation:
             status.append("Invalid name")
+            df.loc[i, "success"] = False
+            # df.loc[i,'checked'] = True
+            continue
+        name_unique = is_unique_table_name(df.loc[i]["name"], dbt_tables_names)
+        print(name_unique)
+        if not name_unique:
+            status.append("Model name is duplicated with another existing model")
             df.loc[i, "success"] = False
             # df.loc[i,'checked'] = True
             continue
@@ -285,7 +114,7 @@ def create_model():
         model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i, "name"])
 
         with open(model_path, "w+") as f:
-            model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas)
+            model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas, SCHEMA_NAMES)
             if model_file_content:
                 f.write(model_file_content)
                 print("Wrote model {name} contents".format(name=df.loc[i, "name"]))

@@ -1,12 +1,22 @@
 import logging
 import re
 import sqlfluff
-from bs4 import BeautifulSoup
 import requests
-from markdown import markdown
 import ruamel.yaml
-
-from financial.resources import SUPERSET_HOST, SUPERSET_PASSWORD, SUPERSET_USERNAME
+import psycopg2
+from bs4 import BeautifulSoup
+from markdown import markdown
+from financial.resources import (
+    SUPERSET_HOST,
+    SUPERSET_PASSWORD,
+    SUPERSET_USERNAME,
+    MATERIALIZATION_MAPPING,
+    DB_USERNAME,
+    DB_PASSWORD,
+    DB_HOST,
+    DB_PORT,
+    DB_DB,
+)
 
 
 #### ADD ALL OF THE END POINT USED TO CSRF EXEMPT LIST TO RUN PARALLELY
@@ -579,3 +589,204 @@ class YamlFormatted(ruamel.yaml.YAML):
         self.block_seq_indent = 2
         self.indent = 4
         self.emitter.alt_null = ""
+
+
+# Create Query
+
+
+def is_valid_table_name(table_name):
+    """
+    Checks if the given string is a valid table name in PostgreSQL.
+
+    Args:
+        table_name: The string to check.
+
+    Returns:
+        True if the string is a valid table name, False otherwise.
+    """
+
+    # The regular expression to match a valid table name.
+    regex = re.compile(r"^[a-zA-Z0-9_]{1,63}$")
+
+    # Check if the string matches the regular expression.
+    if regex.match(table_name):
+        return True
+    else:
+        return False
+
+
+def is_unique_table_name(table_name, dbt_tables):
+    """
+    Checks if the given string is a valid table name in PostgreSQL.
+
+    Args:
+        table_name: The string to check.
+
+    Returns:
+        True if the string is a valid table name, False otherwise.
+    """
+
+    # The regular expression to match a valid table name.
+    regex = re.compile(r"^[a-zA-Z0-9_]{1,63}$")
+
+    # Check if the string matches the regular expression.
+    if table_name not in dbt_tables.keys():
+        return True
+    else:
+        return False
+
+
+def create_dbt_model(df_row, dbt_tables, exec_time, schema_names):
+    """
+    Returns content of a user-created dbt model file.
+
+    Args:
+        df_row: Row of DataFrame taken from "query" table.
+        dbt_tables: Set of tables name.
+
+    Returns:
+        String: the content of the dbt model.
+    """
+
+    original_query = df_row["query_string"]
+    original_query = original_query[:-1] if original_query[-1] == ";" else original_query
+    # Access table names
+    try:
+        original_query = sqlfluff.fix(original_query, dialect="posgres")
+        table_names = set(get_tables_from_sql(original_query, dialect="posgres"))
+    except:
+        table_names = set(get_tables_from_sql_simple(original_query))
+
+    # Wrap original query
+    new_query = """
+original_query as (
+    {original_query}
+)
+    
+select * from original_query
+    """.format(
+        original_query=original_query
+    )
+
+    # Put tables in subqueries
+    final_tables = tuple(table_names.intersection(dbt_tables))  # Filter out
+    assert len(final_tables) > 0, "No tables referenced in dbt projects"
+
+    table_to_ref = {}
+
+    for table in final_tables:  # Ensure that there is only table names, no schema names
+        if table.startswith(schema_names):
+            table_to_ref[table] = table[table.find(".") + 1 :]
+        else:
+            table_to_ref[table] = table
+    for table in final_tables:
+        new_query = (
+            """
+    -- depends_on: {{{{ref(\'{table}\')}}}}
+        ),
+        """.format(
+                table=table_to_ref[final_tables[0]]
+            )
+            + new_query
+        )
+
+    new_query = (
+        """
+{{{{ config(
+    materialized=\'{materialization}\',
+    name='{name}',
+    description='{desc}',
+    tags = ['{user_id}','user_created','{created_time}'],
+    schema = 'financial_user'
+) }}}}""".format(
+            materialization=MATERIALIZATION_MAPPING[df_row["materialization"]],
+            user_id=df_row["user_id"],
+            name=df_row["name"],
+            desc=df_row["description"],
+            created_time=exec_time,
+        )
+        + new_query
+    )
+
+    # original_query = re.sub(r".", "_", original_query)
+
+    return new_query
+
+
+def get_records():
+    # Query records
+    try:
+        connection = psycopg2.connect(
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            database=DB_DB,
+        )
+        cursor = connection.cursor()
+        postgreSQL_select_Query = "select * from financial_query.query"
+        # postgreSQL_select_Query = """
+        # SELECT *
+        # FROM query
+        # WHERE insert_time  > now() - interval '30 second';
+        # """
+
+        cursor.execute(postgreSQL_select_Query)
+        query_columns = [
+            "query_string",
+            "materialization",
+            "user_id",
+            "description",
+            "insert_time",
+            "name",
+            "success",
+            "checked",
+        ]
+
+        df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
+
+    except (Exception, psycopg2.Error) as error:
+        print("Error while fetching data from PostgreSQL", error)
+    finally:
+        # closing database connection.
+        if connection:
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
+    return df
+
+
+def update_records(update_values):
+    try:
+        connection = psycopg2.connect(
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            database=DB_DB,
+        )
+        cursor = connection.cursor()
+        update_sql_query = f"""UPDATE financial_query.query q 
+                                SET success = v.success,
+                                    checked = v.checked
+
+                                FROM (values {update_values}) AS v (name, user_id, checked, success)
+                                WHERE q.user_id = v.user_id 
+                                AND q.name = v.name;"""
+        cursor.execute(update_sql_query)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while updating data in PostgreSQL", error)
+
+        cursor.execute(update_sql_query)
+
+    finally:
+        # closing database connection.
+        if connection:
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
+
+
+def get_emails(superset, user_ids):
+    res = superset.request("POST", "/security/get_email", json={"users_ids": user_ids})
+    return res["emails"]

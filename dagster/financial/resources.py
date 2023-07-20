@@ -72,6 +72,9 @@ DB_HOST = "34.82.185.252"
 DB_PORT = "30005"
 DB_DB = "financial_data"
 
+# Create Query
+MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
+
 # DB
 # f = open(PATH + "airbyte.json")
 # data = json.load(f)[ENV]
