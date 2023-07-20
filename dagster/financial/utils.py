@@ -660,6 +660,7 @@ def create_dbt_model(df_row, dbt_tables, exec_time, schema_names):
 
     # Wrap original query
     new_query = """
+WITH
 original_query as (
     {original_query}
 )
@@ -683,9 +684,7 @@ select * from original_query
     for table in final_tables:
         new_query = (
             """
-    -- depends_on: {{{{ref(\'{table}\')}}}}
-        ),
-        """.format(
+    -- depends_on: {{{{ref(\'{table}\')}}}}""".format(
                 table=table_to_ref[final_tables[0]]
             )
             + new_query
@@ -789,6 +788,6 @@ def update_records(update_values):
 
 
 def get_emails(superset, user_ids):
-    url = unquote(f'/security/get_email/?q={list(user_ids)}')
+    url = unquote(f"/security/get_email/?q={list(user_ids)}")
     res = superset.request("GET", url)
     return res["emails"]
