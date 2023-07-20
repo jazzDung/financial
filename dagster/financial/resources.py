@@ -9,6 +9,8 @@ f = open(PATH + "email.json")
 data = json.load(f)[ENV]
 EMAIL_SENDER = data["sender_email"]
 EMAIL_PASSWORD = data["password"]
+SMTP = data["smtp"]
+EMAIL_PORT = data["port"]
 f.close()
 
 # Email authorization
@@ -19,6 +21,16 @@ SMTP = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
 f = open(PATH + "postgres.json")
 data = json.load(f)[ENV]
 DB_URL = data["url"]
+USER_SCHEMA = data["user_schema"]
+SERVING_SCHEMA = data["serving_schema"]
+SQL_DIALECT = data["type"]
+DB_USERNAME = data["username"]
+DB_PASSWORD = data["password"]
+DB_HOST = data["host"]
+DB_PORT = data["port"]
+DB_DB = data["db"]
+QUERY_SCHEMA = data["query_schema"]
+QUERY_TABLE = data["query_table"]
 f.close()
 
 # Setup connection
@@ -41,47 +53,19 @@ data = json.load(f)[ENV]
 DBT_PROJECT_DIR = data["project"]
 DBT_PROFILE_PATH = data["profile"]
 DBT_TARGET = data["target"]
+MANIFEST_PATH = data["target"] + "/manifest.json"
+EXPOSURES_PATH = data["project"] + "/models/exposures/dashboards.yml"
 f.close()
 
 
-# Superset bot ID, username and password
-SUPERSET_ID = 1
-SUPERSET_USERNAME = "superset"
-SUPERSET_PASSWORD = "superset"
-SUPERSET_HOST = "http://34.82.185.252:30007/"
-# dbt project path
-DBT_PROJECT_DIR = "/home/jazzdung/projects/financial/dbt"
-# dbt project's manifest path
-MANIFEST_PATH = DBT_PROJECT_DIR + "/target/manifest.json"
+# Superset 
+f = open(PATH + "superset.json")
+data = json.load(f)[ENV]
+SUPERSET_ID = data["id"]
+SUPERSET_USERNAME = data["username"]
+SUPERSET_PASSWORD = data["password"]
+SUPERSET_HOST = data["host"]
+DATABASE_ID = data["db"]
 
-# Dashboard exposures path
-EXPOSURES_PATH = DBT_PROJECT_DIR + "/models/exposures/dashboards.yml"
-
-# The id of the database in superset, found in superset metadatabase.
-DATABASE_ID = 1
-
-# Schema of models
-USER_SCHEMA = "user"
-SERVING_SCHEMA = "marts"
-# sqlfluff dialect
-SQL_DIALECT = "postgres"
-# dbt connection info
-DB_USERNAME = "fdp"
-DB_PASSWORD = "fdp"
-DB_HOST = "34.82.185.252"
-DB_PORT = "30005"
-DB_DB = "financial_data"
-QUERY_SCHEMA = "financial_query"
-QUERY_TABLE = "query"
 # Create Query
 MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
-
-# DB
-# f = open(PATH + "airbyte.json")
-# data = json.load(f)[ENV]
-# AIRBYTE_HOST = data["host"]
-# AIRBYTE_PORT = data["port"]
-# AIRBYTE_USERNAME = data["username"]
-# AIRBYTE_PASSWORD = data["password"]
-# AIRBYTE_WORKSPACE = data["workspace"]
-# f.close()

@@ -21,6 +21,10 @@ from financial.resources import (
     DB_PASSWORD,
     DB_PORT,
     DB_USERNAME,
+    EMAIL_PASSWORD,
+    EMAIL_PORT,
+    EMAIL_SENDER,
+    SMTP,
     SUPERSET_ID,
     USER_SCHEMA,
 )
@@ -141,10 +145,10 @@ def create_model():
     import smtplib
     import ssl
 
-    port = 465  # For SSL
-    smtp_server = "smtp.gmail.com"
-    sender_email = "catvu113@gmail.com"
-    password = "xhtzakhmnsbufufy"
+    port = EMAIL_PORT  # For SSL
+    smtp_server = SMTP
+    sender_email = EMAIL_SENDER
+    password = EMAIL_PASSWORD
 
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
