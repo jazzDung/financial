@@ -1,1 +1,0 @@
-SELECT * FROM "financial_data"."staging"."stg_stock_intraday"

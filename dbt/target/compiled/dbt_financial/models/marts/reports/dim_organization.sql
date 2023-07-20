@@ -1,1 +1,0 @@
-select * from "financial_data"."staging"."stg_organization"

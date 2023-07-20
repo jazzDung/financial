@@ -1,1 +1,0 @@
-SELECT * FROM "financial_data"."financial_raw"."stg_cash_flow"

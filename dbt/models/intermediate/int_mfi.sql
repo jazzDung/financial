@@ -2,7 +2,7 @@ with price_history as (
 	select
 		*
 	from
-		{{ref('dim_price_history')}}
+		{{ref('stg_price_history')}}
 ),
 typical_price as (
 	SELECT

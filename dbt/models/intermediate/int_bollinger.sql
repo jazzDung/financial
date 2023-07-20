@@ -4,7 +4,7 @@ with price_history as (
         close,
         trading_date
     from
-		{{ref('dim_price_history')}}
+		{{ref('stg_price_history')}}
 ),
 sma as (
     select
