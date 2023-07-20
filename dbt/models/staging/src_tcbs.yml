@@ -246,7 +246,6 @@ sources:
               - not_null:
                   severity: warn
               - symbol_invalid_length
-              - symbol_invalid_length
               - not_uppercase
               - relationships:
                   to: source('organization', 'organization')
@@ -274,7 +273,6 @@ sources:
               - unique
               - not_null:
                   severity: warn
-              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -304,7 +302,6 @@ sources:
               - not_null:
                   severity: warn
               - symbol_invalid_length
-              - symbol_invalid_length
               - not_uppercase
               - relationships:
                   to: source('organization', 'organization')
@@ -332,7 +329,6 @@ sources:
               - unique
               - not_null:
                   severity: warn
-              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:
@@ -362,7 +358,6 @@ sources:
               - unique
               - not_null:
                   severity: warn
-              - symbol_invalid_length
               - symbol_invalid_length
               - not_uppercase
               - relationships:

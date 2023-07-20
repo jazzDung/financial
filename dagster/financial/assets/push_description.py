@@ -4,7 +4,7 @@ import logging
 from requests import HTTPError
 import argparse
 from pathlib import Path
-from financial.superset_utils.utils import (
+from financial.resources import (
     SupersetDBTConnectorSession,
     add_certifications_in_superset,
     add_superset_columns,
@@ -14,7 +14,7 @@ from financial.superset_utils.utils import (
     put_columns_to_superset,
     refresh_columns_in_superset,
 )
-from financial.superset_utils.config import DATABASE_ID, MANIFEST_PATH
+from financial.resources import DATABASE_ID, MANIFEST_PATH
 
 
 def main():
