@@ -6,6 +6,7 @@ import re
 import smtplib
 import ssl
 from itertools import compress
+from dagster import asset
 
 import pandas as pd
 import psycopg2
@@ -30,8 +31,13 @@ from superset_utils.utils import (
     get_tables_from_sql_simple,
 )
 
+<<<<<<< HEAD
 
 def is_valid_table_name(table_name, dbt_tables):
+=======
+@asset(group_name="user_query")
+def is_valid_table_name(table_name):
+>>>>>>> e9f21df (lmao)
     """
     Checks if the given string is a valid table name in PostgreSQL.
 
@@ -51,7 +57,7 @@ def is_valid_table_name(table_name, dbt_tables):
     else:
         return False
 
-
+@asset(group_name="user_query")
 def create_dbt_model(df_row, dbt_tables):
     """
     Returns content of a user-created dbt model file.
@@ -128,7 +134,7 @@ select * from original_query
 
     return new_query
 
-
+@asset(group_name="user_query")
 def get_records():
     # Query records
     try:
@@ -171,7 +177,7 @@ def get_records():
             print("PostgreSQL connection is closed")
     return df
 
-
+@asset(group_name="user_query")
 def update_records(update_values):
     try:
         connection = psycopg2.connect(
@@ -202,13 +208,13 @@ def update_records(update_values):
             connection.close()
             print("PostgreSQL connection is closed")
 
-
+@asset(group_name="user_query")
 def get_emails(superset, user_ids):
     res = superset.request("POST", "/security/get_email", json={"users_ids": user_ids})
     return res["emails"]
 
-
-def main():
+@asset(group_name="user_query")
+def create_model():
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
 
