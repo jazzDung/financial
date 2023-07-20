@@ -25,7 +25,7 @@ RUN \
         Markdown==3.3.4\ 
         bs4==0.0.1\ 
         pgsanity==0.2.9\ 
-        pandas==1.5.3\ 
+        pandas==1.5.3
 
         # dagster-celery[flower,redis,kubernetes]==${DAGSTER_VERSION} \
         # dagster-aws==${DAGSTER_VERSION} \

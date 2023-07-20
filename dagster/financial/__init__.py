@@ -1,4 +1,7 @@
 from dagster import Definitions
+from financial.assets.pull_dashboards import pull_dashboard
+from financial.assets.pull_user_description import pull_user_description
+from financial.assets.push_description import push_description
 from financial.assets.dataset_sync import dataset_sync
 from financial.assets.create_query import *
 from financial.assets.dbt_assets import *
@@ -14,7 +17,10 @@ defs = Definitions(
         [airbyte_assets] +
         [fetch_unchecked, send_email, check_record] +
         [create_model] +
-        [dataset_sync]
+        [dataset_sync] +
+        [pull_dashboard] +
+        [pull_user_description] +
+        [push_description]
         # [is_valid_table_name, create_dbt_model, get_records, update_records, create_model]
     ),
     

@@ -5,7 +5,7 @@ from dagster import asset
 from requests import HTTPError
 import argparse
 from pathlib import Path
-from financial.resources import (
+from financial.utils import (
     SupersetDBTConnectorSession,
     add_certifications_in_superset,
     add_superset_columns,
