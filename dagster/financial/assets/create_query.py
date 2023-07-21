@@ -139,8 +139,7 @@ def create_model():
     # Get Emails from API
     superset = SupersetDBTConnectorSession(logger=logger)
     users = set(df["user_id"].to_list())
-    emails = get_emails(superset, users)
-    email_dict = dict(zip(df.user_id.to_list(), emails))
+    email_dict = get_emails(superset, users)
 
     import smtplib
     import ssl
