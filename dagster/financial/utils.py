@@ -427,7 +427,7 @@ def refresh_columns_in_superset(superset: SupersetDBTConnectorSession, dataset_i
 
 
 def add_certifications_in_superset(
-    superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables, sst_dataset_name
+    superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables
 ):
     logging.info("Refreshing columns in Superset.")
     body = {

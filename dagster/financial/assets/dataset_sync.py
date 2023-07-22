@@ -43,11 +43,9 @@ def dataset_sync():
     # Only tables that start with a given schema prefix name
     mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
     mask = list(mapped)
-    mapped_superset = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), superset_dict_keys)
-    mask_superset = list(mapped_superset)
 
     dbt_tables_reporting = list(compress(dbt_tables_names, mask))
-    superset_tables = list(compress(superset_dict_keys, mask_superset))
+    superset_tables = superset_dict_keys
 
     # Parsing as sets
     dbt_tables_reporting = set(dbt_tables_reporting)
@@ -55,12 +53,12 @@ def dataset_sync():
 
     # To add to superset
     add_to_superset = list(dbt_tables_reporting.difference(superset_tables))
-    len(add_to_superset)
+    print(len(add_to_superset))
 
     # To remove from superset
 
     remove_from_superset = list(superset_tables.difference(dbt_tables_reporting))
-    len(remove_from_superset)
+    print(len(remove_from_superset))
 
     for i in add_to_superset:
         print("Starting datasets addition")

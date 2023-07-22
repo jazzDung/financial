@@ -60,7 +60,7 @@ def push_description():
             sst_dataset_w_cols = add_superset_columns(superset, sst_dataset)
             sst_dataset_w_cols_new = merge_columns_info(sst_dataset_w_cols, dbt_tables)
             put_columns_to_superset(superset, sst_dataset_w_cols_new)
-            add_certifications_in_superset(superset, sst_dataset_id, sst_dataset_key, dbt_tables, sst_dataset_name)
+            add_certifications_in_superset(superset, sst_dataset_id, sst_dataset_key, dbt_tables)
         except HTTPError as e:
             logging.error("The dataset with ID=%d wasn't updated. Check the error below.", sst_dataset_id, exc_info=e)
 
