@@ -462,7 +462,7 @@ def add_certifications_in_superset(
         "description": dbt_tables[sst_dataset_key]["description"],
         "owners": [SUPERSET_ID],
     }
-    if dbt_tables[sst_dataset_name]["user"]:
+    if "user" in dbt_tables[sst_dataset_name].keys():
         body["owners"].append(dbt_tables[sst_dataset_name]["user"])
     superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
