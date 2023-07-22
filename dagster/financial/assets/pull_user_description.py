@@ -41,7 +41,7 @@ def pull_user_description():
         with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "r") as file:
             text = file.read()
             pattern = r"description='{my_desc}'"
-            replacement = "description='{table_desc}'".format(table=table)
+            replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
             new_text = re.sub(pattern, replacement, text)
 
         with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
