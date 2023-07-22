@@ -591,7 +591,7 @@ class YamlFormatted(ruamel.yaml.YAML):
         self.encoding = "utf-8"
         self.block_seq_indent = 2
         self.indent = 4
-        self.emitter.alt_null = ""
+        self.emitter.alt_null = "''"
 
 
 # Create Query
@@ -729,7 +729,7 @@ def get_records():
         postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
         # postgreSQL_select_Query = """
         # SELECT *
-        # FROM query 
+        # FROM query
         # WHERE insert_time  > now() - interval '30 second';
         # """
         print(postgreSQL_select_Query)
