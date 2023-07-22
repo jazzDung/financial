@@ -45,6 +45,7 @@ from financial.utils import (
 
 @asset(group_name="user_query")
 def create_model():
+    logger = logging.getLogger("create_query")
     df = get_records()
 
     if df.empty:
@@ -62,10 +63,6 @@ def create_model():
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
-    mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
-    mask = list(mapped)
-
-    dbt_tables_reporting = list(compress(dbt_tables_names, mask))
     status = []  # Status of preliminary checking
 
     for i in df.index:
@@ -93,16 +90,15 @@ def create_model():
             continue
         # Check multi-query
         parsed = sqlfluff.parse(query_string)["file"]
-        statement_list = [statement for statement in parsed if tuple(statement.keys())[0] == "statement"]
-        if len(statement_list) > 1:
+        if type(parsed) == list:
             df.loc[i, "success"] = False
             status.append("Multiple statement")
             continue
         # Check select statements
-        if list(statement_list[0]["statement"].keys())[0] != "select_statement":
-            df.loc[i, "success"] = False
-            status.append("Query is not 'SELECT'")
-            continue
+        # if list(statement_list[0]["statement"].keys())[0] != "select_statement":
+        #     df.loc[i, "success"] = False
+        #     status.append("Query is not 'SELECT'")
+        #     continue
         # Check tables and add model ref
         partially_model, processed_status = get_ref(df.loc[i], dbt_tables, (USER_SCHEMA, SERVING_SCHEMA))
         if processed_status != "Success":
