@@ -16,11 +16,6 @@ import sqlparse
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from financial.resources import (
     DATABASE_ID,
-    DATABASE_NAME,
-    DATABASE_HOST,
-    DATABASE_PASSWORD,
-    DATABASE_PORT,
-    DATABASE_USERNAME,
     EMAIL_PASSWORD,
     EMAIL_PORT,
     EMAIL_SENDER,
@@ -56,7 +51,7 @@ def create_model():
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
-
+    raise Exception(DBT_PROJECT_DIR, MANIFEST_PATH, USER_MODEL_PATH)
     # Get all schema names in project
     # Either this or defined schema name available to the user before
     with open(MANIFEST_PATH) as f:

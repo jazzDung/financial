@@ -33,7 +33,7 @@ def dataset_sync():
         dbt_tables_temp = get_tables_from_dbt(dbt_manifest, None)
         dbt_tables = {**dbt_tables, **dbt_tables_temp}
     else:
-        raise Exception("No exposures found at path")
+        raise Exception("No manifest found at path")
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
