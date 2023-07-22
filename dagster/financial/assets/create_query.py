@@ -2,11 +2,11 @@ import datetime
 import json
 
 import logging
-
-# import re
-# import smtplib
-# import ssl
+import sys
+import os
 from itertools import compress
+
+import sqlfluff
 from dagster import asset
 
 # import pandas as pd
@@ -45,6 +45,12 @@ from financial.utils import (
 
 @asset(group_name="user_query")
 def create_model():
+    df = get_records()
+
+    if df.empty:
+        print(df.empty)
+        exit(0)
+
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
 
@@ -83,8 +89,6 @@ def create_model():
     ]
     status = []  # Status of preliminary checking
 
-    df = get_records()
-
     for i in df.index:
         # Check name validity
         print(df.loc[i]["name"])
@@ -93,14 +97,12 @@ def create_model():
         if not name_validation:
             status.append("Invalid name")
             df.loc[i, "success"] = False
-            # df.loc[i,'checked'] = True
             continue
         name_unique = is_unique_table_name(df.loc[i]["name"], dbt_tables_names)
         print(name_unique)
         if not name_unique:
             status.append("Model name is duplicated with another existing model")
             df.loc[i, "success"] = False
-            # df.loc[i,'checked'] = True
             continue
         # Check syntax
         query_string = df.loc[i]["query_string"]
@@ -108,20 +110,21 @@ def create_model():
         validation = check_string(query_string)
         if not validation[0]:
             df.loc[i, "success"] = False
-            # df.loc[i,'checked'] = True
             status.append("Invalid query: {error}".format(error=validation[1]))
             continue
         # Check multi-query
-        if len(sqlparse.split(query_string)) > 1:
+        parsed = sqlfluff.parse(query_string)['file']
+        statement_list = [statement for statement in parsed if tuple(statement.keys())[0]=='statement']
+        if len(statement_list) > 1:
             df.loc[i, "success"] = False
-            # df.loc[i,'checked'] = True
             status.append("Multiple statement")
             continue
-        if sqlparse.parse(query_string)[0].get_type() != "SELECT":
+        # Check select statements
+        if list(statement_list[0]["statement"].keys())[0] != "select_statement":
             df.loc[i, "success"] = False
-            # df.loc[i,'checked'] = True
             status.append("Query is not 'SELECT'")
             continue
+
         model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i, "name"])
 
         with open(model_path, "w+") as f:
@@ -136,6 +139,7 @@ def create_model():
             f.close()
         status.append("Success")
     print(status)
+
     # Get Emails from API
     superset = SupersetDBTConnectorSession(logger=logger)
     users = set(df["user_id"].to_list())
@@ -172,6 +176,14 @@ def create_model():
                 server.login(sender_email, password)
                 server.sendmail(sender_email, email_dict[df.loc[i, "user_id"]], message)
 
+    # If every record is unsuccesful, terminate script early
+    if not df["success"].any():
+        entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
+        print("entries")
+        print(entries_to_update)
+        update_records(entries_to_update)
+        exit(0)
+
     # initialize
     dbt = dbtRunner()
 
@@ -181,7 +193,7 @@ def create_model():
         "--project-dir",
         PROJECT_PATH,
         "--select",
-        # "tag:{exec_time}".format(exec_time=EXEC_TIME)
+        "tag:{exec_time}".format(exec_time=EXEC_TIME)
         "tag:user_created",
     ]
 
@@ -206,6 +218,7 @@ def create_model():
             # Check Success
             if df.loc[i, "success"] is None or df.loc[i, "success"] is True:
                 if dbt_res_df_map[i].status == "success":
+                    df.loc[i, "success"] = True
                     rison_request = "/dataset/"
                     # Data to be written
                     dictionary = {
@@ -229,6 +242,7 @@ def create_model():
                         sql=df.loc[i, "query_string"]
                     )
                 else:
+                    df.loc[i, "success"] = False
                     message = """\
         Subject: Superset Model Creation
 
@@ -247,8 +261,18 @@ def create_model():
                 server.login(sender_email, password)
                 server.sendmail(sender_email, email_dict[df.loc[i, "user_id"]], message)
 
+    # Delete unsucessful model
+    for i in df.index:
+        # Check Success
+        if df.loc[i, "success"] is False:
+            if dbt_res_df_map[i].status != "success":
+                model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
+                if os.path.exists(model_path):
+                    os.remove(model_path)
+
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
     print("entries")
     print(entries_to_update)
     update_records(entries_to_update)
+
     raise Exception(entries_to_update)
