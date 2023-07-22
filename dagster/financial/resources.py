@@ -55,10 +55,11 @@ DBT_PROFILE_PATH = data["profile"]
 DBT_TARGET = data["target"]
 MANIFEST_PATH = data["target"] + "/manifest.json"
 EXPOSURES_PATH = data["project"] + "/models/exposures/dashboards.yml"
+DESC_YAML_PATH = data["project"] + "/models/user/user_schema.yml"
 f.close()
 
 
-# Superset 
+# Superset
 f = open(PATH + "superset.json")
 data = json.load(f)[ENV]
 SUPERSET_ID = data["id"]

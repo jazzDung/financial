@@ -3,7 +3,8 @@ import re
 
 from dagster import asset
 from financial.utils import SupersetDBTConnectorSession, YamlFormatted
-from financial.resources import DATABASE_ID, USER_SCHEMA
+from financial.resources import DATABASE_ID, USER_SCHEMA, DESC_YAML_PATH
+
 
 @asset(group_name="dashboard")
 def pull_user_description():
@@ -24,8 +25,7 @@ def pull_user_description():
     desc_yaml_file = YamlFormatted()
 
     col_desc_yaml_schema = {"version": 2, "models": result_list}
-    desc_yaml_path = "/home/vu/Desktop/Projects/Thesis/dbt-project/thesis/models/user_schema.yml"
-    with open(desc_yaml_path, "w+", encoding="utf-8") as f:
+    with open(DESC_YAML_PATH, "w+", encoding="utf-8") as f:
         desc_yaml_file.dump(col_desc_yaml_schema, f)
 
     # write to each model file
