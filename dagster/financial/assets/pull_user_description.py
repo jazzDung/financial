@@ -15,7 +15,13 @@ def pull_user_description():
 
     result = res["result"]
 
-    result_list = [{"name": result[id]["table_name"], "columns": result[id]["columns"]} for id in result]
+    result_list = [
+        {"name": result[id]["table_name"], "columns": result[id]["columns"]}
+        for id in result
+        if result[id]["table_schema"] == USER_SCHEMA
+    ]
+    for table in result_list:
+        table["columns"] = [column for column in table["columns"] if column["description"]]
 
     tables_desc = {}
     for key in result.keys():
