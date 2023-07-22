@@ -19,6 +19,7 @@ from financial.resources import (
     EMAIL_PASSWORD,
     EMAIL_PORT,
     EMAIL_SENDER,
+    SERVING_SCHEMA,
     SMTP,
     SUPERSET_ID,
     USER_MODEL_PATH,
@@ -29,9 +30,11 @@ from financial.resources import (
 from pgsanity.pgsanity import check_string
 from financial.utils import (
     SupersetDBTConnectorSession,
+    add_materialization,
     create_dbt_model,
     get_emails,
     get_records,
+    get_ref,
     get_tables_from_dbt,
     get_tables_from_sql,
     get_tables_from_sql_simple,
@@ -58,29 +61,12 @@ def create_model():
         dbt_manifest = json.load(f)
         dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
-    SCHEMA_NAMES = tuple(
-        set(
-            [
-                dbt_tables[table]["schema"]
-                for table in dbt_tables.keys()
-                if not dbt_tables[table]["schema"].endswith("_dbt_test__audit")
-            ]
-        )
-    )
-    SCHEMA_NAMES_WITH_DOT = tuple([schema + "." for schema in SCHEMA_NAMES])
-
-    logger = logging.getLogger(__name__)
-    # Get table names with and without schemas
+    # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
-
-    mapped = map(lambda x: x.startswith(SCHEMA_NAMES_WITH_DOT), dbt_tables_names)
+    mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
     mask = list(mapped)
 
     dbt_tables_reporting = list(compress(dbt_tables_names, mask))
-
-    dbt_tables_with_schemas = [
-        table.removeprefix(schema) for table in dbt_tables_reporting for schema in SCHEMA_NAMES_WITH_DOT
-    ]
     status = []  # Status of preliminary checking
 
     for i in df.index:
@@ -118,18 +104,20 @@ def create_model():
             df.loc[i, "success"] = False
             status.append("Query is not 'SELECT'")
             continue
+        # Check tables and add model ref
+        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, (USER_SCHEMA, SERVING_SCHEMA))
+        if processed_status != "Success":
+            df.loc[i, "success"] = False
+            status.append(processed_status)
+            continue
+        # Add config
+        processed_model = add_materialization(partially_model, df.loc[i], EXEC_TIME)
 
         model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
 
         with open(model_path, "w+") as f:
-            model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas, EXEC_TIME, SCHEMA_NAMES)
-            if model_file_content:
-                f.write(model_file_content)
-                print("Wrote model {name} contents".format(name=df.loc[i, "name"]))
-            else:
-                df.loc[i, "success"] = False
-                print("Model references no valid tables.".format(name=df.loc[i, "name"]))
-
+            f.write(processed_model)
+            print("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status.append("Success")
     print(status)

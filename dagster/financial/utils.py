@@ -245,7 +245,7 @@ def get_tables_from_sql_simple(sql):
 def get_tables_from_sql(sql, dialect):
     """
     (Superset) SQL parsing using sqlfluff to get clean tables names.
-    If sqlfluff parsing fails it runs the above regex parsing fun.
+    If sqlfluff parsing fails it runs the above regex parsing func.
     Returns a tables list.
     """
     try:
@@ -615,60 +615,70 @@ def is_unique_table_name(table_name, dbt_tables):
         return False
 
 
-def create_dbt_model(df_row, dbt_tables, exec_time, schema_names):
+def get_ref(original_query, dbt_tables, schema_names):
     """
-    Returns content of a user-created dbt model file.
+    Returns content of a user-created dbt model file w/o config.
 
     Args:
-        df_row: Row of DataFrame taken from "query" table.
-        dbt_tables: Set of tables name.
+        original_query: Query needed processing
+        dbt_tables: Dict of dicts obtained by get_tables_from_dbt.
+        schema_names: List of serving schema names.
 
     Returns:
         String: the content of the dbt model.
     """
-
-    original_query = df_row["query_string"]
+    serving_table = [table for table in dbt_tables if dbt_tables[table]["schema"] in schema_names]
     original_query = original_query[:-1] if original_query[-1] == ";" else original_query
     # Access table names
     try:
         original_query = sqlfluff.fix(original_query, dialect="posgres")
         table_names = set(get_tables_from_sql(original_query, dialect="posgres"))
-    except:
+    except:  # If sqlfluff fix fails
         table_names = set(get_tables_from_sql_simple(original_query))
-
-    # Wrap original query
-    new_query = """
-WITH
-original_query as (
-    {original_query}
-)
-    
-select * from original_query
-    """.format(
-        original_query=original_query
-    )
-
     # Put tables in subqueries
-    final_tables = tuple(table_names.intersection(dbt_tables))  # Filter out
-    assert len(final_tables) > 0, "No tables referenced in dbt projects"
+    final_tables = tuple(table_names.intersection(serving_table))  # Filter out
+
+    if len(final_tables) > 0:
+        return None, "No tables referenced in dbt projects"
+    # Check if tables in serving schemas is referred to without schema
+    for table in final_tables:
+        if "{schema}.{name}".format(schema=dbt_tables[table]["schema"], name=table) not in original_query:
+            return None, "Please include the schema with table referrence"
 
     table_to_ref = {}
-
-    for table in final_tables:  # Ensure that there is only table names, no schema names
+    # Ensure that there is only table names, no schema names
+    for table in final_tables:
         if table.startswith(schema_names):
             table_to_ref[table] = table[table.find(".") + 1 :]
         else:
             table_to_ref[table] = table
+
+    # Add ref for original query
+    new_query = original_query
     for table in final_tables:
         new_query = (
             """
     -- depends_on: {{{{ref(\'{table}\')}}}}""".format(
-                table=table_to_ref[final_tables[0]]
+                table=table
             )
             + new_query
         )
+    return new_query, "Success"
 
-    new_query = (
+
+def add_materialization(df_row, query, exec_time):
+    """
+    Returns content of a user-created dbt model file with config.
+
+    Args:
+        df_row: Row of DataFrame taken from "query" table.
+        dbt_tables: List of tables name.
+        schema_names: List of serving schema names.
+
+    Returns:
+        String: the content of the dbt model.
+    """
+    query = (
         """
 {{{{ config(
     materialized=\'{materialization}\',
@@ -683,12 +693,9 @@ select * from original_query
             desc=df_row["description"],
             created_time=exec_time,
         )
-        + new_query
+        + query
     )
-
-    # original_query = re.sub(r".", "_", original_query)
-
-    return new_query
+    return query
 
 
 def get_records():

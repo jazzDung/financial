@@ -2,7 +2,7 @@
 {{ config(
     materialized='table',
     name='test_query_hgffhgf',
-    description='test description',
+    description='newdesc',
     tags = ['1','user_created','20/07/2023_18:48:25'],
     schema = 'financial_user'
 ) }}
