@@ -43,7 +43,7 @@ def push_description():
         columns_refreshed = 0
         logging.info("Processing dataset %d/%d.", i + 1, len(sst_datasets))
         sst_dataset_id = sst_dataset["id"]
-        sst_dataset_name = sst_dataset["table_name"]
+        sst_dataset_name = sst_dataset["name"]
         sst_dataset_key = sst_dataset["key"]
         try:
             refresh_columns_in_superset(superset, sst_dataset_id)
