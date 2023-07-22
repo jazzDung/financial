@@ -31,7 +31,6 @@ from pgsanity.pgsanity import check_string
 from financial.utils import (
     SupersetDBTConnectorSession,
     add_materialization,
-    create_dbt_model,
     get_emails,
     get_records,
     get_ref,
