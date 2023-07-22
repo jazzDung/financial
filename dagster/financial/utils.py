@@ -136,9 +136,12 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
             name = table["name"]
             schema = table["schema"]
             database = table["database"]
+            description = table["description"]
             alias = table["alias"]
             source = table["unique_id"].split(".")[-2]
             table_key = schema + "." + alias
+            table_key_short = schema + "." + name
+            columns = table["columns"]
 
             if dbt_db_name is None or database == dbt_db_name:
                 # fail if it breaks uniqueness constraint
@@ -155,6 +158,8 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
                     "ref": f"ref('{name}')" if table_type == "nodes" else f"source('{source}', '{name}')",
                     "user": None,
                 }
+                tables[table_key_short] = {"columns": columns}
+                tables[table_key_short]["description"] = description
             if schema == "user":
                 tables[table_key]["user"] = table["tags"][0]
 
@@ -416,38 +421,6 @@ def get_datasets_from_superset_dbt_refs(
     return datasets
 
 
-def get_tables_descriptions_from_dbt(dbt_manifest, dbt_db_name):
-    global table
-    tables = {}
-    for table_type in ["nodes"]:
-        manifest_subset = dbt_manifest[table_type]
-
-        for table_key_long in manifest_subset:
-            table = manifest_subset[table_key_long]
-            name = table["name"]
-            schema = table["schema"]
-            database = table["database"]
-            description = table["description"]
-            table_key_short = schema + "." + name
-            columns = table["columns"]
-
-            if dbt_db_name is None or database == dbt_db_name:
-                # fail if it breaks uniqueness constraint
-                assert table_key_short not in tables, (
-                    f"Table {table_key_short} is a duplicate name (schema + table) "
-                    f"across databases. "
-                    "This would result in incorrect matching between Superset and dbt. "
-                    "To fix this, remove duplicates or add the ``dbt_db_name`` argument."
-                )
-
-                tables[table_key_short] = {"columns": columns}
-                tables[table_key_short]["description"] = description
-
-    assert tables, "Manifest is empty!"
-
-    return tables
-
-
 def refresh_columns_in_superset(superset: SupersetDBTConnectorSession, dataset_id):
     logging.info("Refreshing columns in Superset.")
     superset.request("PUT", f"/dataset/{dataset_id}/refresh")
@@ -462,8 +435,8 @@ def add_certifications_in_superset(
         "description": dbt_tables[sst_dataset_key]["description"],
         "owners": [SUPERSET_ID],
     }
-    if "user" in dbt_tables[sst_dataset_name].keys():
-        body["owners"].append(dbt_tables[sst_dataset_name]["user"])
+    if "user" in dbt_tables[sst_dataset_key].keys():
+        body["owners"].append(dbt_tables[sst_dataset_key]["user"])
     superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
 

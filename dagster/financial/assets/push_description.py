@@ -10,7 +10,7 @@ from financial.utils import (
     add_certifications_in_superset,
     add_superset_columns,
     get_physical_datasets_from_superset,
-    get_tables_descriptions_from_dbt,
+    get_tables_from_dbt,
     merge_columns_info,
     put_columns_to_superset,
     refresh_columns_in_superset,
@@ -35,9 +35,9 @@ def push_description():
         with open(MANIFEST_PATH) as f:
             dbt_manifest = json.load(f)
     else:
-        raise Exception("No exposures found at path")
+        raise Exception("No manifest found at path")
 
-    dbt_tables = get_tables_descriptions_from_dbt(dbt_manifest, None)
+    dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
     for i, sst_dataset in enumerate(sst_datasets):
         columns_refreshed = 0
