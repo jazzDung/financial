@@ -139,8 +139,7 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
             description = table["description"]
             alias = table["alias"]
             source = table["unique_id"].split(".")[-2]
-            table_key = schema + "." + alias
-            table_key_short = schema + "." + name
+            table_key = schema + "." + alias  # Key will be alias, not name
             columns = table["columns"]
 
             if dbt_db_name is None or database == dbt_db_name:
@@ -157,9 +156,10 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
                     "type": table_type[:-1],
                     "ref": f"ref('{name}')" if table_type == "nodes" else f"source('{source}', '{name}')",
                     "user": None,
+                    "columns": columns,
+                    "description": description,
+                    "alias": alias,
                 }
-                tables[table_key_short] = {"columns": columns}
-                tables[table_key_short]["description"] = description
             if schema == "user":
                 tables[table_key]["user"] = table["tags"][0]
 
@@ -596,11 +596,11 @@ def is_valid_table_name(table_name):
 
 def is_unique_table_name(table_name, dbt_tables):
     """
-    Checks if the given string is a valid table name in PostgreSQL.
+    Checks if the given string is a valid table name in PostgreSQL and dbt.
 
     Args:
         table_name: The string to check.
-
+        dbt_tables: Dict of get_dbt_tables
     Returns:
         True if the string is a valid table name, False otherwise.
     """
@@ -628,7 +628,7 @@ def get_ref(original_query, dbt_tables, schema_names):
         String: the content of the dbt model.
     """
     serving_table = [table for table in dbt_tables if dbt_tables[table]["schema"] in schema_names]
-    original_query = original_query[:-1] if original_query[-1] == ";" else original_query
+    # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
     try:
         original_query = sqlfluff.fix(original_query, dialect="posgres")

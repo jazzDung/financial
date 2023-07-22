@@ -64,6 +64,7 @@ def create_model():
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
     status = []  # Status of preliminary checking
+    dbt_names_aliases = [table["name"] for table in dbt_tables] + [table["alias"] for table in dbt_tables] # Name and aliases wo schema
 
     for i in df.index:
         # Check name validity
@@ -74,7 +75,7 @@ def create_model():
             status.append("Invalid name")
             df.loc[i, "success"] = False
             continue
-        name_unique = is_unique_table_name(df.loc[i]["name"], dbt_tables_names)
+        name_unique = is_unique_table_name(df.loc[i]["name"], dbt_names_aliases)  # check aliases and name
         print(name_unique)
         if not name_unique:
             status.append("Model name is duplicated with another existing model")
