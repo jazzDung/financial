@@ -14,7 +14,6 @@ def pull_user_description():
     res = superset.request("GET", f"/database/get_tables_descriptions/?q=[{DATABASE_ID}]")
 
     result = res["result"]
-    USER_SCHEMA = "financial_user"
     result_list = [
         {"name": result[id]["table_name"], "columns": result[id]["columns"]}
         for id in result
