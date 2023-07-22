@@ -26,7 +26,10 @@ from financial.resources import (
     EMAIL_SENDER,
     SMTP,
     SUPERSET_ID,
+    USER_MODEL_PATH,
     USER_SCHEMA,
+    MANIFEST_PATH,
+    DBT_PROJECT_DIR,
 )
 from pgsanity.pgsanity import check_string
 from financial.utils import (
@@ -53,10 +56,6 @@ def create_model():
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
-
-    PROJECT_PATH = "/home/jazzdung/projects/financial/dbt/"
-    # MANIFEST_PATH = os.getenv('DBT_PROJECT_PATH')+"/target/manifest.json"
-    MANIFEST_PATH = PROJECT_PATH + "target/manifest.json"
 
     # Get all schema names in project
     # Either this or defined schema name available to the user before
@@ -125,7 +124,7 @@ def create_model():
             status.append("Query is not 'SELECT'")
             continue
 
-        model_path = PROJECT_PATH + "models/user/{name}.sql".format(name=df.loc[i, "name"])
+        model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
 
         with open(model_path, "w+") as f:
             model_file_content = create_dbt_model(df.loc[i], dbt_tables_with_schemas, EXEC_TIME, SCHEMA_NAMES)
@@ -191,7 +190,7 @@ def create_model():
     cli_args = [
         "run",
         "--project-dir",
-        PROJECT_PATH,
+        DBT_PROJECT_DIR,
         "--select",
         "tag:{exec_time}".format(exec_time=EXEC_TIME),
         "tag:user_created",

@@ -426,9 +426,7 @@ def refresh_columns_in_superset(superset: SupersetDBTConnectorSession, dataset_i
     superset.request("PUT", f"/dataset/{dataset_id}/refresh")
 
 
-def add_certifications_in_superset(
-    superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables
-):
+def add_certifications_in_superset(superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables):
     logging.info("Refreshing columns in Superset.")
     body = {
         "extra": '{"certification": \n  {"certified_by": "Data Analytics Team", \n   "details": "This table is the source of truth." \n    \n  }\n}',
@@ -704,7 +702,7 @@ def get_records():
             database=DATABASE_NAME,
         )
         cursor = connection.cursor()
-        postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
+        postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE} where check=False and success is null"
         # postgreSQL_select_Query = """
         # SELECT *
         # FROM query
