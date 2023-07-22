@@ -113,8 +113,8 @@ def create_model():
             status.append("Invalid query: {error}".format(error=validation[1]))
             continue
         # Check multi-query
-        parsed = sqlfluff.parse(query_string)['file']
-        statement_list = [statement for statement in parsed if tuple(statement.keys())[0]=='statement']
+        parsed = sqlfluff.parse(query_string)["file"]
+        statement_list = [statement for statement in parsed if tuple(statement.keys())[0] == "statement"]
         if len(statement_list) > 1:
             df.loc[i, "success"] = False
             status.append("Multiple statement")
@@ -193,7 +193,7 @@ def create_model():
         "--project-dir",
         PROJECT_PATH,
         "--select",
-        "tag:{exec_time}".format(exec_time=EXEC_TIME)
+        "tag:{exec_time}".format(exec_time=EXEC_TIME),
         "tag:user_created",
     ]
 

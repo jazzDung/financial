@@ -15,7 +15,7 @@ from financial.utils import (
     put_columns_to_superset,
     refresh_columns_in_superset,
 )
-from financial.resources import DATABASE_ID, MANIFEST_PATH
+from financial.resources import DATABASE_ID, MANIFEST_PATH, USER_SCHEMA
 
 
 @asset(group_name="dashboard")
@@ -43,8 +43,9 @@ def push_description():
         columns_refreshed = 0
         logging.info("Processing dataset %d/%d.", i + 1, len(sst_datasets))
         sst_dataset_id = sst_dataset["id"]
-        sst_dataset_name = sst_dataset["name"]
         sst_dataset_key = sst_dataset["key"]
+        if sst_dataset["schema"] == USER_SCHEMA:
+            continue  # Don't push user description, or do push but do not certify
         try:
             refresh_columns_in_superset(superset, sst_dataset_id)
             columns_refreshed = 1
