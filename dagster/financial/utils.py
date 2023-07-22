@@ -635,6 +635,8 @@ def get_ref(original_query, dbt_tables, schema_names):
         table_names = set(get_tables_from_sql(original_query, dialect="posgres"))
     except:  # If sqlfluff fix fails
         table_names = set(get_tables_from_sql_simple(original_query))
+    if len(table_names.difference(serving_table)) > 0:
+        return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
     final_tables = tuple(table_names.intersection(serving_table))  # Filter out
 
