@@ -63,11 +63,12 @@ f.close()
 # Superset
 f = open(PATH + "superset.json")
 data = json.load(f)[ENV]
-SUPERSET_ID = data["id"]
+SUPERSET_ID = data["bot_id"]
 SUPERSET_USERNAME = data["username"]
 SUPERSET_PASSWORD = data["password"]
 SUPERSET_HOST = data["host"]
 DATABASE_ID = data["db"]
+SUPERSET_ADMIN_ID = data["admin_id"]
 f.close()
 
 # Create Query

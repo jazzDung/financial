@@ -15,7 +15,7 @@ from financial.utils import (
     get_tables_from_dbt,
     merge_dashboards_with_datasets,
 )
-from financial.resources import DATABASE_ID, EXPOSURES_PATH, MANIFEST_PATH, SQL_DIALECT, SUPERSET_ID
+from financial.resources import DATABASE_ID, EXPOSURES_PATH, MANIFEST_PATH, SQL_DIALECT, SUPERSET_ADMIN_ID
 
 # logging.basicConfig(level=logging.INFO)
 logging.getLogger("sqlfluff").setLevel(level=logging.WARNING)
@@ -51,7 +51,7 @@ def pull_dashboard():
 
     dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
-    dashboards, dashboards_datasets = get_dashboards_from_superset(superset, DATABASE_ID, SUPERSET_ID)
+    dashboards, dashboards_datasets = get_dashboards_from_superset(superset, DATABASE_ID, SUPERSET_ADMIN_ID)
 
     datasets = get_datasets_from_superset_dbt_refs(superset, dashboards_datasets, dbt_tables, SQL_DIALECT, DATABASE_ID)
 
