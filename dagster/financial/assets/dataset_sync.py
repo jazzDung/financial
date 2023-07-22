@@ -13,7 +13,8 @@ from financial.utils import (
     get_physical_datasets_from_superset,
     get_tables_from_dbt,
 )
-from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, SUPERSET_ID
+from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, USER_SCHEMA, SUPERSET_ID
+
 
 @asset(group_name="dashboard")
 def dataset_sync():
@@ -40,9 +41,9 @@ def dataset_sync():
     print()
     superset_dict_keys = [i["key"] for i in superset_tables_dict_list]
     # Only tables that start with a given schema prefix name
-    mapped = map(lambda x: x.startswith(SERVING_SCHEMA), dbt_tables_names)
+    mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
     mask = list(mapped)
-    mapped_superset = map(lambda x: x.startswith(SERVING_SCHEMA), superset_dict_keys)
+    mapped_superset = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), superset_dict_keys)
     mask_superset = list(mapped_superset)
 
     dbt_tables_reporting = list(compress(dbt_tables_names, mask))
