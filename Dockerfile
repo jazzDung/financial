@@ -6,7 +6,7 @@ FROM ubuntu:jammy
 RUN apt-get update && apt-get install -y \
     python3-pip
 
-RUN apt-get install libecpg-dev
+RUN apt-get install -y libecpg-dev
 
 RUN \
     pip3 install\
