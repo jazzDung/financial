@@ -35,8 +35,6 @@ from financial.utils import (
     get_records,
     get_ref,
     get_tables_from_dbt,
-    get_tables_from_sql,
-    get_tables_from_sql_simple,
     is_unique_table_name,
     is_valid_table_name,
     update_records,
@@ -101,7 +99,7 @@ def create_model():
         #     status.append("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
-        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, (USER_SCHEMA, SERVING_SCHEMA))
+        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, parsed, (USER_SCHEMA, SERVING_SCHEMA))
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status.append(processed_status)

@@ -1,3 +1,4 @@
+from typing import Any, Dict, Union
 import pandas as pd
 import logging
 import re
@@ -22,6 +23,8 @@ from financial.resources import (
     QUERY_TABLE,
 )
 from urllib.parse import unquote
+from typing import Any, Dict, Iterator, List, Union
+
 
 #### ADD ALL OF THE END POINT USED TO CSRF EXEMPT LIST TO RUN PARALLELY
 #### ONLY USE SESSION FOR SEQUENTIAL RUNNING SCRIPTS
@@ -242,16 +245,29 @@ def get_tables_from_sql_simple(sql):
     return tables
 
 
-def get_tables_from_sql(sql, dialect):
+def get_tables_from_sql(sql, dialect, sql_parsed=None):
     """
     (Superset) SQL parsing using sqlfluff to get clean tables names.
     If sqlfluff parsing fails it runs the above regex parsing func.
     Returns a tables list.
     """
     try:
-        sql_parsed = sqlfluff.parse(sql, dialect=dialect)
-        tables_raw = [table.raw for table in sql_parsed.tree.recursive_crawl("table_reference")]  # type: ignore
-        tables_cleaned = [".".join(table.replace('"', "").lower().split(".")[-2:]) for table in tables_raw]
+        if not sql_parsed:
+            sql_parsed = sqlfluff.parse(sql, dialect=dialect)
+        tables_raw = list(get_json_segment(sql_parsed, "table_reference"))  # type: ignore
+        tables_cleaned = []  # With schema
+        for table_ref in tables_raw:
+            if isinstance(table_ref, list):
+                table_ref_identifier = []
+                # Get last 2 "naked_identifier"
+                for dictionary in table_ref[::-1]:
+                    if "naked_identifier" in dictionary:
+                        table_ref_identifier.append(dictionary["naked_identifier"])
+                        if len(table_ref_identifier) == 2:
+                            tables_cleaned.append(".".join(table_ref_identifier))
+                            break
+            if isinstance(table_ref, dict):
+                tables_cleaned.append(table_ref["naked_identifier"])
     except (
         sqlfluff.core.errors.SQLParseError,  # type: ignore
         sqlfluff.core.errors.SQLLexError,  # type: ignore
@@ -267,9 +283,31 @@ def get_tables_from_sql(sql, dialect):
         )
         tables_cleaned = get_tables_from_sql_simple(sql)
 
-    tables = list(set(tables_cleaned))
+    return tables_cleaned
 
-    return tables
+
+def get_json_segment(
+    parse_result: Dict[str, Any], segment_type: str
+) -> Iterator[Union[str, Dict[str, Any], List[Dict[str, Any]]]]:
+    """Recursively search JSON parse result for specified segment type.
+
+    Args:
+        parse_result (Dict[str, Any]): JSON parse result from `sqlfluff.fix`.
+        segment_type (str): The segment type to search for.
+
+    Yields:
+        Iterator[Union[str, Dict[str, Any], List[Dict[str, Any]]]]:
+        Retrieves children of specified segment type as either a string for a raw
+        segment or as JSON or an array of JSON for non-raw segments.
+    """
+    for k, v in parse_result.items():
+        if k == segment_type:
+            yield v
+        elif isinstance(v, dict):
+            yield from get_json_segment(v, segment_type)
+        elif isinstance(v, list):
+            for s in v:
+                yield from get_json_segment(s, segment_type)
 
 
 def get_dashboards_from_superset(superset: SupersetDBTConnectorSession, superset_db_id, user_id):
@@ -615,7 +653,12 @@ def is_unique_table_name(table_name, dbt_tables):
         return False
 
 
-def get_ref(original_query, dbt_tables, schema_names):
+class SchemaReferenceError(Exception):
+    ...
+    pass
+
+
+def get_ref(original_query, dbt_tables, parsed_result, schema_names):
     """
     Returns content of a user-created dbt model file w/o config.
 
@@ -627,14 +670,11 @@ def get_ref(original_query, dbt_tables, schema_names):
     Returns:
         String: the content of the dbt model.
     """
-    serving_table = [table for table in dbt_tables if dbt_tables[table]["schema"] in schema_names]
+    serving_table = [table["alias"] for table in dbt_tables if dbt_tables[table]["schema"] in schema_names]
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
-    try:
-        original_query = sqlfluff.fix(original_query, dialect="posgres")
-        table_names = set(get_tables_from_sql(original_query, dialect="posgres"))
-    except:  # If sqlfluff fix fails
-        table_names = set(get_tables_from_sql_simple(original_query))
+    table_names = set(get_tables_from_sql(original_query, dialect="posgres", sql_parsed=parsed_result))
+    original_query = sqlfluff.fix(original_query, dialect="posgres")
     if len(table_names.difference(serving_table)) > 0:
         return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
