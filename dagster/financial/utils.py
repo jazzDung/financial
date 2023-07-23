@@ -245,45 +245,46 @@ def get_tables_from_sql_simple(sql):
     return tables
 
 
-def get_tables_from_sql(sql, dialect, sql_parsed=None):
-    """
-    (Superset) SQL parsing using sqlfluff to get clean tables names.
-    If sqlfluff parsing fails it runs the above regex parsing func.
-    Returns a tables list.
-    """
-    try:
-        if not sql_parsed:
-            sql_parsed = sqlfluff.parse(sql, dialect=dialect)
-        tables_raw = list(get_json_segment(sql_parsed, "table_reference"))  # type: ignore
-        tables_cleaned = []  # With schema
-        for table_ref in tables_raw:
-            if isinstance(table_ref, list):
-                table_ref_identifier = []
-                # Get last 2 "naked_identifier"
-                for dictionary in table_ref[::-1]:
-                    if "naked_identifier" in dictionary:
-                        table_ref_identifier.append(dictionary["naked_identifier"])
-                        if len(table_ref_identifier) == 2:
-                            tables_cleaned.append(".".join(table_ref_identifier))
-                            break
-            if isinstance(table_ref, dict):
-                tables_cleaned.append(table_ref["naked_identifier"])
-    except (
-        sqlfluff.core.errors.SQLParseError,  # type: ignore
-        sqlfluff.core.errors.SQLLexError,  # type: ignore
-        sqlfluff.core.errors.SQLFluffUserError,  # type: ignore
-        sqlfluff.api.simple.APIParsingError,  # type: ignore
-    ) as e:  # type: ignore
-        logging.warning(
-            "Parsing SQL through sqlfluff failed. "
-            "Let me attempt this via regular expressions at least and "
-            "check the problematic query and error below.\n%s",
-            sql,
-            exc_info=e,
-        )
-        tables_cleaned = get_tables_from_sql_simple(sql)
+def get_tables_from_dbt(dbt_manifest, dbt_db_name):
+    tables = {}
+    for table_type in ["nodes"]:
+        manifest_subset = dbt_manifest[table_type]
 
-    return tables_cleaned
+        for table_key_long in manifest_subset:
+            table = manifest_subset[table_key_long]
+            name = table["name"]
+            schema = table["schema"]
+            database = table["database"]
+            description = table["description"]
+            alias = table["alias"]
+            source = table["unique_id"].split(".")[-2]
+            table_key = schema + "." + alias  # Key will be alias, not name
+            columns = table["columns"]
+
+            if dbt_db_name is None or database == dbt_db_name:
+                # fail if it breaks uniqueness constraint
+                assert table_key not in tables, (
+                    f"Table {table_key} is a duplicate name (schema + table) across databases. "
+                    "This would result in incorrect matching between Superset and dbt. "
+                    "To fix this, remove duplicates or add ``dbt_db_name``."
+                )
+                tables[table_key] = {
+                    "name": name,
+                    "schema": schema,
+                    "database": database,
+                    "type": table_type[:-1],
+                    "ref": f"ref('{name}')" if table_type == "nodes" else f"source('{source}', '{name}')",
+                    "user": None,
+                    "columns": columns,
+                    "description": description,
+                    "alias": alias,
+                }
+            if schema == "user":
+                tables[table_key]["user"] = table["tags"][0]
+
+    assert tables, "Manifest is empty!"
+
+    return tables
 
 
 def get_json_segment(
@@ -672,8 +673,9 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     """
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
-    table_names = set(get_tables_from_sql(original_query, dialect="posgres", sql_parsed=parsed_result))
-    original_query = sqlfluff.fix(original_query, dialect="posgres")
+    fixed_query = str(original_query)
+    table_names = set(get_tables_from_sql(fixed_query, dialect="postgres", sql_parsed=parsed_result))
+    fixed_query = sqlfluff.fix(fixed_query, dialect="postgres")
     if len(table_names.difference(dbt_tables_names)) > 0:  # dbt_tables_names include schema
         return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
