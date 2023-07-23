@@ -120,12 +120,11 @@ def create_model():
     email_dict = get_emails(superset, users)
 
     port = EMAIL_PORT  # For SSL
-    # smtp_server = SMTP
     sender_email = EMAIL_SENDER
     password = EMAIL_PASSWORD
-
+    smtp_server = SMTP
     context = ssl.create_default_context()
-    smtp_server = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
+
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         for i in df.index:
             # Check Success
