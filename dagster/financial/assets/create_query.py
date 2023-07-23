@@ -145,7 +145,7 @@ def create_model():
             df.loc[i, "checked"] = True
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
-    If every record is unsuccesful, terminate script early
+    # If every record is unsuccesful, terminate script early
     if not df["success"].any():
         entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
         print("entries")
