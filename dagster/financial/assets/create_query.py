@@ -119,33 +119,27 @@ def create_model():
     users = set(df["user_id"].to_list())
     email_dict = get_emails(superset, users)
 
-    port = EMAIL_PORT  # For SSL
-    sender_email = EMAIL_SENDER
-    password = EMAIL_PASSWORD
-    smtp_server = SMTP
-    context = ssl.create_default_context()
+    SMTP.login(EMAIL_SENDER, EMAIL_PASSWORD)
 
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        for i in df.index:
-            # Check Success
-            if df.loc[i, "success"] == False:
-                message = """\
-        Subject: Superset Model Creation
+    for i in df.index:
+        # Check Success
+        if df.loc[i, "success"] == False:
+            message = """\
+    Subject: Superset Model Creation
 
-        Your Model was unsuccessfully created.
-        
-        Reason:
-        {reason}
+    Your Model was unsuccessfully created.
 
-        SQL:
-        {sql}
-        """.format(
-                    reason=status[i], sql=df.loc[i, "query_string"]
-                )
+    Reason:
+    {reason}
 
-                df.loc[i, "checked"] = True
-                server.login(sender_email, password)
-                server.sendmail(sender_email, email_dict[str(df.loc[i, "user_id"])], message)
+    SQL:
+    {sql}
+    """.format(
+                reason=status[i], sql=df.loc[i, "query_string"]
+            )
+
+            df.loc[i, "checked"] = True
+            SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
     # If every record is unsuccesful, terminate script early
     if not df["success"].any():
@@ -181,55 +175,53 @@ def create_model():
             if r.node.name == df.loc[i, "name"]:
                 dbt_res_df_map[i] = r
             break
-    context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        for i in df.index:
-            # Check Success
-            if df.loc[i, "success"] is None or df.loc[i, "success"] is True:
-                if dbt_res_df_map[i].status == "success":
-                    df.loc[i, "success"] = True
-                    rison_request = "/dataset/"
-                    # Data to be written
-                    dictionary = {
-                        # Parameter database
-                        "database": DATABASE_ID,
-                        "schema": USER_SCHEMA,
-                        "table_name": df.loc[i, "name"],
-                        "owners": [df.loc[i, "user_id"], SUPERSET_ID],
-                    }
-                    # Serializing json
-                    json_object = json.dumps(dictionary)
-                    response = superset.request("POST", rison_request, json=dictionary)
+    for i in df.index:
+        # Check Success
+        if df.loc[i, "success"] is None or df.loc[i, "success"] is True:
+            if dbt_res_df_map[i].status == "success":
+                df.loc[i, "success"] = True
+                rison_request = "/dataset/"
+                # Data to be written
+                dictionary = {
+                    # Parameter database
+                    "database": DATABASE_ID,
+                    "schema": USER_SCHEMA,
+                    "table_name": df.loc[i, "name"],
+                    "owners": [df.loc[i, "user_id"], SUPERSET_ID],
+                }
+                # Serializing json
+                json_object = json.dumps(dictionary)
+                response = superset.request("POST", rison_request, json=dictionary)
 
-                    message = """\
-        Subject: Superset Model Creation
+                message = """\
+    Subject: Superset Model Creation
 
-        Your Model was successfully created. 
+    Your Model was successfully created. 
 
-        SQL:{sql}
-        """.format(
-                        sql=df.loc[i, "query_string"]
-                    )
-                else:
-                    df.loc[i, "success"] = False
-                    message = """\
-        Subject: Superset Model Creation
+    SQL:{sql}
+    """.format(
+                    sql=df.loc[i, "query_string"]
+                )
+            else:
+                df.loc[i, "success"] = False
+                message = """\
+    Subject: Superset Model Creation
 
-        Your Model was unsuccessfully created during dbt's run, please contact the administrator.
-        
-        Reason:
-        {reason}
+    Your Model was unsuccessfully created during dbt's run, please contact the administrator.
+    
+    Reason:
+    {reason}
 
-        SQL:
-        {sql}
-        """.format(
-                        reason=dbt_res_df_map[i].message, sql=df.loc[i, "query_string"]
-                    )
+    SQL:
+    {sql}
+    """.format(
+                    reason=dbt_res_df_map[i].message, sql=df.loc[i, "query_string"]
+                )
 
-                df.loc[i, "checked"] = True
-                server.login(sender_email, password)
-                server.sendmail(sender_email, email_dict[str(df.loc[i, "user_id"])], message)
+            df.loc[i, "checked"] = True
+
+            SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
     # Delete unsucessful model
     for i in df.index:
