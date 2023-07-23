@@ -3,3 +3,7 @@
 /dagster/__pycache__/
 /dagster/.venv/
 
+.venv
+venv
+env
+.env
