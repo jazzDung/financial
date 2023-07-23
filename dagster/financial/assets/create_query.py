@@ -1,6 +1,7 @@
 import datetime
 import json
-
+import ssl
+import smtplib
 import logging
 import sys
 import os
@@ -9,10 +10,6 @@ from itertools import compress
 import sqlfluff
 from dagster import asset
 
-# import pandas as pd
-# import psycopg2
-# import sqlfluff
-import sqlparse
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from financial.resources import (
     DATABASE_ID,
@@ -90,7 +87,7 @@ def create_model():
             status.append("Invalid query: {error}".format(error=validation[1]))
             continue
         # Check multi-query
-        parsed = sqlfluff.parse(query_string)["file"]
+        parsed = sqlfluff.parse(query_string, "postgres")["file"]
         if type(parsed) == list:
             df.loc[i, "success"] = False
             status.append("Multiple statement")
@@ -116,15 +113,11 @@ def create_model():
             print("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status.append("Success")
-    print(status)
 
     # Get Emails from API
     superset = SupersetDBTConnectorSession(logger=logger)
     users = set(df["user_id"].to_list())
     email_dict = get_emails(superset, users)
-
-    import smtplib
-    import ssl
 
     port = EMAIL_PORT  # For SSL
     smtp_server = SMTP
@@ -152,7 +145,7 @@ def create_model():
 
                 df.loc[i, "checked"] = True
                 server.login(sender_email, password)
-                server.sendmail(sender_email, email_dict[df.loc[i, "user_id"]], message)
+                server.sendmail(sender_email, email_dict[str(df.loc[i, "user_id"])], message)
 
     # If every record is unsuccesful, terminate script early
     if not df["success"].any():
@@ -172,7 +165,6 @@ def create_model():
         DBT_PROJECT_DIR,
         "--select",
         "tag:{exec_time}".format(exec_time=EXEC_TIME),
-        "tag:user_created",
     ]
 
     # run the command
@@ -237,7 +229,7 @@ def create_model():
 
                 df.loc[i, "checked"] = True
                 server.login(sender_email, password)
-                server.sendmail(sender_email, email_dict[df.loc[i, "user_id"]], message)
+                server.sendmail(sender_email, email_dict[str(df.loc[i, "user_id"])], message)
 
     # Delete unsucessful model
     for i in df.index:
@@ -252,5 +244,3 @@ def create_model():
     print("entries")
     print(entries_to_update)
     update_records(entries_to_update)
-
-    raise Exception(entries_to_update)
