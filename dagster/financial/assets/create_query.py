@@ -62,8 +62,8 @@ def create_model():
     # Getting the dbt tables keys
     dbt_tables_names = set(list(dbt_tables.keys()))
     status = []  # Status of preliminary checking
-    dbt_names_aliases = [table["name"] for table in dbt_tables] + [
-        table["alias"] for table in dbt_tables
+    dbt_names_aliases = [dbt_tables[table]["name"] for table in dbt_tables] + [
+        dbt_tables[table]["alias"] for table in dbt_tables
     ]  # Name and aliases wo schema
 
     for i in df.index:
