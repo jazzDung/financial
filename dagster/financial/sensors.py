@@ -2,6 +2,8 @@ import os
 from dagster import sensor, RunRequest, RunConfig, SkipReason
 from financial.resources import DB_CONNECTION
 from financial.jobs import ingest_all_job, send_email_job, create_model_job
+from dagster.core.storage.pipeline_run import RunsFilter
+
 
 # @sensor(job=send_email_job, minimum_interval_seconds=60)
 # def unchecked_records_exist():
@@ -21,6 +23,11 @@ from financial.jobs import ingest_all_job, send_email_job, create_model_job
 
 @sensor(job=create_model_job, minimum_interval_seconds=60)
 def check_new_records():
+
+    run_records = context.instance.get_run_records(
+        RunsFilter(job_name="INGEST_STOCK_HISTORY", statuses=[DagsterRunStatus.STARTED])
+    )
+
     output = DB_CONNECTION.execute(
         """
             SELECT exists 
@@ -29,7 +36,9 @@ def check_new_records():
                 WHERE checked = False 
                 LIMIT 1);
         """)
-    if output.fetchall()[0][0]:
+    if output.fetchall()[0][0] and len(run_records) == 0:
         yield RunRequest(run_key=None, run_config={})
+    elif len(run_records) != 0:
+        yield SkipReason("Price history is running, try again!")
     else:
         yield SkipReason("Found 0 unchecked record")
