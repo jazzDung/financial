@@ -1,5 +1,5 @@
 import os
-from dagster import sensor, RunRequest, RunConfig, SkipReason
+from dagster import DagsterRunStatus, sensor, RunRequest, RunConfig, SkipReason
 from financial.resources import DB_CONNECTION
 from financial.jobs import ingest_all_job, send_email_job, create_model_job
 from dagster.core.storage.pipeline_run import RunsFilter
@@ -22,7 +22,7 @@ from dagster.core.storage.pipeline_run import RunsFilter
 
 
 @sensor(job=create_model_job, minimum_interval_seconds=60)
-def check_new_records():
+def check_new_records(context):
 
     run_records = context.instance.get_run_records(
         RunsFilter(job_name="INGEST_STOCK_HISTORY", statuses=[DagsterRunStatus.STARTED])
