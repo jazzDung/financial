@@ -1,0 +1,14 @@
+[0m16:45:30.981104 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292cea9b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292f1b6620>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292f1b4c40>]}
+
+
+============================== 16:45:30.983463 | acc73cbe-07dd-46e9-b756-ed07f0642dd8 ==============================
+[0m16:45:30.983463 [info ] [MainThread]: Running with dbt=1.5.1
+[0m16:45:30.989590 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'profiles_dir': '/home/vu/.dbt', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m16:45:30.991949 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/vu/Desktop/Projects/Thesis/financial/dagster/financial/superset_utils/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:45:30.997887 [debug] [MainThread]: Command `cli parse` failed at 16:45:30.997472 after 0.02 seconds
+[0m16:45:30.999837 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292cea9b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292f1b4970>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f292f1b6800>]}
+[0m16:45:31.001994 [debug] [MainThread]: Flushing usage events

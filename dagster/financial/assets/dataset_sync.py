@@ -13,7 +13,8 @@ from financial.utils import (
     get_physical_datasets_from_superset,
     get_tables_from_dbt,
 )
-from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, USER_SCHEMA, SUPERSET_ID
+from financial.resources import DATABASE_ID, DBT_PROJECT_DIR, MANIFEST_PATH, SERVING_SCHEMA, USER_SCHEMA, SUPERSET_ID
+from dbt.cli.main import dbtRunner
 
 
 @asset(group_name="dashboard")
@@ -34,6 +35,14 @@ def dataset_sync():
         dbt_tables = {**dbt_tables, **dbt_tables_temp}
     else:
         raise Exception("No manifest found at path")
+
+    dbt = dbtRunner()
+    cli_args = [
+        "parse",
+        "--project-dir",
+        DBT_PROJECT_DIR,
+    ]
+    res = dbt.invoke(cli_args)
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())

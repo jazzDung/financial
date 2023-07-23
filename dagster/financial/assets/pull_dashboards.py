@@ -15,7 +15,15 @@ from financial.utils import (
     get_tables_from_dbt,
     merge_dashboards_with_datasets,
 )
-from financial.resources import DATABASE_ID, EXPOSURES_PATH, MANIFEST_PATH, SQL_DIALECT, SUPERSET_ADMIN_ID
+from financial.resources import (
+    DATABASE_ID,
+    DBT_PROJECT_DIR,
+    EXPOSURES_PATH,
+    MANIFEST_PATH,
+    SQL_DIALECT,
+    SUPERSET_ADMIN_ID,
+)
+from dbt.cli.main import dbtRunner
 
 # logging.basicConfig(level=logging.INFO)
 logging.getLogger("sqlfluff").setLevel(level=logging.WARNING)
@@ -36,6 +44,14 @@ def pull_dashboard():
     superset = SupersetDBTConnectorSession(logger=logger)
 
     logging.info("Starting the script!")
+
+    dbt = dbtRunner()
+    cli_args = [
+        "parse",
+        "--project-dir",
+        DBT_PROJECT_DIR,
+    ]
+    res = dbt.invoke(cli_args)
 
     # TODO RECREATE DBT MANIFEST TO PARSE correctly
 
