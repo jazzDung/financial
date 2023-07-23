@@ -737,7 +737,7 @@ def get_records():
             database=DATABASE_NAME,
         )
         cursor = connection.cursor()
-        postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE}"
+        postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE} where checked = False"
         # postgreSQL_select_Query = """
         # SELECT *
         # FROM query
