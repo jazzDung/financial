@@ -14,8 +14,8 @@ EMAIL_PORT = data["port"]
 f.close()
 
 # Email authorization
-# context = ssl.create_default_context()
-# SMTP = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
+context = ssl.create_default_context()
+SMTP = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
 
 # Get database info
 f = open(PATH + "postgres.json")

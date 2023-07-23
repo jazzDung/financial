@@ -3,6 +3,7 @@ from email.message import EmailMessage
 from dagster import asset
 from datetime import datetime
 
+
 @asset(group_name="email")
 def fetch_unchecked():
     """
@@ -11,11 +12,13 @@ def fetch_unchecked():
     output = DB_CONNECTION.execute(
         """
         SELECT * 
-        FROM financial_clean.user_query 
+        FROM financial_query.query 
         WHERE checked = False;
-        """)
+        """
+    )
     result = output.fetchall()
     return [record._asdict() for record in result]
+
 
 @asset(group_name="email")
 def send_email(fetch_unchecked):
@@ -23,17 +26,17 @@ def send_email(fetch_unchecked):
     Send email to user with unchecked records
     """
     SMTP.login(EMAIL_SENDER, EMAIL_PASSWORD)
-    
+
     # TODO: Implement try except for when email is invalid
     for record in fetch_unchecked:
-        body = record['mail_subject'] or "BLANK mail_subject"
-        receiver = record['email']
-        subject = 'Test Email'
+        body = record["mail_subject"] or "BLANK mail_subject"
+        receiver = record["email"]
+        subject = "Test Email"
 
         em = EmailMessage()
-        em['From'] = EMAIL_SENDER
-        em['To'] = receiver
-        em['Subject'] = subject
+        em["From"] = EMAIL_SENDER
+        em["To"] = receiver
+        em["Subject"] = subject
         em.set_content(body)
 
         SMTP.sendmail(EMAIL_SENDER, receiver, em.as_string())
@@ -41,14 +44,15 @@ def send_email(fetch_unchecked):
     SMTP.quit()
     return fetch_unchecked
 
+
 @asset(group_name="email")
 def check_record(send_email):
     """
     Alter records after sending email
     """
     for record in send_email:
-        id = record['id']
-        now = str(datetime.now())[:-7]+"+07"
+        id = record["id"]
+        now = str(datetime.now())[:-7] + "+07"
 
         DB_CONNECTION.execute(
             f"""
@@ -57,4 +61,5 @@ def check_record(send_email):
                 checked = True, 
                 last_checked = '{now}'
             WHERE id = {id};
-            """)
+            """
+        )

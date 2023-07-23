@@ -30,11 +30,14 @@ def _parse_args(argv):
     )
     return parser.parse_args(argv)
 
+
 @asset(group_name="dashboard")
 def pull_dashboard():
     superset = SupersetDBTConnectorSession(logger=logger)
 
     logging.info("Starting the script!")
+
+    # TODO RECREATE DBT MANIFEST TO PARSE correctly
 
     with open(MANIFEST_PATH) as f:
         dbt_manifest = json.load(f)
