@@ -672,8 +672,9 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     """
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
-    table_names = set(get_tables_from_sql(original_query, dialect="posgres", sql_parsed=parsed_result))
-    original_query = sqlfluff.fix(original_query, dialect="posgres")
+    fixed_query = str(original_query)
+    table_names = set(get_tables_from_sql(fixed_query, dialect="postgres", sql_parsed=parsed_result))
+    fixed_query = sqlfluff.fix(fixed_query, dialect="postgres")
     if len(table_names.difference(dbt_tables_names)) > 0:  # dbt_tables_names include schema
         return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
