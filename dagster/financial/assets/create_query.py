@@ -60,9 +60,11 @@ def create_model():
         dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
     # Getting the dbt tables keys
-    dbt_tables_names = list(dbt_tables.keys())
+    dbt_tables_names = set(list(dbt_tables.keys()))
     status = []  # Status of preliminary checking
-    dbt_names_aliases = [table["name"] for table in dbt_tables] + [table["alias"] for table in dbt_tables] # Name and aliases wo schema
+    dbt_names_aliases = [table["name"] for table in dbt_tables] + [
+        table["alias"] for table in dbt_tables
+    ]  # Name and aliases wo schema
 
     for i in df.index:
         # Check name validity
@@ -99,7 +101,7 @@ def create_model():
         #     status.append("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
-        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, parsed, (USER_SCHEMA, SERVING_SCHEMA))
+        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, parsed, dbt_tables_names)
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status.append(processed_status)

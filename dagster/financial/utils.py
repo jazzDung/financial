@@ -658,7 +658,7 @@ class SchemaReferenceError(Exception):
     pass
 
 
-def get_ref(original_query, dbt_tables, parsed_result, schema_names):
+def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     """
     Returns content of a user-created dbt model file w/o config.
 
@@ -670,30 +670,19 @@ def get_ref(original_query, dbt_tables, parsed_result, schema_names):
     Returns:
         String: the content of the dbt model.
     """
-    serving_table = [table["alias"] for table in dbt_tables if dbt_tables[table]["schema"] in schema_names]
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
     table_names = set(get_tables_from_sql(original_query, dialect="posgres", sql_parsed=parsed_result))
     original_query = sqlfluff.fix(original_query, dialect="posgres")
-    if len(table_names.difference(serving_table)) > 0:
+    if len(table_names.difference(dbt_tables_names)) > 0:  # dbt_tables_names include schema
         return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
-    final_tables = tuple(table_names.intersection(serving_table))  # Filter out
+    final_tables = tuple(table_names.intersection(dbt_tables_names))  # Filter out
 
-    if len(final_tables) > 0:
+    if len(final_tables) == 0:
         return None, "No tables referenced in dbt projects"
-    # Check if tables in serving schemas is referred to without schema
-    for table in final_tables:
-        if "{schema}.{name}".format(schema=dbt_tables[table]["schema"], name=table) not in original_query:
-            return None, "Please include the schema with table referrence"
 
     table_to_ref = {}
-    # Ensure that there is only table names, no schema names
-    for table in final_tables:
-        if table.startswith(schema_names):
-            table_to_ref[table] = table[table.find(".") + 1 :]
-        else:
-            table_to_ref[table] = table
 
     # Add ref for original query
     new_query = original_query
@@ -701,7 +690,7 @@ def get_ref(original_query, dbt_tables, parsed_result, schema_names):
         new_query = (
             """
     -- depends_on: {{{{ref(\'{table}\')}}}}""".format(
-                table=table
+                table=dbt_tables[table]["name"]  # Ensure that there is only table names, no schema names
             )
             + new_query
         )
