@@ -47,9 +47,9 @@ def create_model():
         DBT_PROJECT_DIR,
     ]
 
-    if df.empty:
-        print(df.empty)
-        return "Early stopping because no records"
+    # if df.empty:
+    #     print(df.empty)
+    #     return "Early stopping because no records"
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
@@ -146,12 +146,12 @@ def create_model():
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
     # If every record is unsuccesful, terminate script early
-    if not df["success"].any():
-        entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
-        print("entries")
-        print(entries_to_update)
-        update_records(entries_to_update)
-        return "Early stopping because no successful records"
+    # if not df["success"].any():
+    #     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
+    #     print("entries")
+    #     print(entries_to_update)
+    #     update_records(entries_to_update)
+    #     return "Early stopping because no successful records"
 
     # initialize
     dbt = dbtRunner()

@@ -21,6 +21,7 @@ from financial.resources import (
     DATABASE_NAME,
     QUERY_SCHEMA,
     QUERY_TABLE,
+    USER_SCHEMA,
 )
 from urllib.parse import unquote
 from typing import Any, Dict, Iterator, List, Union
@@ -713,13 +714,14 @@ def add_materialization(df_row, query, exec_time):
     name='{name}',
     description='{desc}',
     tags = ['{user_id}','user_created','{created_time}'],
-    schema = 'financial_user'
+    schema = '{schema}'
 ) }}}}""".format(
             materialization=MATERIALIZATION_MAPPING[df_row["materialization"]],
             user_id=df_row["user_id"],
             name=df_row["name"],
             desc=df_row["description"],
             created_time=exec_time,
+            schema=USER_SCHEMA,
         )
         + query
     )
