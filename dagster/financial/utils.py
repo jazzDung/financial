@@ -653,11 +653,6 @@ def is_unique_table_name(table_name, dbt_tables):
         return False
 
 
-class SchemaReferenceError(Exception):
-    ...
-    pass
-
-
 def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     """
     Returns content of a user-created dbt model file w/o config.
@@ -690,7 +685,8 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     for table in final_tables:
         new_query = (
             """
-    -- depends_on: {{{{ref(\'{table}\')}}}}""".format(
+-- depends_on: {{{{ref(\'{table}\')}}}}
+    """.format(
                 table=dbt_tables[table]["name"]  # Ensure that there is only table names, no schema names
             )
             + new_query
@@ -756,8 +752,8 @@ def get_records():
             "description",
             "insert_time",
             "name",
-            "success",
             "checked",
+            "success",
         ]
 
         df = pd.DataFrame(cursor.fetchall(), columns=query_columns)

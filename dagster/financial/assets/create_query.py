@@ -1,9 +1,6 @@
 import datetime
 import json
-import ssl
-import smtplib
 import logging
-import sys
 import os
 from itertools import compress
 
@@ -45,7 +42,7 @@ def create_model():
 
     if df.empty:
         print(df.empty)
-        exit(0)
+        return "Early stopping because no records"
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
@@ -98,13 +95,13 @@ def create_model():
         #     status.append("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
-        partially_model, processed_status = get_ref(df.loc[i], dbt_tables, parsed, dbt_tables_names)
+        partially_model, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_names)
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status.append(processed_status)
             continue
         # Add config
-        processed_model = add_materialization(partially_model, df.loc[i], EXEC_TIME)
+        processed_model = add_materialization(df.loc[i], partially_model, EXEC_TIME)
 
         model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
 
@@ -147,7 +144,7 @@ def create_model():
         print("entries")
         print(entries_to_update)
         update_records(entries_to_update)
-        exit(0)
+        return "Early stopping because no successful records"
 
     # initialize
     dbt = dbtRunner()
@@ -174,7 +171,7 @@ def create_model():
         for r in res.result:
             if r.node.name == df.loc[i, "name"]:
                 dbt_res_df_map[i] = r
-            break
+                break
 
     for i in df.index:
         # Check Success
@@ -188,7 +185,7 @@ def create_model():
                     "database": DATABASE_ID,
                     "schema": USER_SCHEMA,
                     "table_name": df.loc[i, "name"],
-                    "owners": [df.loc[i, "user_id"], SUPERSET_ID],
+                    "owners": [int(df.loc[i, "user_id"]), SUPERSET_ID],
                 }
                 # Serializing json
                 json_object = json.dumps(dictionary)
@@ -203,6 +200,7 @@ def create_model():
     """.format(
                     sql=df.loc[i, "query_string"]
                 )
+
             else:
                 df.loc[i, "success"] = False
                 message = """\
@@ -226,11 +224,10 @@ def create_model():
     # Delete unsucessful model
     for i in df.index:
         # Check Success
-        if df.loc[i, "success"] is False:
-            if dbt_res_df_map[i].status != "success":
-                model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
-                if os.path.exists(model_path):
-                    os.remove(model_path)
+        if not df.loc[i, "success"]:
+            model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
+            if os.path.exists(model_path):
+                os.remove(model_path)
 
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
     print("entries")
