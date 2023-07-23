@@ -264,7 +264,7 @@ def get_tables_from_sql(sql, dialect, sql_parsed=None):
                     if "naked_identifier" in dictionary:
                         table_ref_identifier.append(dictionary["naked_identifier"])
                         if len(table_ref_identifier) == 2:
-                            tables_cleaned.append(".".join(table_ref_identifier))
+                            tables_cleaned.append(".".join(table_ref_identifier[::-1]))
                             break
             if isinstance(table_ref, dict):
                 tables_cleaned.append(table_ref["naked_identifier"])
