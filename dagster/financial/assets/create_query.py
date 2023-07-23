@@ -40,6 +40,13 @@ def create_model():
     logger = logging.getLogger("create_query")
     df = get_records()
 
+    dbt = dbtRunner()
+    cli_args = [
+        "parse",
+        "--project-dir",
+        DBT_PROJECT_DIR,
+    ]
+
     if df.empty:
         print(df.empty)
         return "Early stopping because no records"
@@ -138,7 +145,7 @@ def create_model():
             df.loc[i, "checked"] = True
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
-    # If every record is unsuccesful, terminate script early
+    If every record is unsuccesful, terminate script early
     if not df["success"].any():
         entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
         print("entries")
@@ -175,7 +182,7 @@ def create_model():
 
     for i in df.index:
         # Check Success
-        if df.loc[i, "success"] is None or df.loc[i, "success"] is True:
+        if df.loc[i, "success"] is not False:
             if dbt_res_df_map[i].status == "success":
                 df.loc[i, "success"] = True
                 rison_request = "/dataset/"
