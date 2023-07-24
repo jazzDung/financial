@@ -26,6 +26,7 @@ from financial.utils import (
     SupersetDBTConnectorSession,
     add_materialization,
     get_emails,
+    get_physical_datasets_from_superset,
     get_records,
     get_ref,
     get_tables_from_dbt,
@@ -148,6 +149,9 @@ def create_model():
         logging.info("Early stopping because no successful records")
         return "Early stopping because no successful records"
 
+    sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
+    sst_user_tables = [table["name"] for table in sst_datasets if sst_datasets[table]["schema"] == USER_SCHEMA]
+
     # initialize
     dbt = dbtRunner()
 
@@ -178,7 +182,7 @@ def create_model():
     for i in df.index:
         # Check Success
         if df.loc[i, "success"] is not False:
-            if dbt_res_df_map[i].status == "success":
+            if dbt_res_df_map[i].status == "success" and df.loc[i, "name"] not in sst_user_tables:
                 df.loc[i, "success"] = True
                 rison_request = "/dataset/"
                 # Data to be written
@@ -191,10 +195,8 @@ def create_model():
                 }
                 # Serializing json
                 json_object = json.dumps(dictionary)
-                try:
-                    response = superset.request("POST", rison_request, json=dictionary)
-                except:
-                    
+                response = superset.request("POST", rison_request, json=dictionary)
+
                 message = """\
     Subject: Superset Model Creation
 
