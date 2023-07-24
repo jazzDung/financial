@@ -191,8 +191,10 @@ def create_model():
                 }
                 # Serializing json
                 json_object = json.dumps(dictionary)
-                response = superset.request("POST", rison_request, json=dictionary)
-
+                try:
+                    response = superset.request("POST", rison_request, json=dictionary)
+                except:
+                    
                 message = """\
     Subject: Superset Model Creation
 

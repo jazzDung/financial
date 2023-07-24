@@ -19,9 +19,7 @@ from dbt.cli.main import dbtRunner
 
 @asset(group_name="dashboard")
 def dataset_sync():
-    logger = logging.getLogger(__name__)
-
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession()
     superset_tables_dict_list = get_physical_datasets_from_superset(superset, DATABASE_ID)
     superset_tables_id_dict = dict([(table["key"], table["id"]) for table in superset_tables_dict_list])
     print("Starting!")
