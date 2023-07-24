@@ -47,9 +47,9 @@ def create_model():
         DBT_PROJECT_DIR,
     ]
 
-    # if df.empty:
-    #     print(df.empty)
-    #     return "Early stopping because no records"
+    if df.empty:
+        logging.info("Early stopping because no records")
+        return "Early stopping because no records"
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
@@ -69,15 +69,12 @@ def create_model():
 
     for i in df.index:
         # Check name validity
-        print(df.loc[i]["name"])
         name_validation = is_valid_table_name(df.loc[i]["name"])
-        print(name_validation)
         if not name_validation:
             status.append("Invalid name")
             df.loc[i, "success"] = False
             continue
         name_unique = is_unique_table_name(df.loc[i]["name"], dbt_names_aliases)  # check aliases and name
-        print(name_unique)
         if not name_unique:
             status.append("Model name is duplicated with another existing model")
             df.loc[i, "success"] = False
@@ -114,7 +111,7 @@ def create_model():
 
         with open(model_path, "w+") as f:
             f.write(processed_model)
-            print("Wrote model {name} contents".format(name=df.loc[i, "name"]))
+            logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status.append("Success")
 
@@ -146,12 +143,11 @@ def create_model():
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
     # If every record is unsuccesful, terminate script early
-    # if not df["success"].any():
-    #     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
-    #     print("entries")
-    #     print(entries_to_update)
-    #     update_records(entries_to_update)
-    #     return "Early stopping because no successful records"
+    if not df["success"].any():
+        entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
+        update_records(entries_to_update)
+        logging.info("Early stopping because no successful records")
+        return "Early stopping because no successful records"
 
     # initialize
     dbt = dbtRunner()
@@ -170,7 +166,7 @@ def create_model():
 
     # inspect the results
     for r in res.result:
-        print(f"{r.node.name}: {r.status}")
+        logging.info(f"dbt run result: {r.node.name}: {r.status}")
     # Map df index to result
     dbt_res_df_map = {}
 
@@ -237,6 +233,4 @@ def create_model():
                 os.remove(model_path)
 
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
-    print("entries")
-    print(entries_to_update)
     update_records(entries_to_update)

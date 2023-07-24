@@ -745,7 +745,7 @@ def get_records():
         # FROM query
         # WHERE insert_time  > now() - interval '30 second';
         # """
-        print(postgreSQL_select_Query)
+        logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
         cursor.execute(postgreSQL_select_Query)
         query_columns = [
             "query_string",
@@ -760,14 +760,12 @@ def get_records():
 
         df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
 
-    except (Exception, psycopg2.Error) as error:
-        print("Error while fetching data from PostgreSQL", error)
     finally:
         # closing database connection.
         if connection:
             cursor.close()
             connection.close()
-            print("PostgreSQL connection is closed")
+            logging.info("PostgreSQL connection is closed")
     return df
 
 
@@ -788,11 +786,7 @@ def update_records(update_values):
                                 FROM (VALUES {update_values}) AS v (name, user_id, checked, success)
                                 WHERE q.user_id = v.user_id 
                                 AND q.name = v.name;"""
-        print(update_sql_query)
-        cursor.execute(update_sql_query)
-    except (Exception, psycopg2.Error) as error:
-        print("Error while updating data in PostgreSQL", error)
-
+        logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
 
     finally:
@@ -800,7 +794,7 @@ def update_records(update_values):
         if connection:
             cursor.close()
             connection.close()
-            print("PostgreSQL connection is closed")
+            logging.info("PostgreSQL connection is closed")
 
 
 def get_emails(superset, user_ids):
