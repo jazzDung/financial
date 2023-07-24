@@ -7,7 +7,7 @@ import argparse
 from pathlib import Path
 from financial.utils import (
     SupersetDBTConnectorSession,
-    add_certifications_in_superset,
+    add_sst_dataset_metadata,
     add_superset_columns,
     get_physical_datasets_from_superset,
     get_tables_from_dbt,
@@ -56,6 +56,6 @@ def push_description():
         sst_dataset_w_cols = add_superset_columns(superset, sst_dataset)
         sst_dataset_w_cols_new = merge_columns_info(sst_dataset_w_cols, dbt_tables)
         put_columns_to_superset(superset, sst_dataset_w_cols_new)
-        add_certifications_in_superset(superset, sst_dataset_id, sst_dataset_key, dbt_tables)
+        add_sst_dataset_metadata(superset, sst_dataset_id, sst_dataset_key, dbt_tables)
 
     logging.info("All done!")

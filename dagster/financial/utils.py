@@ -464,14 +464,14 @@ def refresh_columns_in_superset(superset: SupersetDBTConnectorSession, dataset_i
     superset.request("PUT", f"/dataset/{dataset_id}/refresh")
 
 
-def add_certifications_in_superset(superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables):
+def add_sst_dataset_metadata(superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables):
     logging.info("Refreshing columns in Superset.")
     body = {
         "extra": '{"certification": \n  {"certified_by": "Data Analytics Team", \n   "details": "This table is the source of truth." \n    \n  }\n}',
         "description": dbt_tables[sst_dataset_key]["description"],
         "owners": [SUPERSET_ID],
     }
-    if "user" in dbt_tables[sst_dataset_key].keys():
+    if dbt_tables[sst_dataset_key]["user"]:
         body["owners"].append(dbt_tables[sst_dataset_key]["user"])
     superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
