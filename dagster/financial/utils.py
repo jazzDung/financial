@@ -34,7 +34,7 @@ from typing import Any, Dict, Iterator, List, Union
 class SupersetDBTConnectorSession:
     """A class for accessing the Superset API in an easy way."""
 
-    def __init__(self, logger):
+    def __init__(self):
         """Instantiates the class.
 
         ''access_token'' will be instantiated via enviromental variable
@@ -50,7 +50,6 @@ class SupersetDBTConnectorSession:
         self.url = SUPERSET_HOST
         self.api_url = self.url + "api/v1/"
 
-        self.logger = logger
         self.session = requests.session()
 
         self.username = SUPERSET_USERNAME
@@ -59,7 +58,7 @@ class SupersetDBTConnectorSession:
         self._refresh_session()
 
     def _refresh_session(self):
-        self.logger.info("Refreshing session")
+        logging.info("Refreshing session")
 
         self.soup = BeautifulSoup(self.session.post(self.url + "login").text, "html.parser")
         self.csrf_token = self.soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
@@ -93,10 +92,10 @@ class SupersetDBTConnectorSession:
 
         Raises:
             HTTPError: There is an HTTP error (detected by ``requests.Response.raise_for_status``)
-                even after retrying with a fresh ``access_token``.
+                even after retrying with a fresh session.
         """
 
-        self.logger.info("About to %s execute request for endpoint %s", method, endpoint)
+        logging.info("About to %s execute request for endpoint %s", method, endpoint)
 
         if headers is None:
             headers = {}
@@ -104,7 +103,7 @@ class SupersetDBTConnectorSession:
         url = self.api_url + endpoint
         res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
 
-        self.logger.info("Request finished with status: %d", res.status_code)
+        logging.info("Request finished with status: %d", res.status_code)
 
         if (
             refresh_session_if_needed
@@ -112,10 +111,10 @@ class SupersetDBTConnectorSession:
             and res.json().get("msg") == "Token has expired"
             and self._refresh_session()
         ):
-            self.logger.info("Retrying %s request for endpoint %s with refreshed session")
+            logging.info(f"Retrying {method} request for {url} %s with refreshed session")
             res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
 
-            self.logger.info("Request finished with status: %d", res.status_code)
+            logging.info("Request finished with status: %d", res.status_code)
 
         if (
             refresh_session_if_needed
@@ -123,9 +122,9 @@ class SupersetDBTConnectorSession:
             and res.json()["message"] == "400 Bad Request: The CSRF session token is missing."
             and self._refresh_session()
         ):
-            self.logger.info("Retrying %s request for endpoint %s with refreshed session")
+            logging.info(f"Retrying {method} request for {url} %s with refreshed session")
             res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
-            self.logger.info("Request finished with status: %d", res.status_code)
+            logging.info(f"Request finished with status: {res.status_code}")
         res.raise_for_status()
         return res.json()
 

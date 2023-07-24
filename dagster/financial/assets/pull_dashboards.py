@@ -25,10 +25,6 @@ from financial.resources import (
 )
 from dbt.cli.main import dbtRunner
 
-# logging.basicConfig(level=logging.INFO)
-logging.getLogger("sqlfluff").setLevel(level=logging.WARNING)
-logger = logging.getLogger("__name__")
-
 
 def _parse_args(argv):
     """Parses command-line arguments."""
@@ -41,7 +37,7 @@ def _parse_args(argv):
 
 @asset(group_name="dashboard")
 def pull_dashboard():
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession()
 
     logging.info("Starting the script!")
 

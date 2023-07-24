@@ -8,8 +8,7 @@ from financial.resources import DATABASE_ID, USER_MODEL_PATH, USER_SCHEMA, DESC_
 
 @asset(group_name="dashboard")
 def pull_user_description():
-    logger = logging.getLogger(__name__)
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession()
 
     res = superset.request("GET", f"/database/get_tables_descriptions/?q=[{DATABASE_ID}]")
 

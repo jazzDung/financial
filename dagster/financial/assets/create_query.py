@@ -37,7 +37,6 @@ from financial.utils import (
 
 @asset(group_name="user_query")
 def create_model():
-    logger = logging.getLogger("create_query")
     df = get_records()
 
     dbt = dbtRunner()
@@ -116,7 +115,7 @@ def create_model():
         status.append("Success")
 
     # Get Emails from API
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession()
     users = set(df["user_id"].to_list())
     email_dict = get_emails(superset, users)
 

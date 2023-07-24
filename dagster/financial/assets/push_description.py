@@ -22,9 +22,7 @@ from financial.resources import DATABASE_ID, MANIFEST_PATH, USER_SCHEMA
 def push_description():
     logging.basicConfig(level=logging.INFO)
 
-    logger = logging.getLogger(__name__)
-
-    superset = SupersetDBTConnectorSession(logger=logger)
+    superset = SupersetDBTConnectorSession()
 
     logging.info("Starting the script!")
 
@@ -45,24 +43,19 @@ def push_description():
         sst_dataset_id = sst_dataset["id"]
         sst_dataset_key = sst_dataset["key"]
         if sst_dataset["schema"] == USER_SCHEMA:
-            continue  # Don't push user description, or do push but do not certify
-        try:
-            refresh_columns_in_superset(superset, sst_dataset_id)
-            columns_refreshed = 1
-        except HTTPError as e:
-            superset = SupersetDBTConnectorSession(logger=logger)
-        try:
-            if columns_refreshed == 1:
-                columns_refreshed = 1
-            else:
-                refresh_columns_in_superset(superset, sst_dataset_id)
-            # Otherwise, just adding the normal analytics certification
+            continue  # Don't push user description
 
-            sst_dataset_w_cols = add_superset_columns(superset, sst_dataset)
-            sst_dataset_w_cols_new = merge_columns_info(sst_dataset_w_cols, dbt_tables)
-            put_columns_to_superset(superset, sst_dataset_w_cols_new)
-            add_certifications_in_superset(superset, sst_dataset_id, sst_dataset_key, dbt_tables)
-        except HTTPError as e:
-            logging.error("The dataset with ID=%d wasn't updated. Check the error below.", sst_dataset_id, exc_info=e)
+        refresh_columns_in_superset(superset, sst_dataset_id)
+        columns_refreshed = 1
+
+        if columns_refreshed == 1:
+            columns_refreshed = 1
+        else:
+            refresh_columns_in_superset(superset, sst_dataset_id)
+        # Otherwise, just adding the normal analytics certification
+        sst_dataset_w_cols = add_superset_columns(superset, sst_dataset)
+        sst_dataset_w_cols_new = merge_columns_info(sst_dataset_w_cols, dbt_tables)
+        put_columns_to_superset(superset, sst_dataset_w_cols_new)
+        add_certifications_in_superset(superset, sst_dataset_id, sst_dataset_key, dbt_tables)
 
     logging.info("All done!")
