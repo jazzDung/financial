@@ -785,7 +785,7 @@ def update_records(update_values):
                                 SET success = v.success,
                                     checked = v.checked
 
-                                FROM (values {update_values}) AS v (name, user_id, checked, success)
+                                FROM (VALUES {update_values}) AS v (name, user_id, checked, success)
                                 WHERE q.user_id = v.user_id 
                                 AND q.name = v.name;"""
         print(update_sql_query)
