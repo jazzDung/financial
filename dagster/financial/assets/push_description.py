@@ -3,7 +3,6 @@ import json
 import logging
 from dagster import asset
 from requests import HTTPError
-import argparse
 from pathlib import Path
 from financial.utils import (
     SupersetDBTConnectorSession,

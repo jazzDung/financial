@@ -49,8 +49,6 @@ def pull_dashboard():
     ]
     res = dbt.invoke(cli_args)
 
-    # TODO RECREATE DBT MANIFEST TO PARSE correctly
-
     with open(MANIFEST_PATH) as f:
         dbt_manifest = json.load(f)
 

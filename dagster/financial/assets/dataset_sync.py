@@ -1,8 +1,3 @@
-# sync dataset and tables
-# Parse libraries
-import argparse
-
-# Script libraries
 import logging
 import json
 from itertools import compress
@@ -24,16 +19,6 @@ def dataset_sync():
     superset_tables_id_dict = dict([(table["key"], table["id"]) for table in superset_tables_dict_list])
     print("Starting!")
 
-    dbt_tables = {}
-
-    if Path(MANIFEST_PATH).is_file():
-        with open(MANIFEST_PATH) as f:
-            dbt_manifest = json.load(f)
-        dbt_tables_temp = get_tables_from_dbt(dbt_manifest, None)
-        dbt_tables = {**dbt_tables, **dbt_tables_temp}
-    else:
-        raise Exception("No manifest found at path")
-
     dbt = dbtRunner()
     cli_args = [
         "parse",
@@ -41,6 +26,13 @@ def dataset_sync():
         DBT_PROJECT_DIR,
     ]
     res = dbt.invoke(cli_args)
+
+    dbt_tables = {}
+
+    with open(MANIFEST_PATH) as f:
+        dbt_manifest = json.load(f)
+    dbt_tables_temp = get_tables_from_dbt(dbt_manifest, None)
+    dbt_tables = {**dbt_tables, **dbt_tables_temp}
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
