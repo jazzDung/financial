@@ -800,3 +800,46 @@ def get_emails(superset, user_ids):
     url = unquote(f"/security/get_email/?q={list(user_ids)}")
     res = superset.request("GET", url)
     return res["emails"]
+
+
+def get_mail_content(name, sql, status, dbt_reason=None):
+    if status == "dbt success":
+        message = """\
+        Subject: Superset Model Creation
+
+        Your Model {name} was successfully created. 
+
+        SQL:{sql}
+        """.format(
+            sql=sql, name=name
+        )
+
+    elif status == "dbt fail":
+        message = """\
+        Subject: Superset Model Creation
+
+        Your Model {name} was unsuccessfully created during dbt's run, please contact the administrator.
+        
+        Reason:
+        {reason}
+
+        SQL:
+        {sql}
+        """.format(
+            reason=dbt_reason, sql=sql, name=name
+        )
+    else:
+        message = """\
+        Subject: Superset Model Creation
+
+        Your Model {name} was unsuccessfully created.
+
+        Reason:
+        {reason}
+
+        SQL:
+        {sql}
+        """.format(
+            reason=status, sql=sql, name=name
+        )
+    return message

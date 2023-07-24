@@ -26,6 +26,7 @@ from financial.utils import (
     SupersetDBTConnectorSession,
     add_materialization,
     get_emails,
+    get_mail_content,
     get_physical_datasets_from_superset,
     get_records,
     get_ref,
@@ -125,19 +126,7 @@ def create_model():
     for i in df.index:
         # Check Success
         if df.loc[i, "success"] == False:
-            message = """\
-    Subject: Superset Model Creation
-
-    Your Model was unsuccessfully created.
-
-    Reason:
-    {reason}
-
-    SQL:
-    {sql}
-    """.format(
-                reason=status[i], sql=df.loc[i, "query_string"]
-            )
+            message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], status[i])
 
             df.loc[i, "checked"] = True
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
@@ -197,30 +186,12 @@ def create_model():
                 json_object = json.dumps(dictionary)
                 response = superset.request("POST", rison_request, json=dictionary)
 
-                message = """\
-    Subject: Superset Model Creation
-
-    Your Model was successfully created. 
-
-    SQL:{sql}
-    """.format(
-                    sql=df.loc[i, "query_string"]
-                )
+                message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], "dbt success")
 
             else:
                 df.loc[i, "success"] = False
-                message = """\
-    Subject: Superset Model Creation
-
-    Your Model was unsuccessfully created during dbt's run, please contact the administrator.
-    
-    Reason:
-    {reason}
-
-    SQL:
-    {sql}
-    """.format(
-                    reason=dbt_res_df_map[i].message, sql=df.loc[i, "query_string"]
+                message = get_mail_content(
+                    df.loc[i, "name"], df.loc[i, "query_string"], "dbt fail", dbt_res_df_map[i].message
                 )
 
             df.loc[i, "checked"] = True
