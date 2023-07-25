@@ -10,14 +10,16 @@ from financial.resources import DATABASE_ID, USER_MODEL_PATH, USER_SCHEMA, DESC_
 def pull_user_description():
     superset = SupersetDBTConnectorSession()
 
-    res = superset.request("GET", f"/database/get_tables_descriptions/?q=[{DATABASE_ID}]")
+    res = superset.request("GET", f"/database/get_tables_descriptions/?db_id={DATABASE_ID}")
 
     result = res["result"]
+
     result_list = [
-        {"name": result[id]["table_name"], "columns": result[id]["columns"]}
-        for id in result
-        if result[id]["table_schema"] == USER_SCHEMA
+        {"name": table_dict["table_name"], "columns": table_dict["columns"]}
+        for table_dict in result
+        if table_dict["table_schema"] == USER_SCHEMA
     ]
+
     for table in result_list:
         table["columns"] = [column for column in table["columns"] if column["description"]]
         if not table["columns"]:
