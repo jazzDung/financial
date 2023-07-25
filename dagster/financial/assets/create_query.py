@@ -41,6 +41,10 @@ from financial.utils import (
 def create_model():
     df, succeeded = get_records()
 
+    if df.empty:
+        logging.info("Early stopping because no records")
+        return "Early stopping because no records"
+
     for filename in os.listdir(USER_MODEL_PATH):
         # If file is not present in list
         if filename not in succeeded:
@@ -55,10 +59,6 @@ def create_model():
         DBT_PROJECT_DIR,
     ]
     res: dbtRunnerResult = dbt.invoke(cli_args)
-
-    if df.empty:
-        logging.info("Early stopping because no records")
-        return "Early stopping because no records"
 
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
