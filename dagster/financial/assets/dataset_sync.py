@@ -17,7 +17,7 @@ def dataset_sync():
     superset = SupersetDBTConnectorSession()
     superset_tables_dict_list = get_physical_datasets_from_superset(superset, DATABASE_ID)
     superset_tables_id_dict = dict([(table["key"], table["id"]) for table in superset_tables_dict_list])
-    print("Starting!")
+    logging.info("Starting!")
 
     dbt = dbtRunner()
     cli_args = [
@@ -36,8 +36,7 @@ def dataset_sync():
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
-    print("Tables in manifest: {num}".format(num=len(dbt_tables_names)))
-    print()
+    logging.info("Tables in manifest: {num}".format(num=len(dbt_tables_names)))
     superset_dict_keys = [i["key"] for i in superset_tables_dict_list]
     # Only tables that start with a given schema prefix name
     mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
@@ -52,16 +51,13 @@ def dataset_sync():
 
     # To add to superset
     add_to_superset = list(dbt_tables_reporting.difference(superset_tables))
-    print(len(add_to_superset))
 
     # To remove from superset
 
     remove_from_superset = list(superset_tables.difference(dbt_tables_reporting))
-    print(len(remove_from_superset))
 
     for i in add_to_superset:
-        print("Starting datasets addition")
-        print(i)
+        logging.info("Starting datasets addition")
         rison_request = "dataset/"
         array = i.split(".")
         schema = array[0]
@@ -83,12 +79,12 @@ def dataset_sync():
             response = superset.request("POST", rison_request, json=dictionary)
         except:
             raise Exception(dictionary)
-    print("Done!")
-    print("Starting superset datasets removal")
+    logging.info("Done!")
+    logging.info("Starting superset datasets removal")
     for i in remove_from_superset:
         # Dataset id to be deleted
         dataset_id = superset_tables_id_dict[i]
 
         rison_request = "/dataset/" + str(dataset_id)
         response = superset.request("DELETE", rison_request)
-    print("Done with removing tables!")
+    logging.info("Done with removing tables!")

@@ -26,15 +26,6 @@ from financial.resources import (
 from dbt.cli.main import dbtRunner
 
 
-def _parse_args(argv):
-    """Parses command-line arguments."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--user_id", help="""The id of user that create dashboards.""", required=False, default="reporting"
-    )
-    return parser.parse_args(argv)
-
-
 @asset(group_name="dashboard")
 def pull_dashboard():
     superset = SupersetDBTConnectorSession()

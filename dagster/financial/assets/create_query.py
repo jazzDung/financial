@@ -47,6 +47,7 @@ def create_model():
         "--project-dir",
         DBT_PROJECT_DIR,
     ]
+    res: dbtRunnerResult = dbt.invoke(cli_args)
 
     if df.empty:
         logging.info("Early stopping because no records")
