@@ -39,7 +39,14 @@ from financial.utils import (
 
 @asset(group_name="user_query")
 def create_model():
-    df, succeeded_df = get_records()
+    df, succeeded = get_records()
+
+    for filename in os.listdir(USER_MODEL_PATH):
+        # If file is not present in list
+        if filename not in succeeded:
+            # Get full path of file and remove it
+            full_file_path = os.path.join(USER_MODEL_PATH, filename)
+            os.remove(full_file_path)
 
     dbt = dbtRunner()
     cli_args = [
@@ -64,20 +71,19 @@ def create_model():
 
     # Getting the dbt tables keys
     dbt_tables_names = set(list(dbt_tables.keys()))
-    
+
     dbt_names_aliases = [dbt_tables[table]["name"] for table in dbt_tables] + [
         dbt_tables[table]["alias"] for table in dbt_tables
     ]  # Name and aliases wo schema
 
     # Model files already exist handling
-    # If already exist, and a record in DB 
+    # If already exist, and a record in DB
     for i in df.index:
         # Check Success
         if not df.loc[i, "success"]:
             model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
             if os.path.exists(model_path):
                 os.remove(model_path)
-
 
     status = []  # Status of preliminary checking
     for i in df.index:
