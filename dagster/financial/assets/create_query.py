@@ -39,7 +39,7 @@ from financial.utils import (
 
 @asset(group_name="user_query")
 def create_model():
-    df = get_records()
+    df, succeeded_df = get_records()
 
     dbt = dbtRunner()
     cli_args = [
@@ -64,11 +64,22 @@ def create_model():
 
     # Getting the dbt tables keys
     dbt_tables_names = set(list(dbt_tables.keys()))
-    status = []  # Status of preliminary checking
+    
     dbt_names_aliases = [dbt_tables[table]["name"] for table in dbt_tables] + [
         dbt_tables[table]["alias"] for table in dbt_tables
     ]  # Name and aliases wo schema
 
+    # Model files already exist handling
+    # If already exist, and a record in DB 
+    for i in df.index:
+        # Check Success
+        if not df.loc[i, "success"]:
+            model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
+            if os.path.exists(model_path):
+                os.remove(model_path)
+
+
+    status = []  # Status of preliminary checking
     for i in df.index:
         # Check name validity
         name_validation = is_valid_table_name(df.loc[i]["name"])

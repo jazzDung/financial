@@ -739,11 +739,7 @@ def get_records():
         )
         cursor = connection.cursor()
         postgreSQL_select_Query = f"select * from {QUERY_SCHEMA}.{QUERY_TABLE} where checked = False"
-        # postgreSQL_select_Query = """
-        # SELECT *
-        # FROM query
-        # WHERE insert_time  > now() - interval '30 second';
-        # """
+
         logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
         cursor.execute(postgreSQL_select_Query)
         query_columns = [
@@ -756,8 +752,14 @@ def get_records():
             "checked",
             "success",
         ]
-
         df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
+
+        postgreSQL_select_Query = f"select name from {QUERY_SCHEMA}.{QUERY_TABLE} where success = True"
+
+        logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
+        cursor.execute(postgreSQL_select_Query)
+
+        succeeded = cursor.fetchall()
 
     finally:
         # closing database connection.
@@ -765,7 +767,7 @@ def get_records():
             cursor.close()
             connection.close()
             logging.info("PostgreSQL connection is closed")
-    return df
+    return df, succeeded
 
 
 def update_records(update_values):
