@@ -133,7 +133,7 @@ def create_model():
     superset = SupersetDBTConnectorSession()
     users = set(df["user_id"].to_list())
     email_list = get_emails(superset, users)
-    email_dict = dict([(id, email_list[id]) for id in email_list])
+    email_dict = {key: value for element_dict in email_list for key, value in element_dict.items()}
 
     SMTP.login(EMAIL_SENDER, EMAIL_PASSWORD)
 
@@ -219,7 +219,7 @@ def create_model():
             full_file_path = os.path.join(USER_MODEL_PATH, "{name}.sql".format(name=df.loc[i, "name"]))
             if os.path.isfile(full_file_path):
                 os.remove(full_file_path)
-    
+
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success, df.insert_time))).replace(
         "None", "Null"
     )[1:-1]
