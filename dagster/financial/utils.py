@@ -743,12 +743,13 @@ def get_records():
         logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
         cursor.execute(postgreSQL_select_Query)
         query_columns = [
+            "id",
+            "name",
             "query_string",
-            "materialization",
             "user_id",
+            "materialization",
             "description",
             "insert_time",
-            "name",
             "checked",
             "success",
         ]
@@ -784,9 +785,8 @@ def update_records(update_values):
                                 SET success = v.success,
                                     checked = v.checked
 
-                                FROM (VALUES {update_values}) AS v (name, user_id, checked, success, insert_time)
-                                WHERE q.user_id = v.user_id 
-                                AND q.name = v.name;"""
+                                FROM (VALUES {update_values}) AS v (id, checked, success)
+                                WHERE q.id = v.id;"""
         logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
 

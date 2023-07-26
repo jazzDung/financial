@@ -220,9 +220,7 @@ def create_model():
             if os.path.isfile(full_file_path):
                 os.remove(full_file_path)
 
-    entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success, df.insert_time))).replace(
-        "None", "Null"
-    )[1:-1]
+    entries_to_update = str(tuple(zip(df.id, df.checked, df.success))).replace("None", "Null")[1:-1]
     update_records(entries_to_update)
 
 
