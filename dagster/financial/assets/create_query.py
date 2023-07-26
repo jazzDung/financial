@@ -76,26 +76,17 @@ def create_model():
         dbt_tables[table]["alias"] for table in dbt_tables
     ]  # Name and aliases wo schema
 
-    # Model files already exist handling
-    # If already exist, and a record in DB
-    for i in df.index:
-        # Check Success
-        if not df.loc[i, "success"]:
-            model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
-            if os.path.exists(model_path):
-                os.remove(model_path)
-
-    status = []  # Status of preliminary checking
+    status = {}  # Status of preliminary checking
     for i in df.index:
         # Check name validity
         name_validation = is_valid_table_name(df.loc[i]["name"])
         if not name_validation:
-            status.append("Invalid name")
+            status[i] = "Invalid name"
             df.loc[i, "success"] = False
             continue
         name_unique = is_unique_table_name(df.loc[i]["name"], dbt_names_aliases)  # check aliases and name
         if not name_unique:
-            status.append("Model name is duplicated with another existing model")
+            status[i] = "Model name is duplicated with another existing model"
             df.loc[i, "success"] = False
             continue
         # Check syntax
@@ -104,35 +95,38 @@ def create_model():
         validation = check_string(query_string)
         if not validation[0]:
             df.loc[i, "success"] = False
-            status.append("Invalid query: {error}".format(error=validation[1]))
+            status[i] = "Invalid query: {error}".format(error=validation[1])
             continue
         # Check multi-query
         parsed = sqlfluff.parse(query_string, "postgres")["file"]
         if type(parsed) == list:
             df.loc[i, "success"] = False
-            status.append("Multiple statement")
+            status[i] = "Multiple statement"
             continue
         # Check select statements
         # if list(statement_list[0]["statement"].keys())[0] != "select_statement":
         #     df.loc[i, "success"] = False
-        #     status.append("Query is not 'SELECT'")
+        #     status[i] = ("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
         partially_model, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_names)
         if processed_status != "Success":
             df.loc[i, "success"] = False
-            status.append(processed_status)
+            status[i] = processed_status
             continue
         # Add config
         processed_model = add_materialization(df.loc[i], partially_model, EXEC_TIME)
 
         model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
-
+        if os.path.exists(model_path):
+            status[i] = "Model name is duplicated with another in processing batch"
+            df.loc[i, "success"] = False
+            continue
         with open(model_path, "w+") as f:
             f.write(processed_model)
             logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
-        status.append("Success")
+        status[i] = "Success"
 
     # Get Emails from API
     superset = SupersetDBTConnectorSession()
@@ -146,7 +140,7 @@ def create_model():
         # Check Success
         if df.loc[i, "success"] == False:
             message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], status[i])
-
+            # Add checked
             df.loc[i, "checked"] = True
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
@@ -212,7 +206,7 @@ def create_model():
                 message = get_mail_content(
                     df.loc[i, "name"], df.loc[i, "query_string"], "dbt fail", dbt_res_df_map[i].message
                 )
-
+            # Add checked
             df.loc[i, "checked"] = True
 
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
@@ -225,5 +219,11 @@ def create_model():
             if os.path.exists(model_path):
                 os.remove(model_path)
 
-    entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
+    entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success, df.insert_time))).replace(
+        "None", "Null"
+    )[1:-1]
     update_records(entries_to_update)
+
+
+# TODO handle duplicate in 1 batch, check name before dbt run, if duplicate, change name to _1, => no, if there's another name will fail, just fail early
+# add insert time in insert record
