@@ -50,7 +50,8 @@ def create_model():
         if filename not in succeeded:
             # Get full path of file and remove it
             full_file_path = os.path.join(USER_MODEL_PATH, filename)
-            os.remove(full_file_path)
+            if os.path.isfile(full_file_path):
+                os.remove(full_file_path)
 
     dbt = dbtRunner()
     cli_args = [
@@ -215,10 +216,10 @@ def create_model():
     for i in df.index:
         # Check Success
         if not df.loc[i, "success"]:
-            model_path = "models/user/{name}.sql".format(name=df.loc[i, "name"])
-            if os.path.exists(model_path):
-                os.remove(model_path)
-
+            full_file_path = os.path.join(USER_MODEL_PATH, "{name}.sql".format(name=df.loc[i, "name"]))
+            if os.path.isfile(full_file_path):
+                os.remove(full_file_path)
+    
     entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success, df.insert_time))).replace(
         "None", "Null"
     )[1:-1]
