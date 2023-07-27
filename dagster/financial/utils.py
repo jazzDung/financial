@@ -782,8 +782,8 @@ def update_records(update_values):
         )
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
-                                SET success = v.success,
-                                    checked = v.checked
+                                SET success = v.success::bool,
+                                    checked = v.checked::bool
 
                                 FROM (VALUES {update_values}) AS v (id, checked, success)
                                 WHERE q.id = v.id::int8;"""
