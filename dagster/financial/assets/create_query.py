@@ -220,9 +220,5 @@ def create_model():
             if os.path.isfile(full_file_path):
                 os.remove(full_file_path)
 
-    entries_to_update = str(tuple(zip(df.id, df.checked, df.success))).replace("None", "Null")[1:-1]
+    entries_to_update = str(tuple(zip(df.checked, df.success, df.id))).replace("None", "Null")[1:-1]
     update_records(entries_to_update)
-
-
-# TODO handle duplicate in 1 batch, check name before dbt run, if duplicate, change name to _1, => no, if there's another name will fail, just fail early
-# add insert time in insert record

@@ -786,7 +786,7 @@ def update_records(update_values):
                                     checked = v.checked
 
                                 FROM (VALUES {update_values}) AS v (id, checked, success)
-                                WHERE q.id = v.id;"""
+                                WHERE q.id = v.id::int8;"""
         logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
 
