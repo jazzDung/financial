@@ -785,7 +785,7 @@ def update_records(update_values):
                                 SET success = v.success::bool,
                                     checked = v.checked::bool
 
-                                FROM (VALUES {update_values}) AS v (id, checked, success)
+                                FROM (VALUES {update_values}) AS v (checked, success, id)
                                 WHERE q.id = v.id::int8;"""
         logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
@@ -807,40 +807,40 @@ def get_emails(superset, user_ids):
 def get_mail_content(name, sql, status, dbt_reason=None):
     if status == "dbt success":
         message = """\
-        Subject: Superset Model Creation
+Subject: Superset Model Creation
 
-        Your Model {name} was successfully created. 
+Your Model {name} was successfully created. 
 
-        SQL:{sql}
+SQL:{sql}
         """.format(
             sql=sql, name=name
         )
 
     elif status == "dbt fail":
         message = """\
-        Subject: Superset Model Creation
+Subject: Superset Model Creation
 
-        Your Model {name} was unsuccessfully created during dbt's run, please contact the administrator.
-        
-        Reason:
-        {reason}
+Your Model {name} was unsuccessfully created during dbt's run, please contact the administrator.
 
-        SQL:
-        {sql}
+Reason:
+{reason}
+
+SQL:
+{sql}
         """.format(
             reason=dbt_reason, sql=sql, name=name
         )
     else:
         message = """\
-        Subject: Superset Model Creation
+Subject: Superset Model Creation
 
-        Your Model {name} was unsuccessfully created.
+Your Model {name} was unsuccessfully created.
 
-        Reason:
-        {reason}
+Reason:
+{reason}
 
-        SQL:
-        {sql}
+SQL:
+{sql}
         """.format(
             reason=status, sql=sql, name=name
         )
