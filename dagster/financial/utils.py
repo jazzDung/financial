@@ -712,7 +712,7 @@ def add_materialization(df_row, query, exec_time):
     materialized=\'{materialization}\',
     name='{name}',
     description='{desc}',
-    tags = ['{user_id}','user_created','{created_time}'],
+    tags = ['{user_id}','{created_time}'],
     schema = '{schema}'
 ) }}}}""".format(
             materialization=MATERIALIZATION_MAPPING[df_row["materialization"]],
