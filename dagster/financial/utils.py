@@ -784,7 +784,7 @@ def update_records(df):
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
                                 SET success = v.success,
-                                    checked = v.checked as bool
+                                    checked = v.checked
 
                                 FROM (VALUES {entries_to_update}) AS v (checked, success, id)
                                 WHERE q.id = v.id;"""
