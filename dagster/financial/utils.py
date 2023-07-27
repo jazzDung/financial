@@ -771,7 +771,8 @@ def get_records():
     return df, succeeded
 
 
-def update_records(update_values):
+def update_records(df):
+    entries_to_update = str(tuple(zip(df.checked, df.success, df.id))).replace("None", "Null")[1:-1]
     try:
         connection = psycopg2.connect(
             user=DATABASE_USERNAME,
@@ -782,11 +783,11 @@ def update_records(update_values):
         )
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
-                                SET success = cast(v.success as bool),
-                                    checked = cast(v.checked as bool)
+                                SET success = v.success,
+                                    checked = v.checked as bool
 
-                                FROM (VALUES {update_values}) AS v (checked, success, id)
-                                WHERE q.id = cast(v.id as int);"""
+                                FROM (VALUES {entries_to_update}) AS v (checked, success, id)
+                                WHERE q.id = v.id;"""
         logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
 

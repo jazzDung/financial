@@ -147,8 +147,7 @@ def create_model():
 
     # If every record is unsuccesful, terminate script early
     if not df["success"].any():
-        entries_to_update = str(tuple(zip(df.name, df.user_id, df.checked, df.success))).replace("None", "Null")[1:-1]
-        update_records(entries_to_update)
+        update_records(df)
         logging.info("Early stopping because no successful records")
         return "Early stopping because no successful records"
 
@@ -220,5 +219,4 @@ def create_model():
             if os.path.isfile(full_file_path):
                 os.remove(full_file_path)
 
-    entries_to_update = str(tuple(zip(df.checked, df.success, df.id))).replace("None", "Null")[1:-1]
-    update_records(entries_to_update)
+    update_records(df)
