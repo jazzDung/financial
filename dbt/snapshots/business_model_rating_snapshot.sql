@@ -10,6 +10,6 @@
     )
 }}
 
-select * from {{ source('business_model_rating', 'business_model_rating') }}
+select * from {{ source('source', 'business_model_rating') }}
 
 {% endsnapshot %}

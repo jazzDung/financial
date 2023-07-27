@@ -23,6 +23,6 @@ select distinct on (ticker, index_date)
     operationIncome as operation_income,
     ebitda
 from 
-    {{source('income_statement', 'income_statement')}}
+    {{source('source', 'income_statement')}}
 where 
     ticker is not null

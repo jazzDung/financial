@@ -19,6 +19,6 @@ select distinct on (ticker)
     deltainmonth as delta_in_month,
     foreignpercent as foreign_percent
 
-from {{ source('organization', 'organization') }}
+from {{ source('source', 'organization') }}
 where 
     ticker is not null

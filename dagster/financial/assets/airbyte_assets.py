@@ -15,5 +15,5 @@ airbyte_assets = load_assets_from_airbyte_instance(
     airbyte_instance, 
     
     workspace_id=AIRBYTE_WORKSPACE,
-    connection_to_asset_key_fn=lambda c, n: AssetKey([c.name, n]),
+    connection_to_asset_key_fn=lambda c, n: AssetKey(["source", n]),
 )

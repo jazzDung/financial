@@ -10,6 +10,6 @@
     )
 }}
 
-select * from {{ source('industry_health_rating', 'industry_health_rating') }}
+select * from {{ source('source', 'industry_health_rating') }}
 
 {% endsnapshot %}

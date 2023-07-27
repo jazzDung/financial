@@ -14,6 +14,6 @@ SELECT distinct on (ticker)
     beta,
     alpha,
 	_airbyte_emitted_at::date as index_date
-FROM {{source('general_rating', 'general_rating')}}
+FROM {{source('source', 'general_rating')}}
 where 
     ticker is not null

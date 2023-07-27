@@ -10,6 +10,6 @@
     )
 }}
 
-select * from {{ source('financial_health_rating', 'financial_health_rating') }}
+select * from {{ source('source', 'financial_health_rating') }}
 
 {% endsnapshot %}

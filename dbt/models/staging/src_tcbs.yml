@@ -1,12 +1,11 @@
 version: 2
 
 sources:
-  - name: organization
+  - name: source
     description: Raw financial data from Airbyte
     database: financial_data
     schema: sources
     tables:
-      #Organization overview
       - name: organization
         description: Organization overview information, collected from SSI
         tests:
@@ -22,11 +21,6 @@ sources:
               - symbol_invalid_length
               - not_uppercase
 
-  - name: cash_flow
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: cash_flow
         description: cash flow report, quarterly and yearly data
         freshness:
@@ -56,11 +50,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: balance_sheet
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: balance_sheet
         description: balance sheet report, quarterly and yearly data
         freshness:
@@ -90,11 +79,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: income_statement
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: income_statement
         description: income_statement report, quarterly and yearly data
         freshness:
@@ -123,14 +107,7 @@ sources:
                   to: source('organization', 'organization')
                   field: ticker
                   severity: warn
-     
-      # Price history
-  
-  - name: price_history
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
+       
       - name: price_history
         description: stock price history, daily data
         freshness:
@@ -162,14 +139,7 @@ sources:
                   to: source('organization', 'organization')
                   field: ticker
                   severity: warn
-
-      # Intraday transaction
   
-  - name: stock_intraday
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: stock_intraday
         description: transaction records during daytime, collected every 30 minutes
         freshness:
@@ -195,39 +165,34 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: general_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: general_rating
-        description: general rating
-        freshness:
-          warn_after: { count: 30, period: day }
-          error_after: { count: 60, period: day }
-        loaded_at_field: _airbyte_emitted_at
-        tests:
-          - dbt_expectations.expect_table_column_count_to_equal:
-              value: 18
-        columns:
-          - name: ticker
-            description: "Stock symbols"
+        description: Raw financial data from Airbyte
+        database: financial_data
+        schema: sources
+        tables:
+          - name: general_rating
+            description: general rating
+            freshness:
+              warn_after: { count: 30, period: day }
+              error_after: { count: 60, period: day }
+            loaded_at_field: _airbyte_emitted_at
             tests:
-              - unique
-              - not_null:
-                  severity: warn
-              - symbol_invalid_length
-              - not_uppercase
-              - relationships:
-                  to: source('organization', 'organization')
-                  field: ticker
-                  severity: warn
+              - dbt_expectations.expect_table_column_count_to_equal:
+                  value: 18
+            columns:
+              - name: ticker
+                description: "Stock symbols"
+                tests:
+                  - unique
+                  - not_null:
+                      severity: warn
+                  - symbol_invalid_length
+                  - not_uppercase
+                  - relationships:
+                      to: source('organization', 'organization')
+                      field: ticker
+                      severity: warn
       
-  - name: business_model_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: business_model_rating
         description: general rating
         freshness:
@@ -251,11 +216,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: business_operation_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: business_operation_rating
         description: general rating
         freshness:
@@ -279,11 +239,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: financial_health_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: financial_health_rating
         description: general rating
         freshness:
@@ -307,11 +262,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: valuation_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: valuation_rating
         description: general rating
         freshness:
@@ -335,11 +285,6 @@ sources:
                   field: ticker
                   severity: warn
 
-  - name: industry_health_rating
-    description: Raw financial data from Airbyte
-    database: financial_data
-    schema: sources
-    tables:
       - name: industry_health_rating
         description: general rating
         freshness:

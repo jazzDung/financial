@@ -36,6 +36,6 @@ select distinct on (ticker, index_date)
     minorShareHolderProfit as minor_share_holder_profit,
     payable
 from
-    {{source('balance_sheet', 'balance_sheet')}}
+    {{source('source', 'balance_sheet')}}
 where 
     ticker is not null

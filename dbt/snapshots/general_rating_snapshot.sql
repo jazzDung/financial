@@ -10,6 +10,6 @@
     )
 }}
 
-select * from {{ source('general_rating', 'general_rating') }}
+select * from {{ source('source', 'general_rating') }}
 
 {% endsnapshot %}

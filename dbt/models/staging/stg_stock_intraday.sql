@@ -11,6 +11,6 @@ select distinct on (ticker, t, id)
 	pcp as pcp,
 	t::timestamp as transaction_time
 from
-	{{ source('stock_intraday', 'stock_intraday') }}
+	{{ source('source', 'stock_intraday') }}
 where 
     ticker is not null

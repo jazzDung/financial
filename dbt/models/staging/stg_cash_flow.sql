@@ -7,6 +7,6 @@ select distinct on (ticker, index_date)
     fromSale as from_sale,
     freeCashFlow as free_cash_flow
 
-from {{ source('cash_flow', 'cash_flow') }}
+from {{ source('source', 'cash_flow') }}
 where 
     ticker is not null

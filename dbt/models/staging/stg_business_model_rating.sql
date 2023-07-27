@@ -13,6 +13,6 @@ select distinct on (ticker)
 	operationRisk as operation_risk,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('business_model_rating', 'business_model_rating') }}
+	{{ source('source', 'business_model_rating') }}
 where 
     ticker is not null

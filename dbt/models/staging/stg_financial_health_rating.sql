@@ -13,6 +13,6 @@ select distinct on (ticker)
 	netDebtEBITDA as net_debt_ebitda,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('financial_health_rating', 'financial_health_rating') }}
+	{{ source('source', 'financial_health_rating') }}
 where 
     ticker is not null

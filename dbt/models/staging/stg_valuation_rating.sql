@@ -9,6 +9,6 @@ select distinct on (ticker)
 	dividendRate as dividend_rate,
 	_airbyte_emitted_at::date as index_date
 from
-	{{ source('valuation_rating', 'valuation_rating') }}
+	{{ source('source', 'valuation_rating') }}
 where 
     ticker is not null
