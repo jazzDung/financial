@@ -782,11 +782,11 @@ def update_records(update_values):
         )
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
-                                SET success = v.success::bool,
-                                    checked = v.checked::bool
+                                SET success = success as bool),
+                                    checked = cast(v.checked as bool)
 
                                 FROM (VALUES {update_values}) AS v (checked, success, id)
-                                WHERE q.id = v.id::int;"""
+                                WHERE q.id = cast(v.id as int);"""
         logging.info(f"Executing query to update records: {update_sql_query}")
         cursor.execute(update_sql_query)
 
