@@ -782,7 +782,7 @@ def update_records(update_values):
         )
         cursor = connection.cursor()
         update_sql_query = f"""UPDATE {QUERY_SCHEMA}.{QUERY_TABLE} q 
-                                SET success = success as bool),
+                                SET success = cast(v.success as bool),
                                     checked = cast(v.checked as bool)
 
                                 FROM (VALUES {update_values}) AS v (checked, success, id)
