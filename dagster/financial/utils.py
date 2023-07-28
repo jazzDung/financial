@@ -13,7 +13,6 @@ from financial.resources import (
     SUPERSET_ID,
     SUPERSET_PASSWORD,
     SUPERSET_USERNAME,
-    MATERIALIZATION_MAPPING,
     DATABASE_USERNAME,
     DATABASE_PASSWORD,
     DATABASE_HOST,
@@ -21,7 +20,6 @@ from financial.resources import (
     DATABASE_NAME,
     QUERY_SCHEMA,
     QUERY_TABLE,
-    USER_SCHEMA,
 )
 from urllib.parse import unquote
 from typing import Any, Dict, Iterator, List, Union
@@ -663,7 +661,7 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
         schema_names: List of serving schema names.
 
     Returns:
-        String: the content of the dbt model.
+        ref_tables: list of models that is referenced in the query
     """
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
@@ -678,53 +676,9 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     if len(final_tables) == 0:
         return None, "No tables referenced in dbt projects"
 
-    table_to_ref = {}
-
-    # Add ref for original query
-    new_query = original_query
-    for table in final_tables:
-        new_query = (
-            """
--- depends_on: {{{{ref(\'{table}\')}}}}
-    """.format(
-                table=dbt_tables[table]["name"]  # Ensure that there is only table names, no schema names
-            )
-            + new_query
-        )
-    return new_query, "Success"
+    return [dbt_tables[table]["name"] for table in final_tables], "Success"
 
 
-def add_materialization(df_row, query, exec_time):
-    """
-    Returns content of a user-created dbt model file with config.
-
-    Args:
-        df_row: Row of DataFrame taken from "query" table.
-        dbt_tables: List of tables name.
-        schema_names: List of serving schema names.
-
-    Returns:
-        String: the content of the dbt model.
-    """
-    query = (
-        """
-{{{{ config(
-    materialized=\'{materialization}\',
-    name='{name}',
-    description='{desc}',
-    tags = ['{user_id}','{created_time}'],
-    schema = '{schema}'
-) }}}}""".format(
-            materialization=MATERIALIZATION_MAPPING[df_row["materialization"]],
-            user_id=df_row["user_id"],
-            name=df_row["name"],
-            desc=df_row["description"],
-            created_time=exec_time,
-            schema=USER_SCHEMA,
-        )
-        + query
-    )
-    return query
 
 
 def get_records():

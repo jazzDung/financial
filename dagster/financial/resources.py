@@ -1,4 +1,5 @@
 import json, sqlalchemy, smtplib, ssl, os
+from jinja2 import Template
 
 ENV = os.environ["FINANCIAL_ENVIROMENT"] if "FINANCIAL_ENVIROMENT" in os.environ else "dev"
 
@@ -73,3 +74,6 @@ f.close()
 
 # Create Query
 MATERIALIZATION_MAPPING = {1: "table", 2: "view", 3: "incremental", 4: "ephemereal"}
+
+with open(DBT_PROJECT_DIR + "/create_model.txt", "r") as f:
+    MODEL_TEMPLATE = Template(f.read())

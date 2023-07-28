@@ -1,0 +1,10 @@
+{% raw %}{{ config({% endraw %}
+materialized='{{ materialization }}',
+description = '{{ desc }}',
+tags = {{tags}},
+schema = '{{schema}}'
+{% raw %})}}{% endraw %}
+{% for var in refs %}
+-- depends_on: {{ var }}{% endfor %}
+
+{{ query }}

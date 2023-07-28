@@ -13,6 +13,8 @@ from financial.resources import (
     EMAIL_PASSWORD,
     EMAIL_PORT,
     EMAIL_SENDER,
+    MATERIALIZATION_MAPPING,
+    MODEL_TEMPLATE,
     SERVING_SCHEMA,
     SMTP,
     SUPERSET_ID,
@@ -110,21 +112,27 @@ def create_model():
         #     status[i] = ("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
-        partially_model, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_names)
+        ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_names)
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status[i] = processed_status
             continue
-        # Add config
-        processed_model = add_materialization(df.loc[i], partially_model, EXEC_TIME)
-
         model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
         if os.path.exists(model_path):
             status[i] = "Model name is duplicated with another in processing batch"
             df.loc[i, "success"] = False
             continue
         with open(model_path, "w+") as f:
-            f.write(processed_model)
+            template_output = MODEL_TEMPLATE.render(
+                materialization=MATERIALIZATION_MAPPING[df.loc[i, "materialization"]],
+                desc=df.loc[i,"description"],
+                user_id=df.loc[i,"user_id"]
+                exec_time=EXEC_TIME
+                schema=USER_SCHEMA,
+                refs=ref_tables,
+                query=df.loc[i,"query_string"],
+            )
+            f.write(template_output)
             logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status[i] = "Success"
