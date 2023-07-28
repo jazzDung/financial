@@ -1,2 +1,92 @@
 models:
-  - name: dim_price_history
+  - name: fact_price_history
+    description: Price history of stocks
+    columns:
+      - name: ticker
+        description: "The stock symbol"
+      - name: open
+        description: "Open price in index date"
+      - name: low
+        description: "Lowest price in index date"
+      - name: high
+        description: "Highest price in index date"
+      - name: close
+        description: "Closing price in index date"
+      - name: volume
+        description: "Total volume traded in index date"
+      - name: trading_date
+        description: "The index date"
+  - name: dim_organization
+    description: Organization overview information, collected from SSI
+    tests:
+      - dbt_expectations.expect_table_column_count_to_equal:
+          value: 23
+    columns:
+      - name: ticker
+        description: "Stock symbol of organization, primary key for this table"
+
+  - name: fact_cash_flow
+    description: Cash flow report, quarterly and yearly data
+
+    columns:
+      - name: ticker
+        description: "Stock symbol"
+
+  - name: fact_balance_sheet
+    description: Balance sheet report, quarterly and yearly data
+    columns:
+      - name: ticker
+        description: "Stock symbol"
+
+  - name: fact_income_statement
+    description: Income statement report, quarterly and yearly data
+    columns:
+      - name: ticker
+        description: "Stock symbol"
+
+  - name: fact_price_history
+    description: stock price history, daily data
+    columns:
+      - name: ticker
+        description: "Stock symbol of price_history, primary key for this table"
+      - name:
+
+  - name: fact_stock_intraday
+    description: Transaction records during daytime, collected every 30 minutes
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+
+  - name: fact_general_rating
+    description: General rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+  - name: fact_business_model_rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+
+  - name: fact_business_operation_rating
+    description: Business Operation rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+
+  - name: fact_financial_health_rating
+    description: Financial Health rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+
+  - name: fact_valuation_rating
+    description: Valuation rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
+
+  - name: fact_industry_health_rating
+    description: Industry health rating
+    columns:
+      - name: ticker
+        description: "Stock symbols"
