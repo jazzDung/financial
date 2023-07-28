@@ -126,7 +126,7 @@ def create_model():
             template_output = MODEL_TEMPLATE.render(
                 materialization=MATERIALIZATION_MAPPING[df.loc[i, "materialization"]],
                 desc=df.loc[i,"description"],
-                user_id=df.loc[i,"user_id"]
+                user_id=str(df.loc[i,"user_id"])
                 exec_time=EXEC_TIME
                 schema=USER_SCHEMA,
                 refs=ref_tables,
