@@ -218,6 +218,7 @@ def create_model():
 
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
+    SMTP.quit()
     # Delete unsucessful model
     for i in df.index:
         # Check Success
