@@ -33,30 +33,45 @@ class SupersetDBTSessionConnector:
     """A class for accessing the Superset API in an easy way."""
 
     def __init__(self):
-        """Instantiates the class."""
-        self.url = SUPERSET_HOST
-        self.api_url = self.url + "api/v1/"
+        """Instantiates the class.
 
-        self.session = requests.session()
+        ''access_token'' will be instantiated via enviromental variable
+        If ``access_token`` is None, attempts to obtain it using ``refresh_token``.
 
-        self.username = SUPERSET_USERNAME
-        self.password = SUPERSET_PASSWORD
+        Args:
+            api_url: Base API URL of a Superset instance, e.g. https://my-superset/api/v1.
+            access_token: Access token to use for accessing protected endpoints of the Superset
+                API. Can be automatically obtained if ``refresh_token`` is not None.
+            refresh_token: Refresh token to use for obtaining or refreshing the ``access_token``.
+                If None, no refresh will be done.
+        """
+        self.__url = SUPERSET_HOST
+        self.__api_url = self.__url + "api/v1/"
 
-        self._refresh_session()
+        self.__session = requests.session()
 
-    def _refresh_session(self):
+        self.__username = SUPERSET_USERNAME
+        self.__password = SUPERSET_PASSWORD
+
+        self.__refresh_session()
+
+    def __refresh_session(self):
         logging.info("Refreshing session")
 
-        soup = BeautifulSoup(self.session.post(self.url + "login").text, "html.parser")
-        self.csrf_token = soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
+        soup = BeautifulSoup(self.__session.post(self.__url + "login").text, "html.parser")
+        self.__csrf_token = soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
 
         data = {
-            "username": self.username,
-            "password": self.password,
+            "username": self.__username,
+            "password": self.__password,
             "provider": "db",
             "refresh": True,
         }
-        response = self.session.post(self.url + "login", json=data, headers=headers)  # type: ignore
+        headers = {
+            # 'Authorization': 'Bearer {}'.format(self.____access_token),
+            "x-csrftoken": self.__csrf_token,
+        }
+        response = self.__session.post(self.__url + "login", json=data, headers=headers)  # type: ignore
         return True
 
     def request(self, method, endpoint, **request_kwargs):
@@ -75,30 +90,31 @@ class SupersetDBTSessionConnector:
                 even after retrying with a fresh session.
         """
 
-        logging.info("Executing request for endpoint %s", method, endpoint)
+        logging.info("About to %s execute request for endpoint %s", method, endpoint)
 
-        headers = {
-            "x-csrftoken": self.csrf_token,
+        url = self.__api_url + endpoint
+        csrf_headers = {
+            # 'Authorization': 'Bearer {}'.format(self.__access_token),
+            "x-csrftoken": self.__csrf_token,
         }
 
-        url = self.api_url + endpoint
-        res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
+        res = self.__session.request(method, url, headers=csrf_headers, **request_kwargs)  # type: ignore
 
         logging.info("Request finished with status: %d", res.status_code)
 
-        if res.status_code == 401 and res.json().get("msg") == "Token has expired" and self._refresh_session():
+        if res.status_code == 401 and res.json().get("msg") == "Token has expired" and self.__refresh_session():
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
-            res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
+            res = self.__session.request(method, url, headers=csrf_headers, **request_kwargs)  # type: ignore
 
             logging.info("Request finished with status: %d", res.status_code)
 
         if (
             res.status_code == 400
             and res.json()["message"] == "400 Bad Request: The CSRF session token is missing."
-            and self._refresh_session()
+            and self.__refresh_session()
         ):
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
-            res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
+            res = self.__session.request(method, url, headers=csrf_headers, **request_kwargs)  # type: ignore
             logging.info(f"Request finished with status: {res.status_code}")
         res.raise_for_status()
         return res.json()
