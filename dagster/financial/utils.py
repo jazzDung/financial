@@ -33,18 +33,7 @@ class SupersetDBTSessionConnector:
     """A class for accessing the Superset API in an easy way."""
 
     def __init__(self):
-        """Instantiates the class.
-
-        ''access_token'' will be instantiated via enviromental variable
-        If ``access_token`` is None, attempts to obtain it using ``refresh_token``.
-
-        Args:
-            api_url: Base API URL of a Superset instance, e.g. https://my-superset/api/v1.
-            access_token: Access token to use for accessing protected endpoints of the Superset
-                API. Can be automatically obtained if ``refresh_token`` is not None.
-            refresh_token: Refresh token to use for obtaining or refreshing the ``access_token``.
-                If None, no refresh will be done.
-        """
+        """Instantiates the class."""
         self.url = SUPERSET_HOST
         self.api_url = self.url + "api/v1/"
 
@@ -58,8 +47,8 @@ class SupersetDBTSessionConnector:
     def _refresh_session(self):
         logging.info("Refreshing session")
 
-        self.soup = BeautifulSoup(self.session.post(self.url + "login").text, "html.parser")
-        self.csrf_token = self.soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
+        soup = BeautifulSoup(self.session.post(self.url + "login").text, "html.parser")
+        self.csrf_token = soup.find("input", {"id": "csrf_token"})["value"]  # type: ignore
 
         data = {
             "username": self.username,
@@ -68,21 +57,17 @@ class SupersetDBTSessionConnector:
             "refresh": True,
         }
         self.headers = {
-            # 'Authorization': 'Bearer {}'.format(self.access_token),
             "x-csrftoken": self.csrf_token,
         }
         response = self.session.post(self.url + "login", json=data, headers=self.headers)  # type: ignore
         return True
 
-    def request(self, method, endpoint, refresh_session_if_needed=True, headers=None, **request_kwargs):
+    def request(self, method, endpoint, **request_kwargs):
         """Executes a request against the Superset API.
 
         Args:
             method: HTTP method to use.
             endpoint: Endpoint to use.
-            refresh_token_if_needed: Whether the ``access_token`` should be automatically refreshed
-                if needed.
-            headers: Additional headers to use.
             **request_kwargs: Any ``requests.request`` arguments to use.
 
         Returns:
@@ -93,30 +78,21 @@ class SupersetDBTSessionConnector:
                 even after retrying with a fresh session.
         """
 
-        logging.info("About to %s execute request for endpoint %s", method, endpoint)
-
-        if headers is None:
-            headers = {}
+        logging.info("Executing request for endpoint %s", method, endpoint)
 
         url = self.api_url + endpoint
         res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
 
         logging.info("Request finished with status: %d", res.status_code)
 
-        if (
-            refresh_session_if_needed
-            and res.status_code == 401
-            and res.json().get("msg") == "Token has expired"
-            and self._refresh_session()
-        ):
+        if res.status_code == 401 and res.json().get("msg") == "Token has expired" and self._refresh_session():
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
             res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
 
             logging.info("Request finished with status: %d", res.status_code)
 
         if (
-            refresh_session_if_needed
-            and res.status_code == 400
+            res.status_code == 400
             and res.json()["message"] == "400 Bad Request: The CSRF session token is missing."
             and self._refresh_session()
         ):
@@ -677,8 +653,6 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
         return None, "No tables referenced in dbt projects"
 
     return [dbt_tables[table]["name"] for table in final_tables], "Success"
-
-
 
 
 def get_records():
