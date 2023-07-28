@@ -125,12 +125,12 @@ def create_model():
         with open(model_path, "w+") as f:
             template_output = MODEL_TEMPLATE.render(
                 materialization=MATERIALIZATION_MAPPING[df.loc[i, "materialization"]],
-                desc=df.loc[i,"description"],
-                user_id=str(df.loc[i,"user_id"])
-                exec_time=EXEC_TIME
+                desc=df.loc[i, "description"],
+                user_id=str(df.loc[i, "user_id"]),
+                exec_time=EXEC_TIME,
                 schema=USER_SCHEMA,
                 refs=ref_tables,
-                query=df.loc[i,"query_string"],
+                query=df.loc[i, "query_string"],
             )
             f.write(template_output)
             logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
