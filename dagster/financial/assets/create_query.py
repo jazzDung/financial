@@ -26,7 +26,6 @@ from financial.resources import (
 from pgsanity.pgsanity import check_string
 from financial.utils import (
     SupersetDBTSessionConnector,
-    add_materialization,
     get_emails,
     get_mail_content,
     get_physical_datasets_from_superset,
