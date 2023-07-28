@@ -1,5 +1,7 @@
 select distinct on (ticker, index_date) 
     ticker,
+
+    
     format('%s-%s-1', year, quarter)::date as index_date,
     shortAsset as short_asset,
     cash,

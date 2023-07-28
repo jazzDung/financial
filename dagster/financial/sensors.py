@@ -1,7 +1,7 @@
 import os
 from dagster import DagsterRunStatus, sensor, RunRequest, RunConfig, SkipReason
 from financial.resources import DB_CONNECTION
-from financial.jobs import ingest_all_job, send_email_job, create_model_job
+from financial.jobs import *
 from dagster.core.storage.pipeline_run import RunsFilter
 
 

@@ -1,0 +1,1 @@
+SELECT * FROM "financial_data"."staging"."stg_cash_flow"

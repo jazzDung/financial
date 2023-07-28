@@ -14,6 +14,7 @@ from financial.utils import (
     get_exposures_dict,
     get_tables_from_dbt,
     merge_dashboards_with_datasets,
+    SupersetDBTConnectorSession
 )
 from financial.resources import (
     DATABASE_ID,
@@ -27,8 +28,8 @@ from dbt.cli.main import dbtRunner
 
 
 @asset(group_name="dashboard")
-def pull_dashboard():
-    superset = SupersetDBTSessionConnector()
+def pull_dashboards():
+    superset = SupersetDBTConnectorSession()
 
     logging.info("Starting the script!")
 
