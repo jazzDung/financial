@@ -31,7 +31,7 @@ from typing import Any, Dict, Iterator, List, Union
 #### ONLY USE SESSION FOR SEQUENTIAL RUNNING SCRIPTS
 
 
-class SupersetDBTConnectorSession:
+class SupersetDBTSessionConnector:
     """A class for accessing the Superset API in an easy way."""
 
     def __init__(self):
@@ -171,7 +171,7 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
     return tables
 
 
-def get_physical_datasets_from_superset(superset: SupersetDBTConnectorSession, superset_db_id):
+def get_physical_datasets_from_superset(superset: SupersetDBTSessionConnector, superset_db_id):
     logging.info("Getting physical datasets from Superset.")
     page_number = 0
     datasets = []
@@ -310,7 +310,7 @@ def get_json_segment(
                 yield from get_json_segment(s, segment_type)
 
 
-def get_dashboards_from_superset(superset: SupersetDBTConnectorSession, superset_db_id, user_id):
+def get_dashboards_from_superset(superset: SupersetDBTSessionConnector, superset_db_id, user_id):
     """
     This function gets
     1. Get dashboards id list from Superset iterating on the pages of the url
@@ -411,7 +411,7 @@ def get_dashboards_from_superset(superset: SupersetDBTConnectorSession, superset
 
 
 def get_datasets_from_superset_dbt_refs(
-    superset: SupersetDBTConnectorSession, dashboards_datasets, dbt_tables, sql_dialect, superset_db_id
+    superset: SupersetDBTSessionConnector, dashboards_datasets, dbt_tables, sql_dialect, superset_db_id
 ):
     """
     Returns datasets (dict) containing table info and dbt references
@@ -459,12 +459,12 @@ def get_datasets_from_superset_dbt_refs(
     return datasets
 
 
-def refresh_columns_in_superset(superset: SupersetDBTConnectorSession, dataset_id):
+def refresh_columns_in_superset(superset: SupersetDBTSessionConnector, dataset_id):
     logging.info("Refreshing columns in Superset.")
     superset.request("PUT", f"/dataset/{dataset_id}/refresh")
 
 
-def add_sst_dataset_metadata(superset: SupersetDBTConnectorSession, dataset_id, sst_dataset_key, dbt_tables):
+def add_sst_dataset_metadata(superset: SupersetDBTSessionConnector, dataset_id, sst_dataset_key, dbt_tables):
     logging.info("Refreshing columns in Superset.")
     body = {
         "extra": '{"certification": \n  {"certified_by": "Data Analytics Team", \n   "details": "This table is the source of truth." \n    \n  }\n}',
@@ -476,7 +476,7 @@ def add_sst_dataset_metadata(superset: SupersetDBTConnectorSession, dataset_id, 
     superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
 
-def add_superset_columns(superset: SupersetDBTConnectorSession, dataset):
+def add_superset_columns(superset: SupersetDBTSessionConnector, dataset):
     logging.info("Pulling fresh columns info from Superset.")
     res = superset.request("GET", f"/dataset/{dataset['id']}")
     columns = res["result"]["columns"]
@@ -556,7 +556,7 @@ def merge_columns_info(dataset, tables):
     return dataset
 
 
-def put_columns_to_superset(superset: SupersetDBTConnectorSession, dataset):
+def put_columns_to_superset(superset: SupersetDBTSessionConnector, dataset):
     logging.info("Putting new columns info with descriptions back into Superset.")
     body = {"columns": dataset["columns_new"]}
     superset.request("PUT", f"/dataset/{dataset['id']}?override_columns=true", json=body)

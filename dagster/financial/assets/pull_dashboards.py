@@ -7,7 +7,7 @@ from pathlib import Path
 from dagster import asset
 import ruamel.yaml
 from financial.utils import (
-    SupersetDBTConnectorSession,
+    SupersetDBTSessionConnector,
     YamlFormatted,
     get_dashboards_from_superset,
     get_datasets_from_superset_dbt_refs,
@@ -28,7 +28,7 @@ from dbt.cli.main import dbtRunner
 
 @asset(group_name="dashboard")
 def pull_dashboard():
-    superset = SupersetDBTConnectorSession()
+    superset = SupersetDBTSessionConnector()
 
     logging.info("Starting the script!")
 

@@ -2,13 +2,13 @@ import logging
 import re
 
 from dagster import asset
-from financial.utils import SupersetDBTConnectorSession, YamlFormatted
+from financial.utils import SupersetDBTSessionConnector, YamlFormatted
 from financial.resources import DATABASE_ID, USER_MODEL_PATH, USER_SCHEMA, DESC_YAML_PATH
 
 
 @asset(group_name="dashboard")
 def pull_user_description():
-    superset = SupersetDBTConnectorSession()
+    superset = SupersetDBTSessionConnector()
 
     res = superset.request("GET", f"/database/get_tables_descriptions/?db_id={DATABASE_ID}")
 

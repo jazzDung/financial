@@ -5,7 +5,7 @@ from dagster import asset
 from requests import HTTPError
 from pathlib import Path
 from financial.utils import (
-    SupersetDBTConnectorSession,
+    SupersetDBTSessionConnector,
     add_sst_dataset_metadata,
     add_superset_columns,
     get_physical_datasets_from_superset,
@@ -21,7 +21,7 @@ from financial.resources import DATABASE_ID, MANIFEST_PATH, USER_SCHEMA
 def push_description():
     logging.basicConfig(level=logging.INFO)
 
-    superset = SupersetDBTConnectorSession()
+    superset = SupersetDBTSessionConnector()
 
     logging.info("Starting the script!")
 

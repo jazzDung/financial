@@ -4,7 +4,7 @@ from itertools import compress
 from pathlib import Path
 from dagster import asset
 from financial.utils import (
-    SupersetDBTConnectorSession,
+    SupersetDBTSessionConnector,
     get_physical_datasets_from_superset,
     get_tables_from_dbt,
 )
@@ -14,7 +14,7 @@ from dbt.cli.main import dbtRunner
 
 @asset(group_name="dashboard")
 def dataset_sync():
-    superset = SupersetDBTConnectorSession()
+    superset = SupersetDBTSessionConnector()
     superset_tables_dict_list = get_physical_datasets_from_superset(superset, DATABASE_ID)
     superset_tables_id_dict = dict([(table["key"], table["id"]) for table in superset_tables_dict_list])
     logging.info("Starting!")

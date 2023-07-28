@@ -23,7 +23,7 @@ from financial.resources import (
 )
 from pgsanity.pgsanity import check_string
 from financial.utils import (
-    SupersetDBTConnectorSession,
+    SupersetDBTSessionConnector,
     add_materialization,
     get_emails,
     get_mail_content,
@@ -130,7 +130,7 @@ def create_model():
         status[i] = "Success"
 
     # Get Emails from API
-    superset = SupersetDBTConnectorSession()
+    superset = SupersetDBTSessionConnector()
     users = set(df["user_id"].to_list())
     email_list = get_emails(superset, users)
     email_dict = {key: value for element_dict in email_list for key, value in element_dict.items()}
