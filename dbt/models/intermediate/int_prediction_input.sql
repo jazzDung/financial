@@ -10,7 +10,7 @@ SELECT
   ticker,
   close as price
 from
-  {{ ref('dim_price_history') }}
+  {{ ref('fact_price_history') }}
 WHERE
   trading_date BETWEEN CURRENT_DATE - INTERVAL '210' DAY
   AND CURRENT_DATE --fix the interval later, this is just for testing

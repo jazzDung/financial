@@ -1,4 +1,4 @@
-#!/Users/admin/project/financial/dbt/.venv/bin/python3
+#!/Users/jazzdung/projects/financial/dbt/.venv/bin/python3
 # EASY-INSTALL-ENTRY-SCRIPT: 'future==0.18.3','console_scripts','futurize'
 import re
 import sys

@@ -2,8 +2,9 @@
 /dagster/tmp*/
 /dagster/__pycache__/
 /dagster/.venv/
+/dbt/.venv/
 
-.venv
-venv
-env
-.env
+.venv/
+venv/
+env/
+.env/
