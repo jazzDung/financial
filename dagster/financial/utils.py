@@ -41,7 +41,7 @@ class SupersetDBTSessionConnector:
 
         self.username = SUPERSET_USERNAME
         self.password = SUPERSET_PASSWORD
-        self.headers = {}
+
         self._refresh_session()
 
     def _refresh_session(self):
@@ -56,10 +56,7 @@ class SupersetDBTSessionConnector:
             "provider": "db",
             "refresh": True,
         }
-        self.headers = {
-            "x-csrftoken": self.csrf_token,
-        }
-        response = self.session.post(self.url + "login", json=data, headers=self.headers)  # type: ignore
+        response = self.session.post(self.url + "login", json=data, headers=headers)  # type: ignore
         return True
 
     def request(self, method, endpoint, **request_kwargs):
@@ -80,14 +77,18 @@ class SupersetDBTSessionConnector:
 
         logging.info("Executing request for endpoint %s", method, endpoint)
 
+        headers = {
+            "x-csrftoken": self.csrf_token,
+        }
+
         url = self.api_url + endpoint
-        res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
+        res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
 
         logging.info("Request finished with status: %d", res.status_code)
 
         if res.status_code == 401 and res.json().get("msg") == "Token has expired" and self._refresh_session():
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
-            res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
+            res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
 
             logging.info("Request finished with status: %d", res.status_code)
 
@@ -97,7 +98,7 @@ class SupersetDBTSessionConnector:
             and self._refresh_session()
         ):
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
-            res = self.session.request(method, url, headers=self.headers, **request_kwargs)  # type: ignore
+            res = self.session.request(method, url, headers=headers, **request_kwargs)  # type: ignore
             logging.info(f"Request finished with status: {res.status_code}")
         res.raise_for_status()
         return res.json()
