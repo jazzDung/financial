@@ -8,13 +8,23 @@ from financial.utils import (
     SupersetDBTSessionConnector,
     get_tables_from_dbt,
 )
-from financial.resources import DATABASE_ID, MANIFEST_PATH, SERVING_SCHEMA, USER_SCHEMA, SST_DATABASE_NAME
-
+from financial.resources import DBT_PROJECT_DIR, MANIFEST_PATH, SERVING_SCHEMA, USER_SCHEMA, SST_DATABASE_NAME
+from dbt.cli.main import dbtRunner
 
 @asset(group_name="dashboard")
 def invalidate_cache():
     logging.basicConfig(level=logging.INFO)
 
+    dbt = dbtRunner()
+    cli_args = [
+        "parse",
+        "--project-dir",
+        DBT_PROJECT_DIR,
+    ]
+    res = dbt.invoke(cli_args)
+    if not res.success:
+        raise Exception("Unable to parse project.")
+    
     superset = SupersetDBTSessionConnector()
 
     if Path(MANIFEST_PATH).is_file():
