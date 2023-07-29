@@ -70,6 +70,7 @@ SUPERSET_PASSWORD = data["password"]
 SUPERSET_HOST = data["host"]
 DATABASE_ID = data["db"]
 SUPERSET_ADMIN_ID = data["admin_id"]
+SST_DATABASE_NAME = data["db_name"]
 f.close()
 
 # Create Query
