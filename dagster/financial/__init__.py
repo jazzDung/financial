@@ -1,8 +1,16 @@
 from dagster import Definitions
+<<<<<<< Updated upstream
 from financial.assets.pull_dashboards import *
 from financial.assets.pull_user_description import *
 from financial.assets.push_description import *
 from financial.assets.dataset_sync import *
+=======
+from financial.assets.invalidate_cache import invalidate_cache
+from financial.assets.pull_dashboards import pull_dashboard
+from financial.assets.pull_user_description import pull_user_description
+from financial.assets.push_description import push_description
+from financial.assets.dataset_sync import dataset_sync
+>>>>>>> Stashed changes
 from financial.assets.create_query import *
 from financial.assets.dbt_assets import *
 from financial.assets.airbyte_assets import *
@@ -20,7 +28,8 @@ defs = Definitions(
         [dataset_sync] +
         [pull_dashboards] +
         [pull_user_description] +
-        [push_description]
+        [push_description] +
+        [invalidate_cache]
         # [is_valid_table_name, create_dbt_model, get_records, update_records, create_model]
     ),
     
