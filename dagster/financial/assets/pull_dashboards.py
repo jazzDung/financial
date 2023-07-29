@@ -39,7 +39,10 @@ def pull_dashboards():
         DBT_PROJECT_DIR,
     ]
     res = dbt.invoke(cli_args)
-
+    
+    if not res.success:
+        raise Exception("Unable to parse project.")
+    
     with open(MANIFEST_PATH) as f:
         dbt_manifest = json.load(f)
 

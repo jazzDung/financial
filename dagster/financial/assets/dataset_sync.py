@@ -18,7 +18,7 @@ def dataset_sync():
     superset_tables_dict_list = get_physical_datasets_from_superset(superset, DATABASE_ID)
     superset_tables_id_dict = dict([(table["key"], table["id"]) for table in superset_tables_dict_list])
     logging.info("Starting!")
-
+    
     dbt = dbtRunner()
     cli_args = [
         "parse",
@@ -26,7 +26,9 @@ def dataset_sync():
         DBT_PROJECT_DIR,
     ]
     res = dbt.invoke(cli_args)
-
+    if not res.success:
+        raise Exception("Unable to parse project.")
+    
     dbt_tables = {}
 
     with open(MANIFEST_PATH) as f:
