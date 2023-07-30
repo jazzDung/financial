@@ -163,7 +163,7 @@ def create_model():
         return "Early stopping because no successful records"
 
     sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
-    sst_user_tables = [table["name"] for table in sst_datasets if sst_datasets[table]["schema"] == USER_SCHEMA]
+    sst_user_tables = [table["name"] for table in sst_datasets if table["schema"] == USER_SCHEMA]
 
     # initialize
     dbt = dbtRunner()
