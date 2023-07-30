@@ -140,7 +140,6 @@ def create_model():
             logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status[i] = "Success"
-    raise Exception(dbt_tables_reporting)
     # Get Emails from API
     superset = SupersetDBTSessionConnector()
     users = set(df["user_id"].to_list())
