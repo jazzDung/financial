@@ -13,7 +13,6 @@ from financial.resources import (
     EMAIL_PASSWORD,
     EMAIL_PORT,
     EMAIL_SENDER,
-    MATERIALIZATION_MAPPING,
     MODEL_TEMPLATE,
     SERVING_SCHEMA,
     SMTP,
@@ -128,7 +127,6 @@ def create_model():
             continue
         with open(model_path, "w+") as f:
             template_output = MODEL_TEMPLATE.render(
-                materialization=MATERIALIZATION_MAPPING[df.loc[i, "materialization"]],
                 desc=df.loc[i, "description"],
                 user_id=str(df.loc[i, "user_id"]),
                 exec_time=EXEC_TIME,
