@@ -644,7 +644,7 @@ def is_unique_table_name(table_name, dbt_tables):
         return False
 
 
-def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
+def get_ref(original_query, dbt_tables, parsed_result, serving_tables_names):
     """
     Returns content of a user-created dbt model file w/o config.
 
@@ -661,10 +661,11 @@ def get_ref(original_query, dbt_tables, parsed_result, dbt_tables_names):
     fixed_query = str(original_query)
     table_names = set(get_tables_from_sql(fixed_query, dialect="postgres", sql_parsed=parsed_result))
     fixed_query = sqlfluff.fix(fixed_query, dialect="postgres")
-    if len(table_names.difference(dbt_tables_names)) > 0:  # dbt_tables_names include schema
+    dbt_set = set(serving_tables_names)
+    if not table_names.issubset(dbt_set):  # serving_tables_names include schema
         return None, "Tables referenced out of serving schemas"
     # Put tables in subqueries
-    final_tables = tuple(table_names.intersection(dbt_tables_names))  # Filter out
+    final_tables = tuple(table_names.intersection(serving_tables_names))  # Filter out
 
     if len(final_tables) == 0:
         return None, "No tables referenced in dbt projects"
