@@ -718,6 +718,7 @@ def get_records():
 
 def update_records(df):
     entries_to_update = str(tuple(zip(df.checked, df.success, df.id))).replace("None", "Null")[1:-1]
+    if entries_to_update[-1]==",": entries_to_update=entries_to_update[:-1]
     try:
         connection = psycopg2.connect(
             user=DATABASE_USERNAME,

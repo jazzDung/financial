@@ -73,7 +73,12 @@ def create_model():
         dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
     # Getting the dbt tables keys
-    dbt_tables_names = set(list(dbt_tables.keys()))
+    
+    serving_dbt_models = [
+        dbt_tables["name"] for table in dbt_tables if dbt_tables[table]["schema"] in (SERVING_SCHEMA, USER_SCHEMA)
+    ]
+
+    dbt_serving_names = set(list(serving_dbt_models))
 
     dbt_names_aliases = [dbt_tables[table]["name"] for table in dbt_tables] + [
         dbt_tables[table]["alias"] for table in dbt_tables
@@ -112,7 +117,7 @@ def create_model():
         #     status[i] = ("Query is not 'SELECT'")
         #     continue
         # Check tables and add model ref
-        ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_names)
+        ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_serving_names)
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status[i] = processed_status
@@ -136,7 +141,7 @@ def create_model():
             logging.info("Wrote model {name} contents".format(name=df.loc[i, "name"]))
             f.close()
         status[i] = "Success"
-
+    raise Exception(dbt_serving_names)
     # Get Emails from API
     superset = SupersetDBTSessionConnector()
     users = set(df["user_id"].to_list())
