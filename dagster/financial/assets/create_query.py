@@ -73,7 +73,7 @@ def create_model():
         dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 
     # Getting the dbt tables keys
-    
+    dbt_tables_names = list(dbt_tables.keys())
     mapped = map(lambda x: x.startswith((SERVING_SCHEMA, USER_SCHEMA)), dbt_tables_names)
     mask = list(mapped)
 
