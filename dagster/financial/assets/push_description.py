@@ -4,6 +4,7 @@ import logging
 from dagster import asset
 from requests import HTTPError
 from pathlib import Path
+
 from financial.utils import (
     SupersetDBTSessionConnector,
     add_sst_dataset_metadata,
@@ -18,7 +19,7 @@ from financial.resources import DATABASE_ID, MANIFEST_PATH, USER_SCHEMA
 
 
 @asset(group_name="dashboard")
-def push_description():
+def push_description(dataset_sync):
     logging.basicConfig(level=logging.INFO)
 
     superset = SupersetDBTSessionConnector()
