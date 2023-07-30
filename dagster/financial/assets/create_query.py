@@ -68,7 +68,7 @@ def create_model():
     # raise Exception(DBT_PROJECT_DIR, MANIFEST_PATH, USER_MODEL_PATH)
     # Get all schema names in project
     # Either this or defined schema name available to the user before
-    with open(MANIFEST_PATH) as f:
+    with open('target/manifest.json') as f:
         dbt_manifest = json.load(f)
         dbt_tables = get_tables_from_dbt(dbt_manifest, None)
 

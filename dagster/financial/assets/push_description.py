@@ -28,8 +28,10 @@ def push_description():
     sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
     logging.info("There are %d physical datasets in Superset.", len(sst_datasets))
 
-    if Path(MANIFEST_PATH).is_file():
-        with open(MANIFEST_PATH) as f:
+
+    
+    if Path('target/manifest.json').is_file():
+        with open('target/manifest.json') as f:
             dbt_manifest = json.load(f)
     else:
         raise Exception("No manifest found at path")

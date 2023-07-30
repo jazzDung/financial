@@ -101,7 +101,7 @@ def get_tables_from_dbt(dbt_manifest):
 
 # Get all schema names in project
 # Either this or defined schema name available to the user before
-with open(MANIFEST_PATH) as f:
+with open('target/manifest.json') as f:
     dbt_manifest = json.load(f)
     dbt_tables=get_tables_from_dbt(dbt_manifest)
 

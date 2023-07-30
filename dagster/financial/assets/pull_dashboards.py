@@ -43,7 +43,7 @@ def pull_dashboards():
     if not res.success:
         raise Exception("Unable to parse project.")
     
-    with open(MANIFEST_PATH) as f:
+    with open('target/manifest.json') as f:
         dbt_manifest = json.load(f)
 
     try:

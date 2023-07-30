@@ -30,8 +30,7 @@ def dataset_sync():
         raise Exception("Unable to parse project.")
     
     dbt_tables = {}
-
-    with open(MANIFEST_PATH) as f:
+    with open('target/manifest.json') as f:
         dbt_manifest = json.load(f)
     dbt_tables_temp = get_tables_from_dbt(dbt_manifest, None)
     dbt_tables = {**dbt_tables, **dbt_tables_temp}
