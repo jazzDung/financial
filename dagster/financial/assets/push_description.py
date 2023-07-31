@@ -14,7 +14,7 @@ from financial.utils import (
     put_columns_to_superset,
     refresh_columns_in_superset,
 )
-from financial.resources import DATABASE_ID, MANIFEST_PATH, USER_SCHEMA
+from financial.resources import DATABASE_ID, DBT_PROJECT_DIR, MANIFEST_PATH, USER_SCHEMA
 
 
 @asset(group_name="dashboard")
@@ -28,10 +28,8 @@ def push_description():
     sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
     logging.info("There are %d physical datasets in Superset.", len(sst_datasets))
 
-
-    
-    if Path('target/manifest.json').is_file():
-        with open('target/manifest.json') as f:
+    if Path(MANIFEST_PATH).is_file():
+        with open(MANIFEST_PATH) as f:
             dbt_manifest = json.load(f)
     else:
         raise Exception("No manifest found at path")
