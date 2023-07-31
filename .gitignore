@@ -2,6 +2,7 @@
 /dagster/tmp*/
 /dagster/__pycache__/
 /dagster/.venv/
+/dagster/financial/secret/
 /dbt/.venv/
 
 .venv/
