@@ -684,7 +684,7 @@ def get_records():
             database=DATABASE_NAME,
         )
         cursor = connection.cursor()
-        postgreSQL_select_Query = f"""select 'id', 'name', 'query_string', 'user_id', 'description', 'insert_time', 'checked', 'success' 
+        postgreSQL_select_Query = f"""select id, name, query_string, user_id, description, insert_time, checked, success 
                                     from {QUERY_SCHEMA}.{QUERY_TABLE} where checked = False"""
 
         logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
