@@ -60,8 +60,7 @@ def create_model():
         DBT_PROJECT_DIR,
     ]
     res: dbtRunnerResult = dbt.invoke(cli_args)
-    if not res.success:
-        raise Exception("Unable to parse project.")
+
     # Get dagster execution time, see: https://stackoverflow.com/questions/75099470/getting-current-execution-date-in-a-task-or-asset-in-dagster
     EXEC_TIME = datetime.datetime.today().strftime("%d/%m/%Y_%H:%M:%S")
     # raise Exception(DBT_PROJECT_DIR, MANIFEST_PATH, USER_MODEL_PATH)

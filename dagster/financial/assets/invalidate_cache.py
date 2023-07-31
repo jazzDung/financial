@@ -22,9 +22,7 @@ def invalidate_cache():
         DBT_PROJECT_DIR,
     ]
     res = dbt.invoke(cli_args)
-    if not res.success:
-        raise Exception("Unable to parse project.")
-    
+
     superset = SupersetDBTSessionConnector()
 
     if Path('target/manifest.json').is_file():

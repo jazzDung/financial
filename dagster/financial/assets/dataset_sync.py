@@ -26,14 +26,14 @@ def dataset_sync():
         DBT_PROJECT_DIR,
     ]
     res = dbt.invoke(cli_args)
-    if not res.success:
-        raise Exception("Unable to parse project.")
     
     dbt_tables = {}
     with open('target/manifest.json') as f:
         dbt_manifest = json.load(f)
     dbt_tables_temp = get_tables_from_dbt(dbt_manifest, None)
     dbt_tables = {**dbt_tables, **dbt_tables_temp}
+
+        
 
     # Getting the dbt tables keys
     dbt_tables_names = list(dbt_tables.keys())
