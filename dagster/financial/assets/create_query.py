@@ -212,7 +212,7 @@ def create_model():
                 
                 body = {"description": df.loc[i,"description"]}
                 dataset_id = response["id"]
-                superset.request("PUT", f"/dataset/{id}", json=body)
+                superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
                 message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], "dbt success")
 
