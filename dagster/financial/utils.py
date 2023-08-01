@@ -566,19 +566,17 @@ def merge_dashboards_with_datasets(dashboards, datasets):
     return dashboards
 
 
-def get_exposures_dict(dashboards, exposures):
+def get_exposures_dict(dashboards):
     dashboards.sort(key=lambda dashboard: dashboard["id"])
     titles = [dashboard["title"] for dashboard in dashboards]
     # fail if it breaks uniqueness constraint for exposure names
     assert len(set(titles)) == len(titles), "There are duplicate dashboard names!"
 
-    exposures_orig = {exposure["url"]: exposure for exposure in exposures}
     exposures_dict = [
         {
             "name": f"superset__{dashboard['title']}",
             "type": "dashboard",
             "url": dashboard["url"],
-            "description": exposures_orig.get(dashboard["url"], {}).get("description", ""),
             "depends_on": dashboard["refs"],
             "owner": {"name": dashboard["owner_name"]},
         }
