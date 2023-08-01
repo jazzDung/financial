@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from markdown import markdown
 from financial.resources import (
     SUPERSET_HOST,
+    SUPERSET_PUBLIC_HOST,
     SUPERSET_ID,
     SUPERSET_PASSWORD,
     SUPERSET_USERNAME,
@@ -339,7 +340,7 @@ def get_dashboards_from_superset(superset: SupersetDBTSessionConnector, superset
 
         dashboard_id = result["id"]
         title = result["dashboard_title"]
-        url = superset.url + "/superset/dashboard/" + str(dashboard_id)
+        url = SUPERSET_PUBLIC_HOST + "superset/dashboard/" + str(dashboard_id)
         owner_name = result["owners"][0]["first_name"] + " " + result["owners"][0]["last_name"]
 
         # take unique dataset names, formatted as "[database].[schema].[table]" by Superset
@@ -379,7 +380,6 @@ def get_dashboards_from_superset(superset: SupersetDBTSessionConnector, superset
             "title": title,
             "url": url,
             "owner_name": owner_name,
-            "owner_email": "",  # required for dbt to accept owner_name but not in response
             "datasets": datasets_wo_db,  # add in "schema.table" format
         }
         dashboards.append(dashboard)
@@ -580,7 +580,7 @@ def get_exposures_dict(dashboards, exposures):
             "url": dashboard["url"],
             "description": exposures_orig.get(dashboard["url"], {}).get("description", ""),
             "depends_on": dashboard["refs"],
-            "owner": {"name": dashboard["owner_name"], "email": dashboard["owner_email"]},
+            "owner": {"name": dashboard["owner_name"]},
         }
         for dashboard in dashboards
     ]
