@@ -25,9 +25,9 @@ def pull_user_description():
             table.pop("columns")
 
     tables_desc = {}
-    for key in result.keys():
-        if result[key]["table_schema"] == USER_SCHEMA:
-            tables_desc[result[key]["table_name"]] = result[key]["table_desc"]
+    for table in result:
+        if table["table_schema"] == USER_SCHEMA:
+            tables_desc[table["table_name"]] = table["table_desc"]
 
     desc_yaml_file = YamlFormatted()
 
@@ -43,5 +43,5 @@ def pull_user_description():
             replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
             new_text = re.sub(pattern, replacement, text, 1)
 
-        with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
-            file.write(new_text)
+        # with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
+        #     file.write(new_text)
