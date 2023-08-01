@@ -154,7 +154,7 @@ def create_model():
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
 
     # If every record is unsuccesful, terminate script early
-    if not df["success"].any():
+    if df['success'].all() == False and df['success'].isnull().sum() == 0:
         update_records(df)
         logging.info("Early stopping because no successful records")
         return "Early stopping because no successful records"
@@ -227,5 +227,5 @@ def create_model():
             full_file_path = os.path.join(USER_MODEL_PATH, "{name}.sql".format(name=df.loc[i, "name"]))
             if os.path.isfile(full_file_path):
                 os.remove(full_file_path)
-    
+
     update_records(df)

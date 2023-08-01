@@ -732,7 +732,6 @@ def update_records(df):
                             FROM (VALUES {entries_to_update}) AS v (checked, success, id)
                             WHERE q.id = v.id;"""
     logging.info(f"Executing query to update records: {update_sql_query}")
-    raise Exception(update_sql_query)
     cursor.execute(update_sql_query)
     connection.commit()
     # closing database connection.
