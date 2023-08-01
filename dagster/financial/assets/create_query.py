@@ -202,10 +202,17 @@ def create_model():
                     "schema": USER_SCHEMA,
                     "table_name": df.loc[i, "name"],
                     "owners": [int(df.loc[i, "user_id"]), SUPERSET_ID],
+
                 }
+
+                
                 # Serializing json
                 json_object = json.dumps(dictionary)
                 response = superset.request("POST", rison_request, json=dictionary)
+                
+                body = {"description": df.loc[i,"description"]}
+                dataset_id = response["id"]
+                superset.request("PUT", f"/dataset/{id}", json=body)
 
                 message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], "dbt success")
 
