@@ -159,8 +159,6 @@ def create_model():
         logging.info("Early stopping because no successful records")
         return "Early stopping because no successful records"
 
-    sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
-    sst_user_tables = [table["name"] for table in sst_datasets if table["schema"] == USER_SCHEMA]
 
     # initialize
     dbt = dbtRunner()
@@ -189,30 +187,35 @@ def create_model():
                 dbt_res_df_map[i] = r
                 break
 
+    sst_datasets = get_physical_datasets_from_superset(superset, DATABASE_ID)
+    sst_user_tables = [(table["name"],table["id"]) for table in sst_datasets if table["schema"] == USER_SCHEMA and table["name"] in df[df.success!=False]["name"].values]
+    sst_user_tables_name = {name:id for name,id in sst_user_tables}
     for i in df.index:
         # Check Success
         if df.loc[i, "success"] is not False:
-            if dbt_res_df_map[i].status == "success" and df.loc[i, "name"] not in sst_user_tables:
+            if dbt_res_df_map[i].status == "success":
                 df.loc[i, "success"] = True
+
                 rison_request = "/dataset/"
+
+                if df.loc[i, "name"] in sst_user_tables_name.keys():
+                    dataset_id = sst_user_tables_name[df.loc[i, "name"]]
+                    response = superset.request("DELETE", f"/dataset/{dataset_id}")
                 # Data to be written
                 dictionary = {
                     # Parameter database
                     "database": DATABASE_ID,
                     "schema": USER_SCHEMA,
                     "table_name": df.loc[i, "name"],
-                    "owners": [int(df.loc[i, "user_id"]), SUPERSET_ID],
-
                 }
 
                 
                 # Serializing json
-                json_object = json.dumps(dictionary)
                 response = superset.request("POST", rison_request, json=dictionary)
                 
                 body = {"description": df.loc[i,"description"]}
                 dataset_id = response["id"]
-                superset.request("PUT", f"/dataset/{dataset_id}", json=body)
+                response = superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 
                 message = get_mail_content(df.loc[i, "name"], df.loc[i, "query_string"], "dbt success")
 
