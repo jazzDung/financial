@@ -62,7 +62,7 @@ def pull_dashboards():
 
     dashboards = merge_dashboards_with_datasets(dashboards, datasets)
 
-    exposures_dict = get_exposures_dict(dashboards, exposures)
+    exposures_dict = get_exposures_dict(dashboards)
 
     # insert empty line before each exposure, except the first
     exposures_yaml = ruamel.yaml.comments.CommentedSeq(exposures_dict)  # type: ignore
