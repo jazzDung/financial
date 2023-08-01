@@ -84,30 +84,35 @@ def create_model():
     status = {}  # Status of preliminary checking
     for i in df.index:
         # Check name validity
-        name_validation = is_valid_table_name(df.loc[i]["name"])
-        if not name_validation:
-            status[i] = "Invalid name"
-            df.loc[i, "success"] = False
-            continue
+        # name_validation = is_valid_table_name(df.loc[i]["name"])
+        # if not name_validation:
+        #     status[i] = "Invalid name"
+        #     df.loc[i, "success"] = False
+        #     continue
+
         name_unique = is_unique_table_name(df.loc[i]["name"], dbt_names_aliases)  # check aliases and name
         if not name_unique:
             status[i] = "Model name is duplicated with another existing model"
             df.loc[i, "success"] = False
             continue
+
         # Check syntax
         query_string = df.loc[i]["query_string"]
         query_string = query_string + ";" if query_string[-1] != ";" else query_string
-        validation = check_string(query_string)
-        if not validation[0]:
-            df.loc[i, "success"] = False
-            status[i] = "Invalid query: {error}".format(error=validation[1])
-            continue
+
+        # validation = check_string(query_string)
+        # if not validation[0]:
+        #     df.loc[i, "success"] = False
+        #     status[i] = "Invalid query: {error}".format(error=validation[1])
+        #     continue
+        
         # Check multi-query
         parsed = sqlfluff.parse(query_string, "postgres")["file"]
         if type(parsed) == list:
             df.loc[i, "success"] = False
             status[i] = "Multiple statement"
             continue
+
         # Check select statements
         # if list(statement_list[0]["statement"].keys())[0] != "select_statement":
         #     df.loc[i, "success"] = False
@@ -115,15 +120,18 @@ def create_model():
         #     continue
         # Check tables and add model ref
         ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_reporting)
+        
         if processed_status != "Success":
             df.loc[i, "success"] = False
             status[i] = processed_status
             continue
         model_path = USER_MODEL_PATH + "/{name}.sql".format(name=df.loc[i, "name"])
+        
         if os.path.exists(model_path):
             status[i] = "Model name is duplicated with another in processing batch"
             df.loc[i, "success"] = False
             continue
+
         with open(model_path, "w+") as f:
             template_output = MODEL_TEMPLATE.render(
                 desc=df.loc[i, "description"],
