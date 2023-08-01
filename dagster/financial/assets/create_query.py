@@ -152,7 +152,7 @@ def create_model():
             # Add checked
             df.loc[i, "checked"] = True
             SMTP.sendmail(EMAIL_SENDER, email_dict[str(df.loc[i, "user_id"])], message)
-
+    raise Exception(status)
     # If every record is unsuccesful, terminate script early
     if not df["success"].any():
         update_records(df)
