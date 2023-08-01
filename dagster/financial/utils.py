@@ -675,45 +675,42 @@ def get_ref(original_query, dbt_tables, parsed_result, serving_tables_names):
 
 def get_records():
     # Query records
-    try:
-        connection = psycopg2.connect(
-            user=DATABASE_USERNAME,
-            password=DATABASE_PASSWORD,
-            host=DATABASE_HOST,
-            port=DATABASE_PORT,
-            database=DATABASE_NAME,
-        )
-        cursor = connection.cursor()
-        postgreSQL_select_Query = f"""select id, name, query_string, user_id, description, insert_time, checked, success 
-                                    from {QUERY_SCHEMA}.{QUERY_TABLE} where checked = False"""
+    connection = psycopg2.connect(
+        user=DATABASE_USERNAME,
+        password=DATABASE_PASSWORD,
+        host=DATABASE_HOST,
+        port=DATABASE_PORT,
+        database=DATABASE_NAME,
+    )
+    cursor = connection.cursor()
+    postgreSQL_select_Query = f"""select id, name, query_string, user_id, description, insert_time, checked, success 
+                                from {QUERY_SCHEMA}.{QUERY_TABLE} where checked = False"""
 
-        logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
-        cursor.execute(postgreSQL_select_Query)
-        query_columns = [
-            "id",
-            "name",
-            "query_string",
-            "user_id",
-            "description",
-            "insert_time",
-            "checked",
-            "success",
-        ]
-        df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
+    logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
+    cursor.execute(postgreSQL_select_Query)
+    query_columns = [
+        "id",
+        "name",
+        "query_string",
+        "user_id",
+        "description",
+        "insert_time",
+        "checked",
+        "success",
+    ]
+    df = pd.DataFrame(cursor.fetchall(), columns=query_columns)
 
-        postgreSQL_select_Query = f"select name from {QUERY_SCHEMA}.{QUERY_TABLE} where success = True"
+    postgreSQL_select_Query = f"select name from {QUERY_SCHEMA}.{QUERY_TABLE} where success = True"
 
-        logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
-        cursor.execute(postgreSQL_select_Query)
+    logging.info(f"Executing query to fetch records: {postgreSQL_select_Query}")
+    cursor.execute(postgreSQL_select_Query)
 
-        succeeded = cursor.fetchall()
+    succeeded = cursor.fetchall()
 
-    finally:
-        # closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            logging.info("PostgreSQL connection is closed")
+    if connection:
+        cursor.close()
+        connection.close()
+        logging.info("PostgreSQL connection is closed")
     return df, succeeded
 
 
@@ -735,6 +732,7 @@ def update_records(df):
                             FROM (VALUES {entries_to_update}) AS v (checked, success, id)
                             WHERE q.id = v.id;"""
     logging.info(f"Executing query to update records: {update_sql_query}")
+    raise Exception(update_sql_query)
     cursor.execute(update_sql_query)
     connection.commit()
     # closing database connection.
