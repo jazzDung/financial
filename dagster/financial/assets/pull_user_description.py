@@ -35,13 +35,13 @@ def pull_user_description():
     with open(DESC_YAML_PATH, "w+", encoding="utf-8") as f:
         desc_yaml_file.dump(col_desc_yaml_schema, f)
 
-    # write to each model file
-    for table in tables_desc:
-        with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "r") as file:
-            text = file.read()
-            pattern = r"description='(.*?)'|description=''"
-            replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
-            new_text = re.sub(pattern, replacement, text, 1)
+    # # write to each model file
+    # for table in tables_desc:
+    #     with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "r") as file:
+    #         text = file.read()
+    #         pattern = r"description='(.*?)'|description=''"
+    #         replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
+    #         new_text = re.sub(pattern, replacement, text, 1)
 
-        # with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
-        #     file.write(new_text)
+    #     with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
+    #         file.write(new_text)
