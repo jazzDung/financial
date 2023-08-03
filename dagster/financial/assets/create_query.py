@@ -118,6 +118,7 @@ def create_model():
         #     df.loc[i, "success"] = False
         #     status[i] = ("Query is not 'SELECT'")
         #     continue
+
         # Check tables and add model ref
         ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_reporting)
         
@@ -136,6 +137,7 @@ def create_model():
             template_output = MODEL_TEMPLATE.render(
                 user_id=str(df.loc[i, "user_id"]),
                 exec_time=EXEC_TIME,
+                materialized='view',
                 schema=USER_SCHEMA,
                 refs=ref_tables,
                 query=df.loc[i, "query_string"],
