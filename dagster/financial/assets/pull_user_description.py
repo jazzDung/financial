@@ -14,7 +14,7 @@ def pull_user_description():
     result = res["result"]
 
     result_list = [
-        {"name": table_dict["table_name"], "columns": table_dict["columns"]}
+        {"name": table_dict["table_name"], "description": table_dict["table_desc"], "columns": table_dict["columns"]}
         for table_dict in result
         if table_dict["table_schema"] == USER_SCHEMA
     ]
@@ -24,10 +24,10 @@ def pull_user_description():
         if not table["columns"]:
             table.pop("columns")
 
-    tables_desc = {}
-    for table in result:
-        if table["table_schema"] == USER_SCHEMA:
-            tables_desc[table["table_name"]] = table["table_desc"]
+    # tables_desc = {}
+    # for table in result:
+    #     if table["table_schema"] == USER_SCHEMA:
+    #         tables_desc[table["table_name"]] = table["table_desc"]
 
     desc_yaml_file = YamlFormatted()
 
@@ -35,13 +35,13 @@ def pull_user_description():
     with open(DESC_YAML_PATH, "w+", encoding="utf-8") as f:
         desc_yaml_file.dump(col_desc_yaml_schema, f)
 
-    # write to each model file
-    for table in tables_desc:
-        with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "r") as file:
-            text = file.read()
-            pattern = r"description='(.*?)'|description=''"
-            replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
-            new_text = re.sub(pattern, replacement, text, 1)
+    # # write to each model file
+    # for table in tables_desc:
+    #     with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "r") as file:
+    #         text = file.read()
+    #         pattern = r"description='(.*?)'|description=''"
+    #         replacement = "description='{table_desc}'".format(table_desc=tables_desc[table])
+    #         new_text = re.sub(pattern, replacement, text, 1)
 
-        with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
-            file.write(new_text)
+    #     with open(USER_MODEL_PATH + "/{table}.sql".format(table=table), "w") as file:
+    #         file.write(new_text)

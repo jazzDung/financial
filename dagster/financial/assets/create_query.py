@@ -134,7 +134,6 @@ def create_model():
 
         with open(model_path, "w+") as f:
             template_output = MODEL_TEMPLATE.render(
-                desc=df.loc[i, "description"],
                 user_id=str(df.loc[i, "user_id"]),
                 exec_time=EXEC_TIME,
                 schema=USER_SCHEMA,
