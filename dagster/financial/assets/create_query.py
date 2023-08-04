@@ -47,7 +47,7 @@ def create_model():
 
     for filename in os.listdir(USER_MODEL_PATH):
         # If file is not present in list
-        if filename.rstrip(".sql") not in succeeded or filename == "user_schema.yml":
+        if filename.rstrip(".sql") not in succeeded or filename == "schema.yml":
             # Get full path of file and remove it
             full_file_path = os.path.join(USER_MODEL_PATH, filename)
             if os.path.isfile(full_file_path):
@@ -83,12 +83,6 @@ def create_model():
 
     status = {}  # Status of preliminary checking
     for i in df.index:
-        # Check name validity
-        # name_validation = is_valid_table_name(df.loc[i]["name"])
-        # if not name_validation:
-        #     status[i] = "Invalid name"
-        #     df.loc[i, "success"] = False
-        #     continue
 
         name_unique = is_unique_table_name(df.loc[i]["name"], dbt_names_aliases)  # check aliases and name
         if not name_unique:
@@ -96,31 +90,8 @@ def create_model():
             df.loc[i, "success"] = False
             continue
 
-        # Check syntax
-        query_string = df.loc[i]["query_string"]
-        query_string = query_string + ";" if query_string[-1] != ";" else query_string
-
-        # validation = check_string(query_string)
-        # if not validation[0]:
-        #     df.loc[i, "success"] = False
-        #     status[i] = "Invalid query: {error}".format(error=validation[1])
-        #     continue
-        
-        # Check multi-query
-        parsed = sqlfluff.parse(query_string, "postgres")["file"]
-        if type(parsed) == list:
-            df.loc[i, "success"] = False
-            status[i] = "Multiple statement"
-            continue
-
-        # Check select statements
-        # if list(statement_list[0]["statement"].keys())[0] != "select_statement":
-        #     df.loc[i, "success"] = False
-        #     status[i] = ("Query is not 'SELECT'")
-        #     continue
-
         # Check tables and add model ref
-        ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, parsed, dbt_tables_reporting)
+        ref_tables, processed_status = get_ref(df.loc[i, "query_string"], dbt_tables, dbt_tables_reporting)
         
         if processed_status != "Success":
             df.loc[i, "success"] = False
@@ -222,7 +193,7 @@ def create_model():
                 # Serializing json
                 response = superset.request("POST", rison_request, json=dictionary)
                 
-                body = {"description": df.loc[i,"description"]}
+                body = {"description": df.loc[i,"description"], "owners": [int(df.loc[i, "user_id"]), SUPERSET_ID]}
                 dataset_id = response["id"]
                 response = superset.request("PUT", f"/dataset/{dataset_id}", json=body)
 

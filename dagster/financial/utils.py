@@ -260,6 +260,19 @@ def get_tables_from_sql(sql, dialect, sql_parsed=None):
                             break
             if isinstance(table_ref, dict):
                 tables_cleaned.append(table_ref["naked_identifier"])
+
+        cte_raw = list(get_json_segment(sql_parsed, "common_table_expression")) 
+        cte_identifier = []
+        for cte in cte_raw:
+            if isinstance(cte, list):
+                table_ref_identifier = []
+                # Get "naked_identifier" of table
+                for dictionary in cte:
+                    if "naked_identifier" in dictionary:
+                        cte_identifier.append(dictionary["naked_identifier"])
+                        break
+        table_without_cte = set(tables_cleaned) - set(cte_identifier)
+
     except (
         sqlfluff.core.errors.SQLParseError,  # type: ignore
         sqlfluff.core.errors.SQLLexError,  # type: ignore
@@ -273,9 +286,9 @@ def get_tables_from_sql(sql, dialect, sql_parsed=None):
             sql,
             exc_info=e,
         )
-        tables_cleaned = get_tables_from_sql_simple(sql)
+        table_without_cte = get_tables_from_sql_simple(sql)
 
-    return tables_cleaned
+    return list(table_without_cte)
 
 
 def get_json_segment(
@@ -642,7 +655,7 @@ def is_unique_table_name(table_name, dbt_tables):
         return False
 
 
-def get_ref(original_query, dbt_tables, parsed_result, serving_tables_names):
+def get_ref(original_query, dbt_tables, serving_tables_names):
     """
     Returns content of a user-created dbt model file w/o config.
 
@@ -657,7 +670,7 @@ def get_ref(original_query, dbt_tables, parsed_result, serving_tables_names):
     # original_query = original_query[:-1] if original_query[-1] == ";" else original_query # Maybe unneeded since not wrapping with
     # Access table names
     fixed_query = str(original_query)
-    table_names = set(get_tables_from_sql(fixed_query, dialect="postgres", sql_parsed=parsed_result))
+    table_names = set(get_tables_from_sql(fixed_query, dialect="postgres"))
     fixed_query = sqlfluff.fix(fixed_query, dialect="postgres")
     dbt_set = set(serving_tables_names)
     if not table_names.issubset(dbt_set):  # serving_tables_names include schema
