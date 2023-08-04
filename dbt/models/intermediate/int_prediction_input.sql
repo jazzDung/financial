@@ -1,7 +1,6 @@
 {{ 
   config(
     materialized = 'view',
-    description = 'Prediction component input'
   ) 
 }}
 
