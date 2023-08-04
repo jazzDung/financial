@@ -9,6 +9,7 @@ import psycopg2
 from bs4 import BeautifulSoup
 from markdown import markdown
 from financial.resources import (
+    SERVING_SCHEMA,
     SUPERSET_HOST,
     SUPERSET_PUBLIC_HOST,
     SUPERSET_ID,
@@ -21,10 +22,12 @@ from financial.resources import (
     DATABASE_NAME,
     QUERY_SCHEMA,
     QUERY_TABLE,
+    USER_SCHEMA,
 )
 from urllib.parse import unquote
 from typing import Any, Dict, Iterator, List, Union
 
+SERVING_AND_USER_WITH_DOT = (SERVING_SCHEMA+'.',USER_SCHEMA+'.')
 
 #### ADD ALL OF THE END POINT USED TO CSRF EXEMPT LIST TO RUN PARALLELY
 #### ONLY USE SESSION FOR SEQUENTIAL RUNNING SCRIPTS
@@ -223,7 +226,7 @@ def get_tables_from_sql_simple(sql):
     (Superset) Fallback SQL parsing using regular expressions to get tables names.
     """
     sql = re.sub(r"(--.*)|(#.*)", "", sql)
-    sql = re.sub(r"\s+", " ", sql).lower()
+    sql = re.sub(r"\s+", " ", sql)
     sql = re.sub(r"(/\*(.|\n)*\*/)", "", sql)
 
     regex = re.compile(r"\b(from|join)\b\s+(\"?(\w+)\"?(\.))?\"?(\w+)\"?\b")
@@ -233,8 +236,8 @@ def get_tables_from_sql_simple(sql):
     ]
 
     tables = list(set(tables))
-
-    return tables
+    final_tables = [table for table in tables if table.startswith(SERVING_AND_USER_WITH_DOT)]# Assuming that no schema reference
+    return final_tables
 
 
 def get_tables_from_sql(sql, dialect, sql_parsed=None):
