@@ -143,7 +143,7 @@ create_model_job = define_asset_job(
     )
 
 dataset_sync_job = define_asset_job(
-    name="dataset_sync", 
+    name="DATASET_SYNC", 
     description="Dataset sync",
     selection=AssetSelection.keys("dataset_sync")
         .upstream()
@@ -159,7 +159,7 @@ pull_dashboards_job = define_asset_job(
     )
 
 pull_user_description_job = define_asset_job(
-    name="pull_user_description", 
+    name="PULL_USER_DESCRIPTION", 
     description="Pull user description",
     selection=AssetSelection.keys("pull_user_description")
         .upstream()
@@ -167,7 +167,7 @@ pull_user_description_job = define_asset_job(
     )
 
 push_description_job = define_asset_job(
-    name="push_description", 
+    name="PUSH_DESCRIPTION", 
     description="Push description",
     selection=AssetSelection.keys("push_description")
         .upstream()
@@ -175,7 +175,7 @@ push_description_job = define_asset_job(
     )
 
 run_info_job = define_asset_job(
-    name="run_info", 
+    name="RUN_INFO", 
     description="Run info",
     selection=AssetSelection.keys("run_info")
         .upstream()
