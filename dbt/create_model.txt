@@ -4,6 +4,6 @@ tags = ['{{ user_id }}','{{ exec_time }}'],
 schema = '{{ schema }}')
 }}
 {% for table in refs %}
--- depends_on: {% raw %}{{{% endraw %} ref('{{ table }}')}}{% endfor %}
+-- depends_on: {% raw %}{{{% endraw %}'{{ table }}'}}{% endfor %}
 
 {{ query }}
