@@ -46,7 +46,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -75,7 +75,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -104,7 +104,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
        
@@ -136,7 +136,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
   
@@ -161,7 +161,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -189,7 +189,7 @@ sources:
                   - symbol_invalid_length
                   - not_uppercase
                   - relationships:
-                      to: source('organization', 'organization')
+                      to: source('source', 'organization')
                       field: ticker
                       severity: warn
       
@@ -212,7 +212,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -235,7 +235,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -258,7 +258,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -281,7 +281,7 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
 
@@ -305,6 +305,6 @@ sources:
               - symbol_invalid_length
               - not_uppercase
               - relationships:
-                  to: source('organization', 'organization')
+                  to: source('source', 'organization')
                   field: ticker
                   severity: warn
