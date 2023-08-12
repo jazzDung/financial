@@ -106,17 +106,13 @@ class SupersetDBTSessionConnector:
 
         logging.info("Request finished with status: %d", res.status_code)
 
-        if res.status_code == 401 and res.json().get("msg") == "Token has expired" and self.__refresh_session():
+        if res.status_code == 401 and self.__refresh_session():
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
             res = self.__session.request(method, url, headers=csrf_headers, **request_kwargs)  # type: ignore
 
             logging.info("Request finished with status: %d", res.status_code)
 
-        if (
-            res.status_code == 400
-            and res.json()["message"] == "400 Bad Request: The CSRF session token is missing."
-            and self.__refresh_session()
-        ):
+        if res.status_code == 400 and self.__refresh_session():
             logging.info(f"Retrying {method} request for {url} %s with refreshed session")
             res = self.__session.request(method, url, headers=csrf_headers, **request_kwargs)  # type: ignore
             logging.info(f"Request finished with status: {res.status_code}")

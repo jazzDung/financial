@@ -6,4 +6,4 @@ schema = 'user'
 
 -- depends_on: {{ ref('fact_price_history') }}
 
-select * from fact_price_history
+select * from marts.fact_price_history

@@ -73,7 +73,7 @@ def dataset_sync():
         }
         # Add potential user
         if dbt_tables[i]["user"]:
-            dictionary["owners"].append(dbt_tables[add_to_superset]["user"])
+            dictionary["owners"].append(dbt_tables[i]["user"])
         # Serializing json
         json_object = json.dumps(dictionary)
         try:

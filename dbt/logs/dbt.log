@@ -6577,3 +6577,1171 @@ LINE 18: from  AS p
 [0m21:26:11.702849 [debug] [MainThread]: Command `dbt run` failed at 21:26:11.702723 after 19.11 seconds
 [0m21:26:11.703245 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x102f62c10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1043b9100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b30460>]}
 [0m21:26:11.703635 [debug] [MainThread]: Flushing usage events
+[0m11:58:48.236623 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc728da20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5277100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52769b0>]}
+
+
+============================== 11:58:48.243978 | 5509606a-9a62-4a98-94c8-c6b24365163e ==============================
+[0m11:58:48.243978 [info ] [MainThread]: Running with dbt=1.5.1
+[0m11:58:48.250214 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m11:58:48.445268 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '5509606a-9a62-4a98-94c8-c6b24365163e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5a9a4d0>]}
+[0m11:58:48.504333 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '5509606a-9a62-4a98-94c8-c6b24365163e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc53e7730>]}
+[0m11:58:48.628971 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m11:58:48.809978 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m11:58:48.814202 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '5509606a-9a62-4a98-94c8-c6b24365163e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5a9a9e0>]}
+[0m11:58:52.585172 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_balance_sheet.sql
+[0m11:58:52.611523 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_cash_flow.sql
+[0m11:58:52.620718 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_general_rating.sql
+[0m11:58:52.629220 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_organization.sql
+[0m11:58:52.638243 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_income_statement.sql
+[0m11:58:52.648560 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_financial_health_rating.sql
+[0m11:58:52.656910 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_valuation_rating.sql
+[0m11:58:52.671239 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_stock_intraday.sql
+[0m11:58:52.685405 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_price_history.sql
+[0m11:58:52.699648 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_business_operation_rating.sql
+[0m11:58:52.712533 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_business_model_rating.sql
+[0m11:58:52.727553 [debug] [MainThread]: 1699: static parser successfully parsed staging/stg_industry_health_rating.sql
+[0m11:58:52.737470 [debug] [MainThread]: 1699: static parser successfully parsed intermediate/int_mfi.sql
+[0m11:58:52.747714 [debug] [MainThread]: 1699: static parser successfully parsed intermediate/int_prediction_input.sql
+[0m11:58:52.757475 [debug] [MainThread]: 1699: static parser successfully parsed intermediate/int_bov.sql
+[0m11:58:52.765978 [debug] [MainThread]: 1699: static parser successfully parsed intermediate/int_bollinger.sql
+[0m11:58:52.777026 [debug] [MainThread]: 1699: static parser successfully parsed user/user_created_example.sql
+[0m11:58:52.785289 [debug] [MainThread]: 1699: static parser successfully parsed user/sda.sql
+[0m11:58:52.793614 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_valuation_rating.sql
+[0m11:58:52.803064 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_stock_intraday.sql
+[0m11:58:52.811973 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_financial_health_rating.sql
+[0m11:58:52.820458 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_balance_sheet.sql
+[0m11:58:52.829634 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_price_history.sql
+[0m11:58:52.841633 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_business_model_rating.sql
+[0m11:58:52.851610 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_general_rating.sql
+[0m11:58:52.859674 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_business_operation_rating.sql
+[0m11:58:52.869342 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/dim_organization.sql
+[0m11:58:52.877987 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_income_statement.sql
+[0m11:58:52.886677 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_cash_flow.sql
+[0m11:58:52.896385 [debug] [MainThread]: 1699: static parser successfully parsed marts/reports/fact_industry_health_rating.sql
+[0m11:58:52.906730 [debug] [MainThread]: 1699: static parser successfully parsed marts/technicals/fact_bollinger.sql
+[0m11:58:52.916838 [debug] [MainThread]: 1699: static parser successfully parsed marts/technicals/fact_mfi.sql
+[0m11:58:52.926913 [debug] [MainThread]: 1699: static parser successfully parsed marts/technicals/fact_bov.sql
+[0m11:58:54.228052 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '5509606a-9a62-4a98-94c8-c6b24365163e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbe7cc0d0>]}
+[0m11:58:54.231369 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m11:58:54.278562 [debug] [MainThread]: Command `cli parse` succeeded at 11:58:54.278175 after 6.06 seconds
+[0m11:58:54.281766 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc728da20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc53e7730>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5017280>]}
+[0m11:58:54.285037 [debug] [MainThread]: Flushing usage events
+[0m12:22:50.123388 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc73626b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5276440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5276c20>]}
+
+
+============================== 12:22:50.126163 | f6e433bb-2acb-4a88-88f4-443cc736749e ==============================
+[0m12:22:50.126163 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:22:50.131223 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:22:50.169723 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'f6e433bb-2acb-4a88-88f4-443cc736749e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fcc3cba00>]}
+[0m12:22:50.178718 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'f6e433bb-2acb-4a88-88f4-443cc736749e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5a99de0>]}
+[0m12:22:50.275203 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:22:50.437395 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:22:50.439386 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:22:50.465483 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'f6e433bb-2acb-4a88-88f4-443cc736749e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcae40d0>]}
+[0m12:22:50.468724 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:22:50.514631 [debug] [MainThread]: Command `cli parse` succeeded at 12:22:50.514278 after 0.40 seconds
+[0m12:22:50.516568 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc73626b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5a99de0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcaba560>]}
+[0m12:22:50.518496 [debug] [MainThread]: Flushing usage events
+[0m12:25:37.756040 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc72292a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5276b00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5276d40>]}
+
+
+============================== 12:25:37.758927 | a3d94a5a-7705-49e2-9368-8e0ae3e2befb ==============================
+[0m12:25:37.758927 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:25:37.765524 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:25:37.801416 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'a3d94a5a-7705-49e2-9368-8e0ae3e2befb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcaba920>]}
+[0m12:25:37.809223 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'a3d94a5a-7705-49e2-9368-8e0ae3e2befb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc50ec2b0>]}
+[0m12:25:37.920733 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:25:38.082051 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:25:38.083939 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:25:38.108555 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'a3d94a5a-7705-49e2-9368-8e0ae3e2befb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc5fc0d0>]}
+[0m12:25:38.111782 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:25:38.158723 [debug] [MainThread]: Command `cli parse` succeeded at 12:25:38.158325 after 0.41 seconds
+[0m12:25:38.161307 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc72292a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8cdff0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8cdf30>]}
+[0m12:25:38.164262 [debug] [MainThread]: Flushing usage events
+[0m12:42:08.201069 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc72293f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8cd7e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8cddb0>]}
+
+
+============================== 12:42:08.203246 | 51b74f90-3fa0-469e-8e4d-4a0cfa342d03 ==============================
+[0m12:42:08.203246 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:42:08.207748 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:42:08.417420 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '51b74f90-3fa0-469e-8e4d-4a0cfa342d03', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc533d300>]}
+[0m12:42:08.424211 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '51b74f90-3fa0-469e-8e4d-4a0cfa342d03', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc533c880>]}
+[0m12:42:08.525452 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:42:08.703580 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:42:08.705597 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:42:08.732711 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '51b74f90-3fa0-469e-8e4d-4a0cfa342d03', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcab1d80>]}
+[0m12:42:08.735725 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:42:08.786400 [debug] [MainThread]: Command `cli parse` succeeded at 12:42:08.785883 after 0.59 seconds
+[0m12:42:08.788922 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc72293f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc59acbb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5a39540>]}
+[0m12:42:08.792052 [debug] [MainThread]: Flushing usage events
+[0m12:44:39.345821 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcae4370>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcae5870>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcae5840>]}
+
+
+============================== 12:44:39.348118 | 3445b35e-0db0-42f6-8ff6-0fe6d526b931 ==============================
+[0m12:44:39.348118 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:44:39.353437 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:44:39.395939 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3445b35e-0db0-42f6-8ff6-0fe6d526b931', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5299180>]}
+[0m12:44:39.406699 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3445b35e-0db0-42f6-8ff6-0fe6d526b931', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc50a3ee0>]}
+[0m12:44:39.509686 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:44:39.694320 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:44:39.696178 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:44:39.720998 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3445b35e-0db0-42f6-8ff6-0fe6d526b931', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc94dc90>]}
+[0m12:44:39.724229 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:44:39.768662 [debug] [MainThread]: Command `cli parse` succeeded at 12:44:39.768237 after 0.43 seconds
+[0m12:44:39.770544 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbe792d40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbe792cb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbe792e60>]}
+[0m12:44:39.772794 [debug] [MainThread]: Flushing usage events
+[0m12:45:42.573835 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eda65a20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ec3817e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ec381660>]}
+
+
+============================== 12:45:42.579464 | 8af37ad0-247e-4c18-87d5-33a023c05eb2 ==============================
+[0m12:45:42.579464 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:45:42.581009 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/vu/.dbt', 'debug': 'False', 'warn_error': 'None', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:45:42.790871 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ec3f7fa0>]}
+[0m12:45:42.834680 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ec1ff520>]}
+[0m12:45:42.920671 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:45:43.084347 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:45:43.085260 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:45:43.106880 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eb5fe710>]}
+[0m12:45:43.158668 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eb5bcca0>]}
+[0m12:45:43.159788 [info ] [MainThread]: Found 33 models, 68 tests, 6 snapshots, 0 analyses, 760 macros, 0 operations, 0 seed files, 12 sources, 1 exposure, 0 metrics, 0 groups
+[0m12:45:43.160961 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eb5bcdc0>]}
+[0m12:45:43.165696 [info ] [MainThread]: 
+[0m12:45:43.167851 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m12:45:43.170494 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data'
+[0m12:45:43.200155 [debug] [ThreadPool]: Using postgres connection "list_financial_data"
+[0m12:45:43.201180 [debug] [ThreadPool]: On list_financial_data: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m12:45:43.202049 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:45:45.241321 [debug] [ThreadPool]: SQL status: SELECT 34 in 2.0 seconds
+[0m12:45:45.244225 [debug] [ThreadPool]: On list_financial_data: Close
+[0m12:45:45.251413 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data, now list_financial_data_intermediate)
+[0m12:45:45.253875 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_marts'
+[0m12:45:45.266410 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_staging'
+[0m12:45:45.279090 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_financial_raw'
+[0m12:45:45.282155 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:45:45.277994 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:45:45.287858 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:45:45.296148 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:45:45.297264 [debug] [ThreadPool]: On list_financial_data_intermediate: BEGIN
+[0m12:45:45.298211 [debug] [ThreadPool]: On list_financial_data_marts: BEGIN
+[0m12:45:45.299131 [debug] [ThreadPool]: On list_financial_data_staging: BEGIN
+[0m12:45:45.299968 [debug] [ThreadPool]: On list_financial_data_financial_raw: BEGIN
+[0m12:45:45.300820 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:45:45.301690 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:45:45.302559 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:45:45.303365 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:45:47.024045 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:47.025054 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:47.025814 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:45:47.026580 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:47.027428 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:45:47.028322 [debug] [ThreadPool]: On list_financial_data_staging: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_staging"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'staging'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'staging'
+  
+[0m12:45:47.029217 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:45:47.030087 [debug] [ThreadPool]: On list_financial_data_intermediate: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_intermediate"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'intermediate'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'intermediate'
+  
+[0m12:45:47.031176 [debug] [ThreadPool]: On list_financial_data_financial_raw: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_financial_raw"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'financial_raw'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'financial_raw'
+  
+[0m12:45:47.087799 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:47.088740 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:45:47.089488 [debug] [ThreadPool]: On list_financial_data_marts: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_marts"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'marts'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'marts'
+  
+[0m12:45:47.203889 [debug] [ThreadPool]: SQL status: SELECT 12 in 0.0 seconds
+[0m12:45:47.207063 [debug] [ThreadPool]: On list_financial_data_staging: ROLLBACK
+[0m12:45:47.208040 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:45:47.229515 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.0 seconds
+[0m12:45:47.234278 [debug] [ThreadPool]: On list_financial_data_financial_raw: ROLLBACK
+[0m12:45:47.236971 [debug] [ThreadPool]: On list_financial_data_intermediate: ROLLBACK
+[0m12:45:47.282981 [debug] [ThreadPool]: SQL status: SELECT 15 in 0.0 seconds
+[0m12:45:47.286094 [debug] [ThreadPool]: On list_financial_data_marts: ROLLBACK
+[0m12:45:47.399395 [debug] [ThreadPool]: On list_financial_data_staging: Close
+[0m12:45:47.401769 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_staging, now list_financial_data_snapshots)
+[0m12:45:47.411644 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:45:47.412481 [debug] [ThreadPool]: On list_financial_data_financial_raw: Close
+[0m12:45:47.413358 [debug] [ThreadPool]: On list_financial_data_snapshots: BEGIN
+[0m12:45:47.414311 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:45:47.416269 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_financial_raw, now list_financial_data_user)
+[0m12:45:47.422039 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:45:47.422940 [debug] [ThreadPool]: On list_financial_data_user: BEGIN
+[0m12:45:47.423612 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:45:47.425930 [debug] [ThreadPool]: On list_financial_data_intermediate: Close
+[0m12:45:47.477298 [debug] [ThreadPool]: On list_financial_data_marts: Close
+[0m12:45:49.280703 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:49.281712 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:49.282557 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:45:49.283402 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:45:49.284317 [debug] [ThreadPool]: On list_financial_data_snapshots: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_snapshots"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'snapshots'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'snapshots'
+  
+[0m12:45:49.285250 [debug] [ThreadPool]: On list_financial_data_user: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_user"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'user'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'user'
+  
+[0m12:45:49.459971 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:45:49.462678 [debug] [ThreadPool]: On list_financial_data_user: ROLLBACK
+[0m12:45:49.463565 [debug] [ThreadPool]: SQL status: SELECT 6 in 0.0 seconds
+[0m12:45:49.466372 [debug] [ThreadPool]: On list_financial_data_snapshots: ROLLBACK
+[0m12:45:49.686756 [debug] [ThreadPool]: On list_financial_data_snapshots: Close
+[0m12:45:49.687751 [debug] [ThreadPool]: On list_financial_data_user: Close
+[0m12:45:49.705585 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:49.706578 [debug] [MainThread]: On master: BEGIN
+[0m12:45:49.707273 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m12:45:51.632477 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:51.633445 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:51.634525 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m12:45:52.144690 [debug] [MainThread]: SQL status: SELECT 54 in 1.0 seconds
+[0m12:45:52.152611 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eb141480>]}
+[0m12:45:52.153665 [debug] [MainThread]: On master: ROLLBACK
+[0m12:45:52.451658 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:52.452626 [debug] [MainThread]: On master: BEGIN
+[0m12:45:52.966573 [debug] [MainThread]: SQL status: BEGIN in 1.0 seconds
+[0m12:45:52.967498 [debug] [MainThread]: On master: COMMIT
+[0m12:45:52.968208 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:52.968956 [debug] [MainThread]: On master: COMMIT
+[0m12:45:53.270895 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:45:53.271879 [debug] [MainThread]: On master: Close
+[0m12:45:53.273450 [info ] [MainThread]: Concurrency: 4 threads (target='dev_cloud')
+[0m12:45:53.274593 [info ] [MainThread]: 
+[0m12:45:53.280911 [debug] [Thread-1 (]: Began running node model.dbt_financial.user_created_example
+[0m12:45:53.282199 [info ] [Thread-1 (]: 1 of 1 START sql view model user.user_created_example .......................... [RUN]
+[0m12:45:53.284026 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_financial_data_user, now model.dbt_financial.user_created_example)
+[0m12:45:53.285523 [debug] [Thread-1 (]: Began compiling node model.dbt_financial.user_created_example
+[0m12:45:53.295483 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_financial.user_created_example"
+[0m12:45:53.296985 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (compile): 12:45:53.286148 => 12:45:53.296511
+[0m12:45:53.297864 [debug] [Thread-1 (]: Began executing node model.dbt_financial.user_created_example
+[0m12:45:53.389204 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_financial.user_created_example"
+[0m12:45:53.390620 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:45:53.391521 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: BEGIN
+[0m12:45:53.392345 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m12:45:55.040634 [debug] [Thread-1 (]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:55.041697 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:45:55.042566 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "node_id": "model.dbt_financial.user_created_example"} */
+
+  create view "financial_data"."user"."user_created_example__dbt_tmp"
+    
+    
+  as (
+     
+
+-- depends_on: "financial_data"."marts"."fact_price_history"
+
+select * from fact_price_history
+  );
+[0m12:45:55.211147 [debug] [Thread-1 (]: Postgres adapter: Postgres error: relation "fact_price_history" does not exist
+LINE 11: select * from fact_price_history
+                       ^
+
+[0m12:45:55.212237 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: ROLLBACK
+[0m12:45:55.426245 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (execute): 12:45:53.298439 => 12:45:55.425634
+[0m12:45:55.427239 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: Close
+[0m12:45:55.438335 [debug] [Thread-1 (]: Database Error in model user_created_example (models/user/user_created_example.sql)
+  relation "fact_price_history" does not exist
+  LINE 11: select * from fact_price_history
+                         ^
+  compiled Code at target/run/dbt_financial/models/user/user_created_example.sql
+[0m12:45:55.439458 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '8af37ad0-247e-4c18-87d5-33a023c05eb2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eb141480>]}
+[0m12:45:55.440763 [error] [Thread-1 (]: 1 of 1 ERROR creating sql view model user.user_created_example ................. [[31mERROR[0m in 2.16s]
+[0m12:45:55.442076 [debug] [Thread-1 (]: Finished running node model.dbt_financial.user_created_example
+[0m12:45:55.445042 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:55.445921 [debug] [MainThread]: On master: BEGIN
+[0m12:45:55.446594 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m12:45:57.162342 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:45:57.163291 [debug] [MainThread]: On master: COMMIT
+[0m12:45:57.163983 [debug] [MainThread]: Using postgres connection "master"
+[0m12:45:57.164685 [debug] [MainThread]: On master: COMMIT
+[0m12:45:57.366896 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:45:57.367833 [debug] [MainThread]: On master: Close
+[0m12:45:57.369282 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m12:45:57.370022 [debug] [MainThread]: Connection 'list_financial_data_intermediate' was properly closed.
+[0m12:45:57.370643 [debug] [MainThread]: Connection 'list_financial_data_marts' was properly closed.
+[0m12:45:57.371244 [debug] [MainThread]: Connection 'list_financial_data_snapshots' was properly closed.
+[0m12:45:57.371844 [debug] [MainThread]: Connection 'model.dbt_financial.user_created_example' was properly closed.
+[0m12:45:57.372577 [info ] [MainThread]: 
+[0m12:45:57.373536 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 14.21 seconds (14.21s).
+[0m12:45:57.374881 [debug] [MainThread]: Command end result
+[0m12:45:57.420606 [info ] [MainThread]: 
+[0m12:45:57.422487 [info ] [MainThread]: [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:45:57.424281 [info ] [MainThread]: 
+[0m12:45:57.425474 [error] [MainThread]: [33mDatabase Error in model user_created_example (models/user/user_created_example.sql)[0m
+[0m12:45:57.426884 [error] [MainThread]:   relation "fact_price_history" does not exist
+[0m12:45:57.428107 [error] [MainThread]:   LINE 11: select * from fact_price_history
+[0m12:45:57.429132 [error] [MainThread]:                          ^
+[0m12:45:57.430021 [error] [MainThread]:   compiled Code at target/run/dbt_financial/models/user/user_created_example.sql
+[0m12:45:57.430914 [info ] [MainThread]: 
+[0m12:45:57.431860 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
+[0m12:45:57.433528 [debug] [MainThread]: Command `dbt run` failed at 12:45:57.433241 after 14.88 seconds
+[0m12:45:57.434562 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00eda65a20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ec1ff520>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f00ea9195a0>]}
+[0m12:45:57.435469 [debug] [MainThread]: Flushing usage events
+[0m12:46:18.969026 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f328a96da20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f32892857b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3289285630>]}
+
+
+============================== 12:46:18.974619 | 3f9ea761-9f77-46a1-b577-003ee6da46ee ==============================
+[0m12:46:18.974619 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:46:18.976110 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/vu/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'log_format': 'default', 'static_parser': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:46:19.210098 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f32892fbf70>]}
+[0m12:46:19.253654 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3288d734f0>]}
+[0m12:46:19.337170 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:46:19.496562 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m12:46:19.498354 [debug] [MainThread]: Partial parsing: updated file: dbt_financial://models/user/user_created_example.sql
+[0m12:46:19.560157 [debug] [MainThread]: 1699: static parser successfully parsed user/user_created_example.sql
+[0m12:46:19.631528 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3287d10220>]}
+[0m12:46:19.682207 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f32881af430>]}
+[0m12:46:19.683376 [info ] [MainThread]: Found 33 models, 68 tests, 6 snapshots, 0 analyses, 760 macros, 0 operations, 0 seed files, 12 sources, 1 exposure, 0 metrics, 0 groups
+[0m12:46:19.684434 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f32881af550>]}
+[0m12:46:19.689053 [info ] [MainThread]: 
+[0m12:46:19.690912 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m12:46:19.693637 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data'
+[0m12:46:19.723761 [debug] [ThreadPool]: Using postgres connection "list_financial_data"
+[0m12:46:19.724779 [debug] [ThreadPool]: On list_financial_data: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m12:46:19.725506 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:46:21.364661 [debug] [ThreadPool]: SQL status: SELECT 34 in 2.0 seconds
+[0m12:46:21.367540 [debug] [ThreadPool]: On list_financial_data: Close
+[0m12:46:21.374238 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data, now list_financial_data_financial_raw)
+[0m12:46:21.376146 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_marts'
+[0m12:46:21.388447 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_snapshots'
+[0m12:46:21.395639 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_intermediate'
+[0m12:46:21.399563 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:46:21.405385 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:46:21.411409 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:46:21.416793 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:46:21.417742 [debug] [ThreadPool]: On list_financial_data_financial_raw: BEGIN
+[0m12:46:21.418596 [debug] [ThreadPool]: On list_financial_data_marts: BEGIN
+[0m12:46:21.419431 [debug] [ThreadPool]: On list_financial_data_snapshots: BEGIN
+[0m12:46:21.420259 [debug] [ThreadPool]: On list_financial_data_intermediate: BEGIN
+[0m12:46:21.421113 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:46:21.421923 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:46:21.422728 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:46:21.423536 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:46:23.071886 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:23.072906 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:23.073770 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:46:23.074578 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:23.075507 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:46:23.076462 [debug] [ThreadPool]: On list_financial_data_marts: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_marts"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'marts'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'marts'
+  
+[0m12:46:23.077382 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:46:23.078274 [debug] [ThreadPool]: On list_financial_data_financial_raw: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_financial_raw"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'financial_raw'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'financial_raw'
+  
+[0m12:46:23.079392 [debug] [ThreadPool]: On list_financial_data_snapshots: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_snapshots"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'snapshots'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'snapshots'
+  
+[0m12:46:23.139133 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:23.140170 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:46:23.141046 [debug] [ThreadPool]: On list_financial_data_intermediate: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_intermediate"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'intermediate'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'intermediate'
+  
+[0m12:46:23.253841 [debug] [ThreadPool]: SQL status: SELECT 6 in 0.0 seconds
+[0m12:46:23.254834 [debug] [ThreadPool]: SQL status: SELECT 15 in 0.0 seconds
+[0m12:46:23.258052 [debug] [ThreadPool]: On list_financial_data_snapshots: ROLLBACK
+[0m12:46:23.258976 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:46:23.262084 [debug] [ThreadPool]: On list_financial_data_marts: ROLLBACK
+[0m12:46:23.265103 [debug] [ThreadPool]: On list_financial_data_financial_raw: ROLLBACK
+[0m12:46:23.314496 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.0 seconds
+[0m12:46:23.317344 [debug] [ThreadPool]: On list_financial_data_intermediate: ROLLBACK
+[0m12:46:23.430280 [debug] [ThreadPool]: On list_financial_data_snapshots: Close
+[0m12:46:23.432642 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_snapshots, now list_financial_data_staging)
+[0m12:46:23.435942 [debug] [ThreadPool]: On list_financial_data_marts: Close
+[0m12:46:23.442029 [debug] [ThreadPool]: On list_financial_data_financial_raw: Close
+[0m12:46:23.444464 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:46:23.446654 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_marts, now list_financial_data_user)
+[0m12:46:23.453415 [debug] [ThreadPool]: On list_financial_data_staging: BEGIN
+[0m12:46:23.459095 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:46:23.460079 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:46:23.460984 [debug] [ThreadPool]: On list_financial_data_user: BEGIN
+[0m12:46:23.462150 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:46:23.486020 [debug] [ThreadPool]: On list_financial_data_intermediate: Close
+[0m12:46:25.107155 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:25.108066 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:46:25.108991 [debug] [ThreadPool]: On list_financial_data_user: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_user"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'user'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'user'
+  
+[0m12:46:25.111873 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:25.112796 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:46:25.113517 [debug] [ThreadPool]: On list_financial_data_staging: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_staging"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'staging'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'staging'
+  
+[0m12:46:25.281710 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:46:25.284222 [debug] [ThreadPool]: On list_financial_data_user: ROLLBACK
+[0m12:46:25.303975 [debug] [ThreadPool]: SQL status: SELECT 12 in 0.0 seconds
+[0m12:46:25.307256 [debug] [ThreadPool]: On list_financial_data_staging: ROLLBACK
+[0m12:46:25.453383 [debug] [ThreadPool]: On list_financial_data_user: Close
+[0m12:46:25.499441 [debug] [ThreadPool]: On list_financial_data_staging: Close
+[0m12:46:25.517900 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:25.518831 [debug] [MainThread]: On master: BEGIN
+[0m12:46:25.519531 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m12:46:27.439520 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:27.440493 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:27.441528 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m12:46:27.680802 [debug] [MainThread]: SQL status: SELECT 54 in 0.0 seconds
+[0m12:46:27.688536 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3287d78070>]}
+[0m12:46:27.689564 [debug] [MainThread]: On master: ROLLBACK
+[0m12:46:27.992895 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:27.993806 [debug] [MainThread]: On master: BEGIN
+[0m12:46:28.488393 [debug] [MainThread]: SQL status: BEGIN in 0.0 seconds
+[0m12:46:28.489442 [debug] [MainThread]: On master: COMMIT
+[0m12:46:28.490205 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:28.490973 [debug] [MainThread]: On master: COMMIT
+[0m12:46:28.702113 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:46:28.703048 [debug] [MainThread]: On master: Close
+[0m12:46:28.704579 [info ] [MainThread]: Concurrency: 4 threads (target='dev_cloud')
+[0m12:46:28.705793 [info ] [MainThread]: 
+[0m12:46:28.712806 [debug] [Thread-1 (]: Began running node model.dbt_financial.user_created_example
+[0m12:46:28.714064 [info ] [Thread-1 (]: 1 of 1 START sql view model user.user_created_example .......................... [RUN]
+[0m12:46:28.715820 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_financial_data_staging, now model.dbt_financial.user_created_example)
+[0m12:46:28.716816 [debug] [Thread-1 (]: Began compiling node model.dbt_financial.user_created_example
+[0m12:46:28.724830 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_financial.user_created_example"
+[0m12:46:28.726364 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (compile): 12:46:28.717461 => 12:46:28.725890
+[0m12:46:28.727224 [debug] [Thread-1 (]: Began executing node model.dbt_financial.user_created_example
+[0m12:46:28.831303 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_financial.user_created_example"
+[0m12:46:28.833094 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:46:28.834037 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: BEGIN
+[0m12:46:28.835120 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m12:46:30.648632 [debug] [Thread-1 (]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:30.649775 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:46:30.650610 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "node_id": "model.dbt_financial.user_created_example"} */
+
+  create view "financial_data"."user"."user_created_example__dbt_tmp"
+    
+    
+  as (
+     
+
+-- depends_on: "financial_data"."marts"."fact_price_history"
+
+select * from marts.fact_price_history
+  );
+[0m12:46:30.853003 [debug] [Thread-1 (]: Postgres adapter: Postgres error: permission denied for schema user
+
+[0m12:46:30.854198 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: ROLLBACK
+[0m12:46:31.061061 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (execute): 12:46:28.727806 => 12:46:31.060278
+[0m12:46:31.062089 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: Close
+[0m12:46:31.066366 [debug] [Thread-1 (]: Database Error in model user_created_example (models/user/user_created_example.sql)
+  permission denied for schema user
+  compiled Code at target/run/dbt_financial/models/user/user_created_example.sql
+[0m12:46:31.067484 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '3f9ea761-9f77-46a1-b577-003ee6da46ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3287d74c70>]}
+[0m12:46:31.068902 [error] [Thread-1 (]: 1 of 1 ERROR creating sql view model user.user_created_example ................. [[31mERROR[0m in 2.35s]
+[0m12:46:31.070238 [debug] [Thread-1 (]: Finished running node model.dbt_financial.user_created_example
+[0m12:46:31.073242 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:31.074122 [debug] [MainThread]: On master: BEGIN
+[0m12:46:31.074834 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m12:46:32.901046 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:46:32.902113 [debug] [MainThread]: On master: COMMIT
+[0m12:46:32.902800 [debug] [MainThread]: Using postgres connection "master"
+[0m12:46:32.903460 [debug] [MainThread]: On master: COMMIT
+[0m12:46:33.105646 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:46:33.106609 [debug] [MainThread]: On master: Close
+[0m12:46:33.108142 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m12:46:33.108937 [debug] [MainThread]: Connection 'list_financial_data_financial_raw' was properly closed.
+[0m12:46:33.109575 [debug] [MainThread]: Connection 'list_financial_data_user' was properly closed.
+[0m12:46:33.110192 [debug] [MainThread]: Connection 'model.dbt_financial.user_created_example' was properly closed.
+[0m12:46:33.110817 [debug] [MainThread]: Connection 'list_financial_data_intermediate' was properly closed.
+[0m12:46:33.111526 [info ] [MainThread]: 
+[0m12:46:33.112528 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 13.42 seconds (13.42s).
+[0m12:46:33.113902 [debug] [MainThread]: Command end result
+[0m12:46:33.221402 [info ] [MainThread]: 
+[0m12:46:33.222741 [info ] [MainThread]: [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:46:33.224160 [info ] [MainThread]: 
+[0m12:46:33.225626 [error] [MainThread]: [33mDatabase Error in model user_created_example (models/user/user_created_example.sql)[0m
+[0m12:46:33.226882 [error] [MainThread]:   permission denied for schema user
+[0m12:46:33.228128 [error] [MainThread]:   compiled Code at target/run/dbt_financial/models/user/user_created_example.sql
+[0m12:46:33.229552 [info ] [MainThread]: 
+[0m12:46:33.230936 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
+[0m12:46:33.232888 [debug] [MainThread]: Command `dbt run` failed at 12:46:33.232622 after 14.28 seconds
+[0m12:46:33.234010 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f328a96da20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3289a40ee0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f328cba77c0>]}
+[0m12:46:33.235160 [debug] [MainThread]: Flushing usage events
+[0m12:48:45.471198 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ae8a1a20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ad1b97e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ad1b9660>]}
+
+
+============================== 12:48:45.476796 | 7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0 ==============================
+[0m12:48:45.476796 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:48:45.478295 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:48:45.704610 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ad02ffa0>]}
+[0m12:48:45.748297 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ad0a7520>]}
+[0m12:48:45.832543 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:48:45.993108 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:48:45.993994 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:48:46.015529 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8abf3a710>]}
+[0m12:48:46.066950 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ac70cc70>]}
+[0m12:48:46.068056 [info ] [MainThread]: Found 33 models, 68 tests, 6 snapshots, 0 analyses, 760 macros, 0 operations, 0 seed files, 12 sources, 1 exposure, 0 metrics, 0 groups
+[0m12:48:46.069140 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ac70cdc0>]}
+[0m12:48:46.073803 [info ] [MainThread]: 
+[0m12:48:46.075720 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m12:48:46.078207 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data'
+[0m12:48:46.106468 [debug] [ThreadPool]: Using postgres connection "list_financial_data"
+[0m12:48:46.107673 [debug] [ThreadPool]: On list_financial_data: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m12:48:46.108659 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:48:48.368987 [debug] [ThreadPool]: SQL status: SELECT 34 in 2.0 seconds
+[0m12:48:48.371852 [debug] [ThreadPool]: On list_financial_data: Close
+[0m12:48:48.378845 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data, now list_financial_data_marts)
+[0m12:48:48.386085 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_financial_raw'
+[0m12:48:48.395098 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:48:48.400687 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:48:48.402816 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_intermediate'
+[0m12:48:48.403714 [debug] [ThreadPool]: On list_financial_data_marts: BEGIN
+[0m12:48:48.405546 [debug] [ThreadPool]: Acquiring new postgres connection 'list_financial_data_staging'
+[0m12:48:48.406341 [debug] [ThreadPool]: On list_financial_data_financial_raw: BEGIN
+[0m12:48:48.412956 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:48:48.414300 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:48:48.424047 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:48:48.425058 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:48:48.426022 [debug] [ThreadPool]: On list_financial_data_intermediate: BEGIN
+[0m12:48:48.427380 [debug] [ThreadPool]: On list_financial_data_staging: BEGIN
+[0m12:48:48.428622 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:48:48.429455 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:48:50.047209 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:50.048182 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:50.048966 [debug] [ThreadPool]: Using postgres connection "list_financial_data_intermediate"
+[0m12:48:50.049807 [debug] [ThreadPool]: Using postgres connection "list_financial_data_staging"
+[0m12:48:50.050681 [debug] [ThreadPool]: On list_financial_data_intermediate: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_intermediate"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'intermediate'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'intermediate'
+  
+[0m12:48:50.051674 [debug] [ThreadPool]: On list_financial_data_staging: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_staging"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'staging'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'staging'
+  
+[0m12:48:50.052489 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:50.053672 [debug] [ThreadPool]: Using postgres connection "list_financial_data_marts"
+[0m12:48:50.054474 [debug] [ThreadPool]: On list_financial_data_marts: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_marts"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'marts'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'marts'
+  
+[0m12:48:50.132561 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:50.133602 [debug] [ThreadPool]: Using postgres connection "list_financial_data_financial_raw"
+[0m12:48:50.134352 [debug] [ThreadPool]: On list_financial_data_financial_raw: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_financial_raw"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'financial_raw'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'financial_raw'
+  
+[0m12:48:50.227439 [debug] [ThreadPool]: SQL status: SELECT 12 in 0.0 seconds
+[0m12:48:50.228328 [debug] [ThreadPool]: SQL status: SELECT 15 in 0.0 seconds
+[0m12:48:50.231364 [debug] [ThreadPool]: On list_financial_data_staging: ROLLBACK
+[0m12:48:50.232358 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.0 seconds
+[0m12:48:50.235201 [debug] [ThreadPool]: On list_financial_data_marts: ROLLBACK
+[0m12:48:50.238330 [debug] [ThreadPool]: On list_financial_data_intermediate: ROLLBACK
+[0m12:48:50.328729 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:48:50.331462 [debug] [ThreadPool]: On list_financial_data_financial_raw: ROLLBACK
+[0m12:48:50.403801 [debug] [ThreadPool]: On list_financial_data_staging: Close
+[0m12:48:50.406278 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_staging, now list_financial_data_user)
+[0m12:48:50.411240 [debug] [ThreadPool]: On list_financial_data_marts: Close
+[0m12:48:50.416488 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:48:50.417322 [debug] [ThreadPool]: On list_financial_data_intermediate: Close
+[0m12:48:50.418344 [debug] [ThreadPool]: On list_financial_data_user: BEGIN
+[0m12:48:50.420480 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_financial_data_marts, now list_financial_data_snapshots)
+[0m12:48:50.428918 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:48:50.434094 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:48:50.435400 [debug] [ThreadPool]: On list_financial_data_snapshots: BEGIN
+[0m12:48:50.436149 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:48:50.524062 [debug] [ThreadPool]: On list_financial_data_financial_raw: Close
+[0m12:48:52.169080 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:52.170015 [debug] [ThreadPool]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:52.170859 [debug] [ThreadPool]: Using postgres connection "list_financial_data_user"
+[0m12:48:52.171699 [debug] [ThreadPool]: Using postgres connection "list_financial_data_snapshots"
+[0m12:48:52.172629 [debug] [ThreadPool]: On list_financial_data_user: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_user"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'user'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'user'
+  
+[0m12:48:52.173542 [debug] [ThreadPool]: On list_financial_data_snapshots: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "list_financial_data_snapshots"} */
+select
+      'financial_data' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'snapshots'
+    union all
+    select
+      'financial_data' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'snapshots'
+  
+[0m12:48:52.380576 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.0 seconds
+[0m12:48:52.381545 [debug] [ThreadPool]: SQL status: SELECT 6 in 0.0 seconds
+[0m12:48:52.383912 [debug] [ThreadPool]: On list_financial_data_user: ROLLBACK
+[0m12:48:52.386815 [debug] [ThreadPool]: On list_financial_data_snapshots: ROLLBACK
+[0m12:48:52.555521 [debug] [ThreadPool]: On list_financial_data_user: Close
+[0m12:48:52.556441 [debug] [ThreadPool]: On list_financial_data_snapshots: Close
+[0m12:48:52.574092 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:52.575102 [debug] [MainThread]: On master: BEGIN
+[0m12:48:52.575882 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m12:48:54.382719 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:54.383657 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:54.384566 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m12:48:54.835679 [debug] [MainThread]: SQL status: SELECT 54 in 0.0 seconds
+[0m12:48:54.843718 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ac70cb50>]}
+[0m12:48:54.844721 [debug] [MainThread]: On master: ROLLBACK
+[0m12:48:55.035895 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:55.036816 [debug] [MainThread]: On master: BEGIN
+[0m12:48:55.373034 [debug] [MainThread]: SQL status: BEGIN in 0.0 seconds
+[0m12:48:55.373960 [debug] [MainThread]: On master: COMMIT
+[0m12:48:55.374670 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:55.375379 [debug] [MainThread]: On master: COMMIT
+[0m12:48:55.543659 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:48:55.544777 [debug] [MainThread]: On master: Close
+[0m12:48:55.546256 [info ] [MainThread]: Concurrency: 4 threads (target='dev_cloud')
+[0m12:48:55.547345 [info ] [MainThread]: 
+[0m12:48:55.554058 [debug] [Thread-1 (]: Began running node model.dbt_financial.user_created_example
+[0m12:48:55.555372 [info ] [Thread-1 (]: 1 of 1 START sql view model user.user_created_example .......................... [RUN]
+[0m12:48:55.557333 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_financial_data_snapshots, now model.dbt_financial.user_created_example)
+[0m12:48:55.558820 [debug] [Thread-1 (]: Began compiling node model.dbt_financial.user_created_example
+[0m12:48:55.568979 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_financial.user_created_example"
+[0m12:48:55.570692 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (compile): 12:48:55.559459 => 12:48:55.570063
+[0m12:48:55.571874 [debug] [Thread-1 (]: Began executing node model.dbt_financial.user_created_example
+[0m12:48:55.667281 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_financial.user_created_example"
+[0m12:48:55.669211 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:48:55.670433 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: BEGIN
+[0m12:48:55.671681 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m12:48:57.391058 [debug] [Thread-1 (]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:57.392086 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:48:57.392954 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "node_id": "model.dbt_financial.user_created_example"} */
+
+  create view "financial_data"."user"."user_created_example__dbt_tmp"
+    
+    
+  as (
+     
+
+-- depends_on: "financial_data"."marts"."fact_price_history"
+
+select * from marts.fact_price_history
+  );
+[0m12:48:57.602996 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.0 seconds
+[0m12:48:57.617557 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:48:57.618601 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "node_id": "model.dbt_financial.user_created_example"} */
+alter table "financial_data"."user"."user_created_example__dbt_tmp" rename to "user_created_example"
+[0m12:48:57.800881 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.0 seconds
+[0m12:48:57.835498 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: COMMIT
+[0m12:48:57.836585 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:48:57.839885 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: COMMIT
+[0m12:48:58.108889 [debug] [Thread-1 (]: SQL status: COMMIT in 0.0 seconds
+[0m12:48:58.121761 [debug] [Thread-1 (]: Using postgres connection "model.dbt_financial.user_created_example"
+[0m12:48:58.122843 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: /* {"app": "dbt", "dbt_version": "1.5.1", "profile_name": "dbt_financial", "target_name": "dev_cloud", "node_id": "model.dbt_financial.user_created_example"} */
+drop view if exists "financial_data"."user"."user_created_example__dbt_backup" cascade
+[0m12:48:58.313466 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.0 seconds
+[0m12:48:58.316988 [debug] [Thread-1 (]: Timing info for model.dbt_financial.user_created_example (execute): 12:48:55.572721 => 12:48:58.316553
+[0m12:48:58.317916 [debug] [Thread-1 (]: On model.dbt_financial.user_created_example: Close
+[0m12:48:58.319555 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '7bfbaf87-e5a5-4e58-9980-2dac88b9c5e0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ab79b640>]}
+[0m12:48:58.320923 [info ] [Thread-1 (]: 1 of 1 OK created sql view model user.user_created_example ..................... [[32mCREATE VIEW[0m in 2.76s]
+[0m12:48:58.322513 [debug] [Thread-1 (]: Finished running node model.dbt_financial.user_created_example
+[0m12:48:58.325437 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:58.326296 [debug] [MainThread]: On master: BEGIN
+[0m12:48:58.327106 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m12:48:59.951207 [debug] [MainThread]: SQL status: BEGIN in 2.0 seconds
+[0m12:48:59.952110 [debug] [MainThread]: On master: COMMIT
+[0m12:48:59.952840 [debug] [MainThread]: Using postgres connection "master"
+[0m12:48:59.953497 [debug] [MainThread]: On master: COMMIT
+[0m12:49:00.156094 [debug] [MainThread]: SQL status: COMMIT in 0.0 seconds
+[0m12:49:00.157050 [debug] [MainThread]: On master: Close
+[0m12:49:00.158499 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m12:49:00.159229 [debug] [MainThread]: Connection 'model.dbt_financial.user_created_example' was properly closed.
+[0m12:49:00.159852 [debug] [MainThread]: Connection 'list_financial_data_financial_raw' was properly closed.
+[0m12:49:00.160484 [debug] [MainThread]: Connection 'list_financial_data_intermediate' was properly closed.
+[0m12:49:00.161082 [debug] [MainThread]: Connection 'list_financial_data_user' was properly closed.
+[0m12:49:00.161791 [info ] [MainThread]: 
+[0m12:49:00.163008 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 14.09 seconds (14.09s).
+[0m12:49:00.164729 [debug] [MainThread]: Command end result
+[0m12:49:00.207764 [info ] [MainThread]: 
+[0m12:49:00.209058 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m12:49:00.210124 [info ] [MainThread]: 
+[0m12:49:00.211434 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[0m12:49:00.213631 [debug] [MainThread]: Command `dbt run` succeeded at 12:49:00.213288 after 14.76 seconds
+[0m12:49:00.214875 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ae8a1a20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ab700370>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb8ac7533d0>]}
+[0m12:49:00.215932 [debug] [MainThread]: Flushing usage events
+[0m12:49:10.712376 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc4157910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc4155a80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc41559f0>]}
+
+
+============================== 12:49:10.714617 | 6ab49ee7-6617-4e43-a7c0-ae38f2a5ec58 ==============================
+[0m12:49:10.714617 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:49:10.720336 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:49:10.757363 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '6ab49ee7-6617-4e43-a7c0-ae38f2a5ec58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5bbce20>]}
+[0m12:49:10.765367 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '6ab49ee7-6617-4e43-a7c0-ae38f2a5ec58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc533fee0>]}
+[0m12:49:10.866248 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:49:11.203225 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:49:11.205139 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:49:11.229671 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '6ab49ee7-6617-4e43-a7c0-ae38f2a5ec58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbcbe80d0>]}
+[0m12:49:11.233209 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:49:11.281559 [debug] [MainThread]: Command `cli parse` succeeded at 12:49:11.281120 after 0.57 seconds
+[0m12:49:11.284352 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc5bbce20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc50b5150>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc50b47f0>]}
+[0m12:49:11.287415 [debug] [MainThread]: Flushing usage events
+[0m12:50:11.237887 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52b4730>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52b4700>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52b4160>]}
+
+
+============================== 12:50:11.240196 | 0eeb9ea3-61fd-4d60-9afe-8275f89370fe ==============================
+[0m12:50:11.240196 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:50:11.244657 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:50:11.279744 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0eeb9ea3-61fd-4d60-9afe-8275f89370fe', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52b4520>]}
+[0m12:50:11.287662 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0eeb9ea3-61fd-4d60-9afe-8275f89370fe', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc52b4b20>]}
+[0m12:50:11.381766 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:50:11.546945 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:50:11.548832 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:50:11.573265 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0eeb9ea3-61fd-4d60-9afe-8275f89370fe', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc9640d0>]}
+[0m12:50:11.577227 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:50:11.624050 [debug] [MainThread]: Command `cli parse` succeeded at 12:50:11.623678 after 0.39 seconds
+[0m12:50:11.626495 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8e8130>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc4119e40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc4119d80>]}
+[0m12:50:11.629987 [debug] [MainThread]: Flushing usage events
+[0m12:53:02.964448 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fcc37f880>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fcc37fac0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fcc37e5f0>]}
+
+
+============================== 12:53:02.966560 | 132bac68-0151-4539-818c-32309ca5b715 ==============================
+[0m12:53:02.966560 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:53:02.971609 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:53:03.005373 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '132bac68-0151-4539-818c-32309ca5b715', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8ffee0>]}
+[0m12:53:03.012974 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '132bac68-0151-4539-818c-32309ca5b715', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc41ad660>]}
+[0m12:53:03.119825 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:53:03.448434 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:53:03.450430 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:53:03.477650 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '132bac68-0151-4539-818c-32309ca5b715', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc78c0d0>]}
+[0m12:53:03.480679 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:53:03.529533 [debug] [MainThread]: Command `cli parse` succeeded at 12:53:03.528993 after 0.57 seconds
+[0m12:53:03.531889 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc923610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc923e50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc923cd0>]}
+[0m12:53:03.534826 [debug] [MainThread]: Flushing usage events
+[0m12:58:17.445296 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529e680>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529ea40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529e770>]}
+
+
+============================== 12:58:17.447549 | cde03b94-b823-4cdd-a0f9-3e9e8255a356 ==============================
+[0m12:58:17.447549 [info ] [MainThread]: Running with dbt=1.5.1
+[0m12:58:17.452186 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/vu/.dbt', 'log_path': '/home/vu/Desktop/Projects/Thesis/financial/dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m12:58:17.490912 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'cde03b94-b823-4cdd-a0f9-3e9e8255a356', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529e440>]}
+[0m12:58:17.498164 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'cde03b94-b823-4cdd-a0f9-3e9e8255a356', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529e860>]}
+[0m12:58:17.607395 [debug] [MainThread]: checksum: 51f6b581eba8f8101bc020bf9faf8f96af641e2da86d581f66e2bdf0ff384b1c, vars: {}, profile: , target: , version: 1.5.1
+[0m12:58:17.787503 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m12:58:17.789330 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m12:58:17.816826 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'cde03b94-b823-4cdd-a0f9-3e9e8255a356', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc94d3c0>]}
+[0m12:58:17.819912 [info ] [MainThread]: Performance info: target/perf_info.json
+[0m12:58:17.874199 [debug] [MainThread]: Command `cli parse` succeeded at 12:58:17.873816 after 0.43 seconds
+[0m12:58:17.876794 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc8ebb80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fc529e860>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8fbc70be80>]}
+[0m12:58:17.879711 [debug] [MainThread]: Flushing usage events
