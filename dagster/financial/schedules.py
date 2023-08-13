@@ -10,27 +10,27 @@ schedules=[
 
     ScheduleDefinition(
         job=ingest_organization_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=ingest_cash_flow_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
     
     ScheduleDefinition(
         job=ingest_balance_sheet_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ), 
 
     ScheduleDefinition(
         job=ingest_income_statement_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),   
 
     ScheduleDefinition(
         job=ingest_general_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
@@ -40,47 +40,47 @@ schedules=[
 
     ScheduleDefinition(
         job=ingest_business_model_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=ingest_business_operation_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=ingest_financial_health_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=ingest_industry_health_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=ingest_valuation_rating_job,
-        cron_schedule="* 9 30 1-12/3 *"
+        cron_schedule="30 09 01 1-12/3 *"
     ),
 
     ScheduleDefinition(
         job=create_snapshot_tables_job,
-        cron_schedule="* 10 * 1-12/3 *"
+        cron_schedule="00 10 01 1-12/3 *"
     )
 
     # ScheduleDefinition(
     #     job=calculate_bollinger_job,
-    #     cron_schedule="* 9 30 1-12/3 *"
+    #     cron_schedule="30 09 01 1-12/3 *"
     # ),
 
     # ScheduleDefinition(
     #     job=calculate_mfi_job,
-    #     cron_schedule="* 9 30 1-12/3 *"
+    #     cron_schedule="30 09 01 1-12/3 *"
     # ),
 
     # ScheduleDefinition(
     #     job=calculate_bov_job,
-    #     cron_schedule="* 9 30 1-12/3 *"
+    #     cron_schedule="30 09 01 1-12/3 *"
     # )
 
 ]

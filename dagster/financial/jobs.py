@@ -195,8 +195,6 @@ create_snapshot_tables_job = define_asset_job(
         "industry_health_rating_snapshot",
         "valuation_rating_snapshot"
         )
-        .upstream()
-        .required_multi_asset_neighbors()
     )
 
 create_model_job = define_asset_job(
