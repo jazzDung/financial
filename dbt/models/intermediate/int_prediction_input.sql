@@ -13,8 +13,8 @@ LAG(close,1) OVER (
 		ORDER BY p.ticker, p.trading_date
 	) y_lag
 
-from  AS p 
-	INNER JOIN  AS o 
+from marts.fact_price_history AS p 
+	INNER JOIN marts.dim_organization AS o 
 		ON p.ticker = o.ticker
 WHERE
   p.trading_date BETWEEN CURRENT_DATE - INTERVAL '366' DAY AND CURRENT_DATE --fix the interval later, this is just for testing
