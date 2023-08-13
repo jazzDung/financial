@@ -716,6 +716,7 @@ def get_records():
     cursor.execute(postgreSQL_select_Query)
 
     succeeded = cursor.fetchall()
+    succeeded = [record[0] for record in succeeded]
 
     if connection:
         cursor.close()

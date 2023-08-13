@@ -47,7 +47,7 @@ def create_model():
 
     for filename in os.listdir(USER_MODEL_PATH):
         # If file is not present in list
-        if filename.rstrip(".sql") not in succeeded or filename == "schema.yml":
+        if filename.rstrip(".sql") not in succeeded or filename == "user_schema.yml":
             # Get full path of file and remove it
             full_file_path = os.path.join(USER_MODEL_PATH, filename)
             if os.path.isfile(full_file_path):
