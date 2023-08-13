@@ -1,5 +1,9 @@
 select 
     ticker,
+    open,
+    high,
+    low,
+    close,
     lower_band_5,
     sma_5,
     upper_band_5,
