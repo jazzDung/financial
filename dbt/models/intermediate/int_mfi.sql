@@ -78,6 +78,11 @@ money_ratio as (
 mfi as (
 	select
 		ticker,
+		open,
+		high,
+		low,
+		close,
+		volume,
 		pos_sum :: bigint,
 		neg_sum :: bigint,
 		money_ratio :: real,

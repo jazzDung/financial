@@ -129,6 +129,7 @@ select
         when lower_band_5 is null then 0
         else round(CAST(lower_band_5 as numeric), 2)
     end as lower_band_5,
+    sma_5,
     case
         when upper_band_5 is null then 0
         else round(CAST(upper_band_5 as numeric), 2)
@@ -137,6 +138,7 @@ select
         when lower_band_10 is null then 0
         else round(CAST(lower_band_10 as numeric), 2)
     end as lower_band_10,
+    sma_10,
     case
         when upper_band_10 is null then 0
         else round(CAST(upper_band_10 as numeric), 2)
@@ -145,6 +147,7 @@ select
         when lower_band_20 is null then 0
         else round(CAST(lower_band_20 as numeric), 2)
     end as lower_band_20,
+    sma_20,
     case
         when upper_band_20 is null then 0
         else round(CAST(upper_band_20 as numeric), 2)
@@ -153,6 +156,7 @@ select
         when lower_band_50 is null then 0
         else round(CAST(lower_band_50 as numeric), 2)
     end as lower_band_50,
+    sma_50,
     case
         when upper_band_50 is null then 0
         else round(CAST(upper_band_50 as numeric), 2)
@@ -161,6 +165,7 @@ select
         when lower_band_100 is null then 0
         else round(CAST(lower_band_100 as numeric), 2)
     end as lower_band_100,
+    sma_100,
     case
         when upper_band_100 is null then 0
         else round(CAST(upper_band_100 as numeric), 2)
@@ -169,6 +174,7 @@ select
         when lower_band_200 is null then 0
         else round(CAST(lower_band_200 as numeric), 2)
     end as lower_band_200,
+    sma_200,
     case
         when upper_band_200 is null then 0
         else round(CAST(upper_band_200 as numeric), 2)
