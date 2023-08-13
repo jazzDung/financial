@@ -149,6 +149,15 @@ calculate_bov_job = define_asset_job(
         .required_multi_asset_neighbors()
     )
 
+calculate_price_history_and_indicator = define_asset_job(
+    tags=['airbyte', 'dbt'],
+    name="INGEST_PRICE_HISTORY_AND_INDICATOR", 
+    description="Ingest price history and related indicator",
+    selection= AssetSelection.keys(["marts/fact_bov", "marts/fact_mfi", "marts/fact_bollinger"])
+        .upstream()
+        .required_multi_asset_neighbors()
+    )
+
 create_model_job = define_asset_job(
     name="CREATE_USER_QUERY", 
     description="Create user query",

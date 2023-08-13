@@ -42,7 +42,8 @@ defs = Definitions(
         ingest_valuation_rating_job,
         calculate_bollinger_job,
         calculate_mfi_job,
-        calculate_bov_job
+        calculate_bov_job,
+        calculate_price_history_and_indicator
 
         # create_model_job,
         # pull_dashboards_job,
