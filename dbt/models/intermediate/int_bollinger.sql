@@ -1,56 +1,7 @@
-with price_history as (
-    select
-        *
-    from
-         {{ ref('int_sma') }}
-),
+with
 moving_average as (
     select
-        *,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 5 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_5,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 10 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_10,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 20 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_20,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 50 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_50,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 100 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_100,
-        AVG(close) OVER(
-            partition by ticker
-            ORDER BY
-                ticker,
-                trading_date asc ROWS BETWEEN 200 PRECEDING
-                AND CURRENT ROW
-        ) AS sma_200
-    from
-        price_history
+        * from {{ ref('int_sma') }}
 ),
 standard_deviation as (
     select

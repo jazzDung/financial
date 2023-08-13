@@ -24,14 +24,9 @@ from dagster.core.storage.pipeline_run import RunsFilter
 @sensor(job=create_model_job, minimum_interval_seconds=60)
 def check_new_records(context):
 
-    # run_records = context.instance.get_run_records(
-    #     RunsFilter(job_name="INGEST_STOCK_HISTORY", statuses=[DagsterRunStatus.STARTED])
-    # )
-
     run_records = context.instance.get_run_records(
         RunsFilter(tags={"dbt":"True"}, statuses=[DagsterRunStatus.STARTED])
     )
-
 
     output = DB_CONNECTION.execute(
         """

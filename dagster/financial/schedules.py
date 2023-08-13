@@ -4,7 +4,7 @@ from financial.jobs import *
 schedules=[
 
     ScheduleDefinition(
-        job=ingest_price_history_job,
+        job=calculate_price_history_and_indicator,
         cron_schedule="0 0 * * 1,2,3,4,5",
     ),
 
