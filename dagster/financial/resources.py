@@ -57,7 +57,7 @@ DBT_TARGET = data["target"]
 MANIFEST_PATH = data["target"] + "/manifest.json"
 USER_MODEL_PATH = data["project"] + "/models/user"
 EXPOSURES_PATH = USER_MODEL_PATH + "/exposures/dashboards.yml"
-DESC_YAML_PATH = USER_MODEL_PATH + "/user_schema.yml"
+DESC_YAML_PATH = USER_MODEL_PATH + "/schema.yml"
 f.close()
 
 
