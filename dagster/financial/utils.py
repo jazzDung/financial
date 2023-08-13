@@ -221,9 +221,9 @@ def get_tables_from_sql_simple(sql):
     """
     (Superset) Fallback SQL parsing using regular expressions to get tables names.
     """
-    sql = re.sub(r"(--.*)|(#.*)", "", sql)
-    sql = re.sub(r"\s+", " ", sql)
-    sql = re.sub(r"(/\*(.|\n)*\*/)", "", sql)
+    sql = re.sub(r"(--.*)|(#.*)", "", sql) # remove comments lines
+    sql = re.sub(r"\s+", " ", sql) # shorten whitespaces
+    sql = re.sub(r"(/\*(.|\n)*\*/)", "", sql) # remove multi lines comments
 
     regex = re.compile(r"\b(from|join)\b\s+(\"?(\w+)\"?(\.))?\"?(\w+)\"?\b")
     tables_match = regex.findall(sql)
