@@ -25,7 +25,7 @@ from dagster.core.storage.pipeline_run import RunsFilter
 def check_new_records(context):
 
     run_records = context.instance.get_run_records(
-        RunsFilter(job_name="INGEST_STOCK_HISTORY", statuses=[DagsterRunStatus.STARTED])
+        RunsFilter(tags={"dbt":"True"}, statuses=[DagsterRunStatus.STARTED])
     )
 
     output = DB_CONNECTION.execute(
@@ -39,6 +39,6 @@ def check_new_records(context):
     if output.fetchall()[0][0] and len(run_records) == 0:
         yield RunRequest(run_key=None, run_config={})
     elif len(run_records) != 0:
-        yield SkipReason("Price history is running, try again!")
+        yield SkipReason("Job(s) related to dbt is running, try again!")
     else:
         yield SkipReason("Found 0 unchecked record")

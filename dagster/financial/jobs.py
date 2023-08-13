@@ -6,6 +6,31 @@ materialize_all_job = define_asset_job(
     selection=AssetSelection.all()
 )
 
+ingest_all_job = define_asset_job(
+    name="INGEST_ALL",
+    description="Ingest all data sources and indicators",
+    selection=AssetSelection.keys(
+            "marts/dim_organization",
+            "marts/fact_price_history",
+            "marts/fact_stock_intraday",
+            "marts/fact_cash_flow",
+            "marts/fact_balance_sheet",
+            "marts/fact_income_statement",
+            "marts/fact_general_rating",
+            "marts/fact_business_model_rating",
+            "marts/fact_business_operation_rating",
+            "marts/fact_financial_health_rating",
+            "marts/fact_industry_health_rating",
+            "marts/fact_valuation_rating",
+            "marts/fact_mfi", 
+            "marts/fact_bov", 
+            "marts/fact_sma", 
+            "marts/fact_bollinger"
+        )
+        .upstream()
+        .required_multi_asset_neighbors()
+)
+
 send_email_job = define_asset_job(
     name="SEND_EMAIL_FOR_UNCHECKED_QUERY", 
     description="Check for record that have field value equal False every 30 seconds, then send email to the email in those records",
@@ -15,14 +40,16 @@ send_email_job = define_asset_job(
 )
 
 ingest_organization_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_ORGANIZATION_OVERVIEW", 
     description="Ingest organization overview information, this job run at the start every quarterr",
     selection= AssetSelection.keys("marts/dim_organization")
         .upstream()
         .required_multi_asset_neighbors()
-    )
+)
 
 ingest_price_history_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_PRICE_HISTORY", 
     description="Ingest stock price history, this job run daily",
     selection= AssetSelection.keys("marts/fact_price_history")
@@ -31,6 +58,7 @@ ingest_price_history_job = define_asset_job(
     )
 
 ingest_stock_intraday_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_STOCK_INTRADAY", 
     description="Ingest stock intraday transactions, this job run daily",
     selection= AssetSelection.keys("marts/fact_stock_intraday")
@@ -39,6 +67,7 @@ ingest_stock_intraday_job = define_asset_job(
     )
 
 ingest_cash_flow_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_CASH_FLOW", 
     description="Ingest organization cash flow reports, this job run at the start every quarter",
     selection= AssetSelection.keys("marts/fact_cash_flow")
@@ -47,6 +76,7 @@ ingest_cash_flow_job = define_asset_job(
     )
 
 ingest_balance_sheet_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_BALANCE_SHEET", 
     description="Ingest organization balance sheet reports, this job run at the start every quarter",
     selection= AssetSelection.keys("marts/fact_balance_sheet")
@@ -55,6 +85,7 @@ ingest_balance_sheet_job = define_asset_job(
     )
 
 ingest_income_statement_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_INCOME_STATEMENT", 
     description="Ingest organization income statement reports, this job run at the start every quarter",
     selection= AssetSelection.keys("marts/fact_income_statement")
@@ -63,6 +94,7 @@ ingest_income_statement_job = define_asset_job(
     )
 
 ingest_general_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_GENERAL_RATING", 
     description="Ingest organization general rating",
     selection= AssetSelection.keys("marts/fact_general_rating")
@@ -71,6 +103,7 @@ ingest_general_rating_job = define_asset_job(
     )
 
 ingest_business_model_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_BUSINESS_MODEL_RATING", 
     description="Ingest organization business model rating",
     selection= AssetSelection.keys("marts/fact_business_model_rating")
@@ -79,6 +112,7 @@ ingest_business_model_rating_job = define_asset_job(
     )
 
 ingest_business_operation_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_BUSINESS_OPERATION_RATING", 
     description="Ingest organization business operation rating",
     selection= AssetSelection.keys("marts/fact_business_operation_rating")
@@ -87,6 +121,7 @@ ingest_business_operation_rating_job = define_asset_job(
     )
 
 ingest_financial_health_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_FINANCIAL_HEALTH_RATING", 
     description="Ingest organization financial health rating",
     selection= AssetSelection.keys("marts/fact_financial_health_rating")
@@ -95,6 +130,7 @@ ingest_financial_health_rating_job = define_asset_job(
     )
 
 ingest_industry_health_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_INDUSTRY_HEALTH_RATING", 
     description="Ingest organization industry health rating",
     selection= AssetSelection.keys("marts/fact_industry_health_rating")
@@ -103,6 +139,7 @@ ingest_industry_health_rating_job = define_asset_job(
     )
 
 ingest_valuation_rating_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_VALUATION_RATING", 
     description="Ingest organization valuation rating",
     selection= AssetSelection.keys("marts/fact_valuation_rating")
@@ -111,6 +148,7 @@ ingest_valuation_rating_job = define_asset_job(
     )
 
 calculate_bollinger_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_BOLLINGER", 
     description="Calculate symnol bollinger indicator",
     selection= AssetSelection.keys("marts/fact_bollinger")
@@ -119,6 +157,7 @@ calculate_bollinger_job = define_asset_job(
     )
 
 calculate_mfi_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_MFI", 
     description="Calculate symnol mfi indicator",
     selection= AssetSelection.keys("marts/fact_mfi")
@@ -127,9 +166,35 @@ calculate_mfi_job = define_asset_job(
     )
 
 calculate_bov_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_BOV", 
     description="Calculate symnol bov indicator",
     selection= AssetSelection.keys("marts/fact_bov")
+        .upstream()
+        .required_multi_asset_neighbors()
+    )
+
+calculate_price_history_and_indicator_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
+    name="INGEST_PRICE_HISTORY_AND_INDICATOR", 
+    description="Ingest price history and related indicator",
+    selection= AssetSelection.keys("marts/fact_price_history", "marts/fact_mfi", "marts/fact_bov", "marts/fact_sma", "marts/fact_bollinger")
+        .upstream()
+        .required_multi_asset_neighbors()
+    )
+
+create_snapshot_tables_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
+    name="CREATE_SNAPSHOT_TABLES", 
+    description="Create snapshot tables",
+    selection= AssetSelection.keys(
+        "business_model_rating_snapshot", 
+        "business_operation_rating_snapshot", 
+        "financial_health_rating_snapshot",
+        "general_rating_snapshot",
+        "industry_health_rating_snapshot",
+        "valuation_rating_snapshot"
+        )
         .upstream()
         .required_multi_asset_neighbors()
     )

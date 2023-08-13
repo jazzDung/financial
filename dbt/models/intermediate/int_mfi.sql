@@ -6,9 +6,7 @@ with price_history as (
 ),
 typical_price as (
 	SELECT
-		ticker,
-		trading_date,
-		volume,
+		*,
 		(high + low + close) / 3 as typical_price
 	from
 		price_history
@@ -45,7 +43,7 @@ flow as (
 ),
 flow_sum as (
 	select
-		flow.*,
+		*,
 		SUM(COALESCE(raw_flow * flow_type, 0)) OVER(
 			ORDER BY
 				ticker,
@@ -78,6 +76,11 @@ money_ratio as (
 mfi as (
 	select
 		ticker,
+		open,
+		high,
+		low,
+		close,
+		volume,
 		pos_sum :: bigint,
 		neg_sum :: bigint,
 		money_ratio :: real,
