@@ -1,22 +1,5 @@
 
 
-WITH price AS                      
-(select  
-p.ticker, 
-p.trading_date  AS ds, 
-close AS y, o.exchange,
-LAG(close,1) OVER (
-		ORDER BY p.ticker, p.trading_date
-	) y_lag
-
-from  AS p 
-	INNER JOIN  AS o 
-		ON p.ticker = o.ticker
-WHERE
-  p.trading_date BETWEEN CURRENT_DATE - INTERVAL '366' DAY AND CURRENT_DATE --fix the interval later, this is just for testing
-ORDER BY
-  ticker,
-  ds)
 WITH price AS                       
 (select
         p.ticker,
@@ -65,7 +48,7 @@ pre_round as
 select
         ds,
         y,
-        round(CAST("floor" as numeric),-2),
-        round(CAST("cap" as numeric),-2) 
+        round(CAST("floor" as numeric),-2) as floor,
+        round(CAST("cap" as numeric),-2) as cap 
     from
         pre_round
