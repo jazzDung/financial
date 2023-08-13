@@ -39,6 +39,6 @@ def check_new_records(context):
     if output.fetchall()[0][0] and len(run_records) == 0:
         yield RunRequest(run_key=None, run_config={})
     elif len(run_records) != 0:
-        yield SkipReason("Price history is running, try again!")
+        yield SkipReason("Job(s) related to dbt is running, try again!")
     else:
         yield SkipReason("Found 0 unchecked record")

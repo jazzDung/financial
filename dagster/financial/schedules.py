@@ -61,21 +61,21 @@ schedules=[
     ScheduleDefinition(
         job=ingest_valuation_rating_job,
         cron_schedule="* * * 1-12/3 *"
-    ),
-
-    ScheduleDefinition(
-        job=calculate_bollinger_job,
-        cron_schedule="* * * 1-12/3 *"
-    ),
-
-    ScheduleDefinition(
-        job=calculate_mfi_job,
-        cron_schedule="* * * 1-12/3 *"
-    ),
-
-    ScheduleDefinition(
-        job=calculate_bov_job,
-        cron_schedule="* * * 1-12/3 *"
     )
+
+    # ScheduleDefinition(
+    #     job=calculate_bollinger_job,
+    #     cron_schedule="* * * 1-12/3 *"
+    # ),
+
+    # ScheduleDefinition(
+    #     job=calculate_mfi_job,
+    #     cron_schedule="* * * 1-12/3 *"
+    # ),
+
+    # ScheduleDefinition(
+    #     job=calculate_bov_job,
+    #     cron_schedule="* * * 1-12/3 *"
+    # )
 
 ]
