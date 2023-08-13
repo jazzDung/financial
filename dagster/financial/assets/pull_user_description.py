@@ -18,13 +18,12 @@ def pull_user_description():
         for table_dict in result
         if table_dict["table_schema"] == USER_SCHEMA
     ]
-
+    # If no columns desc or dataset desc then remove
     for table in result_list:
         table["columns"] = [column for column in table["columns"] if column["description"]]
         if not table["columns"]:
             table.pop("columns")
-    
-    result_list = [table for table in result_list if "columns" in table.keys() and not table["description"]]
+    result_list = [table for table in result_list if not("columns" not in table.keys()  and not table["description"])] 
 
     desc_yaml_file = YamlFormatted()
 
