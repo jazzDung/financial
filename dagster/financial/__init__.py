@@ -28,6 +28,7 @@ defs = Definitions(
     
     jobs=[
         materialize_all_job, 
+        ingest_all_job,
         ingest_price_history_job, 
         ingest_stock_intraday_job,
         ingest_organization_job,
@@ -43,7 +44,8 @@ defs = Definitions(
         calculate_bollinger_job,
         calculate_mfi_job,
         calculate_bov_job,
-        calculate_price_history_and_indicator
+        calculate_price_history_and_indicator_job,
+        create_snapshot_tables_job
 
         # create_model_job,
         # pull_dashboards_job,

@@ -9,6 +9,7 @@ dbt_assets = with_resources(
         profiles_dir=DBT_PROFILE_PATH,
         target_dir=DBT_TARGET,
         display_raw_sql=True,
+        use_build_command=True
     ),
     {
         "dbt": DbtCliClientResource(

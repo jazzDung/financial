@@ -6,6 +6,31 @@ materialize_all_job = define_asset_job(
     selection=AssetSelection.all()
 )
 
+ingest_all_job = define_asset_job(
+    name="INGEST_ALL",
+    description="Ingest all data sources and indicators",
+    selection=AssetSelection.keys(
+            "marts/dim_organization",
+            "marts/fact_price_history",
+            "marts/fact_stock_intraday",
+            "marts/fact_cash_flow",
+            "marts/fact_balance_sheet",
+            "marts/fact_income_statement",
+            "marts/fact_general_rating",
+            "marts/fact_business_model_rating",
+            "marts/fact_business_operation_rating",
+            "marts/fact_financial_health_rating",
+            "marts/fact_industry_health_rating",
+            "marts/fact_valuation_rating",
+            "marts/fact_mfi", 
+            "marts/fact_bov", 
+            "marts/fact_sma", 
+            "marts/fact_bollinger"
+        )
+        .upstream()
+        .required_multi_asset_neighbors()
+)
+
 send_email_job = define_asset_job(
     name="SEND_EMAIL_FOR_UNCHECKED_QUERY", 
     description="Check for record that have field value equal False every 30 seconds, then send email to the email in those records",
@@ -21,7 +46,7 @@ ingest_organization_job = define_asset_job(
     selection= AssetSelection.keys("marts/dim_organization")
         .upstream()
         .required_multi_asset_neighbors()
-    )
+)
 
 ingest_price_history_job = define_asset_job(
     tags={"airbyte": "True", "dbt": "True"},
@@ -149,11 +174,27 @@ calculate_bov_job = define_asset_job(
         .required_multi_asset_neighbors()
     )
 
-calculate_price_history_and_indicator = define_asset_job(
+calculate_price_history_and_indicator_job = define_asset_job(
     tags={"airbyte": "True", "dbt": "True"},
     name="INGEST_PRICE_HISTORY_AND_INDICATOR", 
     description="Ingest price history and related indicator",
     selection= AssetSelection.keys("marts/fact_price_history", "marts/fact_mfi", "marts/fact_bov", "marts/fact_sma", "marts/fact_bollinger")
+        .upstream()
+        .required_multi_asset_neighbors()
+    )
+
+create_snapshot_tables_job = define_asset_job(
+    tags={"airbyte": "True", "dbt": "True"},
+    name="CREATE_SNAPSHOT_TABLES", 
+    description="Create snapshot tables",
+    selection= AssetSelection.keys(
+        "business_model_rating_snapshot", 
+        "business_operation_rating_snapshot", 
+        "financial_health_rating_snapshot",
+        "general_rating_snapshot",
+        "industry_health_rating_snapshot",
+        "valuation_rating_snapshot"
+        )
         .upstream()
         .required_multi_asset_neighbors()
     )
