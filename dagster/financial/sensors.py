@@ -29,7 +29,7 @@ def check_new_records(context):
     # )
 
     run_records = context.instance.get_run_records(
-        RunsFilter(tags=['dbt'], statuses=[DagsterRunStatus.STARTED])
+        RunsFilter(tags={"dbt":"True"}, statuses=[DagsterRunStatus.STARTED])
     )
 
 

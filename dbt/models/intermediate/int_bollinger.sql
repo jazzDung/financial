@@ -1,10 +1,8 @@
 with price_history as (
     select
-        ticker,
-        close,
-        trading_date
+        *
     from
-        {{ ref('stg_price_history') }}
+         {{ ref('int_sma') }}
 ),
 moving_average as (
     select
@@ -122,12 +120,15 @@ bollinger as (
 )
 select
     ticker,
+    open,
+    high,
+    low,
     close,
+    volume,
     case
         when lower_band_5 is null then 0
         else round(CAST(lower_band_5 as numeric), 2)
     end as lower_band_5,
-    round(CAST(sma_5 as numeric), 2) as sma_5,
     case
         when upper_band_5 is null then 0
         else round(CAST(upper_band_5 as numeric), 2)
@@ -136,7 +137,6 @@ select
         when lower_band_10 is null then 0
         else round(CAST(lower_band_10 as numeric), 2)
     end as lower_band_10,
-    round(CAST(sma_10 as numeric), 2) as sma_10,
     case
         when upper_band_10 is null then 0
         else round(CAST(upper_band_10 as numeric), 2)
@@ -145,7 +145,6 @@ select
         when lower_band_20 is null then 0
         else round(CAST(lower_band_20 as numeric), 2)
     end as lower_band_20,
-    round(CAST(sma_20 as numeric), 2) as sma_20,
     case
         when upper_band_20 is null then 0
         else round(CAST(upper_band_20 as numeric), 2)
@@ -154,7 +153,6 @@ select
         when lower_band_50 is null then 0
         else round(CAST(lower_band_50 as numeric), 2)
     end as lower_band_50,
-    round(CAST(sma_50 as numeric), 2) as sma_50,
     case
         when upper_band_50 is null then 0
         else round(CAST(upper_band_50 as numeric), 2)
@@ -163,7 +161,6 @@ select
         when lower_band_100 is null then 0
         else round(CAST(lower_band_100 as numeric), 2)
     end as lower_band_100,
-    round(CAST(sma_100 as numeric), 2) as sma_100,
     case
         when upper_band_100 is null then 0
         else round(CAST(upper_band_100 as numeric), 2)
@@ -172,7 +169,6 @@ select
         when lower_band_200 is null then 0
         else round(CAST(lower_band_200 as numeric), 2)
     end as lower_band_200,
-    round(CAST(sma_200 as numeric), 2) as sma_200,
     case
         when upper_band_200 is null then 0
         else round(CAST(upper_band_200 as numeric), 2)
