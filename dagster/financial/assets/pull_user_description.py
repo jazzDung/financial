@@ -23,6 +23,8 @@ def pull_user_description():
         table["columns"] = [column for column in table["columns"] if column["description"]]
         if not table["columns"]:
             table.pop("columns")
+    
+    result_list = [table for table in result_list if "columns" in table.keys() and not table["description"]]
 
     desc_yaml_file = YamlFormatted()
 
